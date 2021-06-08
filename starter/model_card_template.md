@@ -6,15 +6,11 @@ For additional information see the Model Card paper: https://arxiv.org/pdf/1810.
 
 ## Intended Use
 
-## Factors
-
-## Metrics
+## Training Data
 
 ## Evaluation Data
 
-## Training Data
-
-## Quantitative Analyses
+## Metrics
 
 ## Ethical Considerations
 

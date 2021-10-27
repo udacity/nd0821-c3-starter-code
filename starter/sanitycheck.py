@@ -121,8 +121,9 @@ def run_sanity_check(test_dir):
 
     if SANITY_TEST_PASSING:
         print(OK_COLOR+"Your test cases look good!")
-        print(WARN_COLOR+"However this is a heuristic based sanity testing and cannot guarantee the correctness of your code.")
-        print(WARN_COLOR+"You should still check your work against the rubric to ensure you meet the criteria.")
+    
+    print(WARN_COLOR+"This is a heuristic based sanity testing and cannot guarantee the correctness of your code.")
+    print(WARN_COLOR+"You should still check your work against the rubric to ensure you meet the criteria.")
 
 
 

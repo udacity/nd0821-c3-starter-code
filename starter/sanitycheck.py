@@ -29,7 +29,7 @@ def run_sanity_check(test_dir):
 
     test_functions_for_get = list(filter(lambda x: inspect.getsource(getattr(module,x)).find('.get(') != -1 , test_function_names))
     test_functions_for_post = list(filter(lambda x: inspect.getsource(getattr(module,x)).find('.post(') != -1, test_function_names))
-
+    
 
     print("\n============= Sanity Check Report ===========")
     SANITY_TEST_PASSING = True
@@ -51,7 +51,7 @@ def run_sanity_check(test_dir):
             source = inspect.getsource(getattr(module,func))
             if source.find('.status_code') != -1:
                 TEST_FOR_GET_METHOD_RESPONSE_CODE = True
-            if source.find('.json') != -1:
+            if (source.find('.json') != -1) or (source.find('json.loads') != -1):
                 TEST_FOR_GET_METHOD_RESPONSE_BODY =  True
 
 
@@ -92,7 +92,7 @@ def run_sanity_check(test_dir):
             source = inspect.getsource(getattr(module,func))
             if source.find('.status_code') != -1:
                 TEST_FOR_POST_METHOD_RESPONSE_CODE = True
-            if source.find('.json') != -1:
+            if source.find('.json') != -1 or (source.find('json.loads') != -1):
                 TEST_FOR_POST_METHOD_RESPONSE_BODY =  True
                 COUNT_POST_METHOD_TEST_FOR_INFERENCE_RESULT += 1
 

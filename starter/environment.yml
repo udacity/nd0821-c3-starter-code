@@ -1,0 +1,13 @@
+name: ml_census_fastapi
+channels:
+  - conda-forge
+dependencies:
+  - numpy==1.21.3
+  - pandas==1.3.4
+  - scikit-learn==1.0.1
+  - pytest==6.2.5
+  - requests==2.26.0
+  - fastapi==0.70.0
+  - uvicorn==0.15.0
+  - gunicorn==20.1.0
+  - flake8==4.0.1

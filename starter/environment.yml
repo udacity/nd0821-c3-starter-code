@@ -11,3 +11,5 @@ dependencies:
   - uvicorn==0.15.0
   - gunicorn==20.1.0
   - flake8==4.0.1
+  - dvc==2.8.2
+  - dvc-s3==2.8.2

@@ -1,3 +1,5 @@
+[![Python Package using Conda](https://github.com/marcusholmgren/machine-learning-on-census-with-fastapi/actions/workflows/python-package-conda.yml/badge.svg)](https://github.com/marcusholmgren/machine-learning-on-census-with-fastapi/actions/workflows/python-package-conda.yml)
+
 Working in a command line environment is recommended for ease of use with git and dvc. If on Windows, WSL1 or 2 is recommended.
 
 # Environment Set up
@@ -19,6 +21,46 @@ Working in a command line environment is recommended for ease of use with git an
 * This data is messy, try to open it in pandas and see what you get.
 * To clean it, use your favorite text editor to remove all spaces.
 * Commit this modified data to dvc (we often want to keep the raw data untouched but then can keep updating the cooked version).
+
+Initialize and start using [dvc](https://dvc.org/) inside git repository.
+```
+dvc init
+```
+
+Start to track the [UCI census](https://archive.ics.uci.edu/ml/datasets/census+income) data file.
+```
+dvc add starter/data/census.csv
+```
+
+Store file in AWS S3 bucket
+```
+dvc remote add -d storage s3://<name-of-s3-bucket>
+```
+
+Tell dvc to use the AWS profile named udacity, instead of the default profile.
+```
+dvc remote modify storage profile udacity
+```
+
+Run the `clean_data.py` script 
+```
+dvc run -n clean_data -d starter/data/census.csv -d starter/starter/clean_data.py -o starter/data/census_clean.csv --no-exec python starter/starter/clean_data.py
+```
+
+Producec a pipleine with one step
+```
++-----------------------------+  
+| starter/data/census.csv.dvc |  
++-----------------------------+  
+                *                
+                *                
+                *                
+        +------------+           
+        | clean_data |           
+        +------------+   
+```
+
+DVC pipeline can be run with `dvc repro` command.
 
 # Model
 * Using the starter code, write a machine learning model that trains on the clean data and saves the model. Complete any function that has been started.

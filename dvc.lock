@@ -1,0 +1,15 @@
+schema: '2.0'
+stages:
+  clean_data:
+    cmd: python starter/starter/clean_data.py
+    deps:
+    - path: starter/data/census.csv
+      md5: 145de00f6e6053d3f7044628f9a5b5ff
+      size: 3974474
+    - path: starter/starter/clean_data.py
+      md5: 021be5faf61540469777a8d3901c6614
+      size: 1311
+    outs:
+    - path: starter/data/census_clean.csv
+      md5: 171eff96d34336df1a3d2d82bdb82fe3
+      size: 3811654

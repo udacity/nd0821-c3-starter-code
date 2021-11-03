@@ -38,7 +38,12 @@ jobs:
     - name: Install dependencies
       run: |
         conda env update --file starter/environment.yml --name base
-      working-directory: ${{ env.working-dir }}
+#      working-directory: ${{ env.working-dir }}
+    - uses: iterative/setup-dvc@v1
+    - name: DVC
+      run: |
+        dvc pull
+#        dvc repro
     - name: Lint with flake8
       run: |
         # conda install flake8
@@ -50,8 +55,3 @@ jobs:
       run: |
         # conda install pytest
         pytest
-    - uses: iterative/setup-dvc@v1
-    - name: DVC
-      run: |
-        dvc pull
-        dvc repro

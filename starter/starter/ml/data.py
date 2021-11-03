@@ -1,10 +1,20 @@
+import logging
 import numpy as np
 from sklearn.preprocessing import LabelBinarizer, OneHotEncoder
+from typing import Optional, List, Tuple
+import pandas as pd
+
+logger = logging.getLogger(__name__)
 
 
 def process_data(
-    X, categorical_features=[], label=None, training=True, encoder=None, lb=None
-):
+        X: pd.DataFrame,
+        categorical_features: List[str] = [],
+        label: Optional[str] = None,
+        training=True,
+        encoder: Optional[OneHotEncoder] = None,
+        lb: Optional[LabelBinarizer] = None
+) -> Tuple[np.ndarray, np.ndarray, OneHotEncoder, LabelBinarizer]:
     """ Process the data used in the machine learning pipeline.
 
     Processes the data using one hot encoding for the categorical features and a
@@ -64,7 +74,7 @@ def process_data(
             y = lb.transform(y.values).ravel()
         # Catch the case where y is None because we're doing inference.
         except AttributeError:
-            pass
+            logger.warning("LabelBinarizer caused error, label passed in: %s, training: %s", label, training)
 
     X = np.concatenate([X_continuous, X_categorical], axis=1)
     return X, y, encoder, lb

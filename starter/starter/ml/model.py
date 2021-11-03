@@ -1,8 +1,15 @@
+import logging
+
+import numpy as np
+from sklearn.linear_model import LogisticRegression
+from sklearn.model_selection import GridSearchCV
 from sklearn.metrics import fbeta_score, precision_score, recall_score
+
+logger = logging.getLogger(__name__)
 
 
 # Optional: implement hyperparameter tuning.
-def train_model(X_train, y_train):
+def train_model(X_train: np.ndarray, y_train: np.ndarray) -> LogisticRegression:
     """
     Trains a machine learning model and returns it.
 
@@ -17,8 +24,15 @@ def train_model(X_train, y_train):
     model
         Trained machine learning model.
     """
-
-    pass
+    param_grid = {
+        'C': [0.001, 0.01, 0.1, 1, 10, 100]
+    }
+    logger.info('Training model with GridSearchCV: %s', param_grid)
+    cv = GridSearchCV(LogisticRegression(), param_grid, cv=5)
+    cv.fit(X_train, y_train)
+    logger.info('Best params: %s', cv.best_params_)
+    logger.info('Best score: %s', cv.best_score_)
+    return cv.best_estimator_
 
 
 def compute_model_metrics(y, preds):

@@ -20,7 +20,7 @@ install:
 	conda env update --file starter/environment.yml --name ml_census_fastap
 
 test:
-	pytest -vv -p no:logging
+	pytest -vv
 
 lint:
 	flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics

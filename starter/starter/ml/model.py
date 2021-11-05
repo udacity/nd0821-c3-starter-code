@@ -59,12 +59,12 @@ def compute_model_metrics(y: np.ndarray,
     return precision, recall, fbeta
 
 
-def inference(model, X):
+def inference(model: LogisticRegression, X: np.ndarray) -> np.ndarray:
     """ Run model inferences and return the predictions.
 
     Inputs
     ------
-    model : ???
+    model : sklearn.linear_model.LogisticRegression
         Trained machine learning model.
     X : np.array
         Data used for prediction.
@@ -73,4 +73,4 @@ def inference(model, X):
     preds : np.array
         Predictions from the model.
     """
-    pass
+    return model.predict(X)

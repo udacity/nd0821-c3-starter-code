@@ -8,6 +8,7 @@ help:
 		@echo "  lint        lint code"
 		@echo "  test        run all the tests"
 		@echo "  dvc-repro   run dvc pull and repro commands"
+		@echo "  training    train machine learning model"
 		@echo "  all         runs both lint and test commands"
 		@echo ""
 		@echo "Check the Makefile to know exactly what each target is doing."
@@ -29,5 +30,8 @@ lint:
 dvc-repro:
 	dvc pull
 	dvc repro
+
+training:
+	python ./starter/starter/train_model.py
 
 all: lint test

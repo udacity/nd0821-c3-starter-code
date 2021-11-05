@@ -1,9 +1,10 @@
 import logging
-import numpy as np
 from typing import Tuple
+
+import numpy as np
 from sklearn.linear_model import LogisticRegression
-from sklearn.model_selection import GridSearchCV
 from sklearn.metrics import fbeta_score, precision_score, recall_score
+from sklearn.model_selection import GridSearchCV
 
 logger = logging.getLogger(__name__)
 
@@ -26,7 +27,7 @@ def train_model(X_train: np.ndarray, y_train: np.ndarray) -> LogisticRegression:
     """
     param_grid = {
         'C': [0.001, 0.01, 0.1, 1, 10, 100],
-        # 'max_iter': [100, 200, 300, 400, 500, 1000],
+        'max_iter': [100, 200],
     }
     logger.info('Training model with GridSearchCV: %s', param_grid)
     cv = GridSearchCV(LogisticRegression(), param_grid, cv=5)

@@ -47,7 +47,7 @@ Run the `clean_data.py` script
 dvc run -n clean_data -d starter/data/census.csv -d starter/starter/clean_data.py -o starter/data/census_clean.csv --no-exec python starter/starter/clean_data.py
 ```
 
-Producec a pipleine with one step
+Curren DVC pipeline
 ```
 +-----------------------------+  
 | starter/data/census.csv.dvc |  
@@ -57,7 +57,13 @@ Producec a pipleine with one step
                 *                
         +------------+           
         | clean_data |           
-        +------------+   
+        +------------+           
+                *                
+                *                
+                *                
+        +-------------+          
+        | train_model |          
+        +-------------+          
 ```
 
 DVC pipeline can be run with `dvc repro` command.

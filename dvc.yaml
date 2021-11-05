@@ -6,3 +6,14 @@ stages:
     - starter/starter/clean_data.py
     outs:
     - starter/data/census_clean.csv
+  train_model:
+    cmd: python starter/starter/train_model.py
+    deps:
+    - starter/data/census_clean.csv
+    - starter/starter/train_model.py
+    - starter/starter/ml/data.py
+    - starter/starter/ml/model.py
+    outs:
+    - starter/model/census_classifier.joblib
+    - starter/model/census_encoder.joblib
+    - starter/model/census_lb.joblib

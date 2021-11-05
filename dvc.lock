@@ -13,3 +13,28 @@ stages:
     - path: starter/data/census_clean.csv
       md5: 171eff96d34336df1a3d2d82bdb82fe3
       size: 3811654
+  train_model:
+    cmd: python starter/starter/train_model.py
+    deps:
+    - path: starter/data/census_clean.csv
+      md5: 171eff96d34336df1a3d2d82bdb82fe3
+      size: 3811654
+    - path: starter/starter/ml/data.py
+      md5: 339a12924053180b3c885307cfe88a31
+      size: 2958
+    - path: starter/starter/ml/model.py
+      md5: fa8ad3ee61b12dd0ae8778f76a71db5c
+      size: 2092
+    - path: starter/starter/train_model.py
+      md5: 0f2348ba36a651ac34993f63d33db47e
+      size: 3985
+    outs:
+    - path: starter/model/census_classifier.joblib
+      md5: 30e63e1530cb26425db7f0192dbb4aa6
+      size: 1630
+    - path: starter/model/census_encoder.joblib
+      md5: e249311a86d8412bfba757ced905fac1
+      size: 3974
+    - path: starter/model/census_lb.joblib
+      md5: 1ae6a221f5f735aee57975ce73a74a6d
+      size: 411

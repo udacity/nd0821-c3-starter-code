@@ -23,6 +23,9 @@ def go(args: argparse.Namespace):
     logger.info('train test split data with shape: %s, test_size: %.2f', data.shape, args.test_size)
     train, test = train_test_split(data, test_size=args.test_size)
 
+    logger.info('save test data to: %s', args.test_output_artifact)
+    test.to_csv(args.test_output_artifact, index=False)
+
     logger.info('Process the test data with the process_data function.')
     cat_features = [
         "workclass",
@@ -72,6 +75,11 @@ if __name__ == "__main__":
                         type=str,
                         help="Train/Test data file",
                         default='./starter/data/census_clean.csv',
+                        required=False)
+    parser.add_argument("--test_output_artifact",
+                        type=str,
+                        help="Test data file for evaluation",
+                        default='./starter/data/census_clean_test.csv',
                         required=False)
 
     parser.add_argument("--test_size",

@@ -64,6 +64,12 @@ Curren DVC pipeline
         +-------------+          
         | train_model |          
         +-------------+          
+                *                
+                *                
+                *                
+          +----------+           
+          | evaluate |           
+          +----------+                   
 ```
 
 DVC pipeline can be run with `dvc repro` command.

@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <title>DVC Plot</title>
+    <script src="https://cdn.jsdelivr.net/npm/vega@5.20.2"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-lite@5.1.0"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-embed@6.18.2"></script>
+</head>
+<body>
+    
+    <div id = "plot_starter_model_slicing_scores_json">
+        <script type = "text/javascript">
+            var spec = {
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "data": {
+        "values": [
+    {
+        "fbeta": 0.3939174511223751,
+        "feature_value": "Private",
+        "precision": 0.6886075949367089,
+        "recall": 0.27586206896551724,
+        "rev": "workspace"
+    },
+    {
+        "fbeta": 0.4126984126984127,
+        "feature_value": "Local-gov",
+        "precision": 0.7358490566037735,
+        "recall": 0.2867647058823529,
+        "rev": "workspace"
+    },
+    {
+        "fbeta": 0.37499999999999994,
+        "feature_value": "?",
+        "precision": 0.5714285714285714,
+        "recall": 0.27906976744186046,
+        "rev": "workspace"
+    },
+    {
+        "fbeta": 0.43523316062176165,
+        "feature_value": "Self-emp-not-inc",
+        "precision": 0.6268656716417911,
+        "recall": 0.3333333333333333,
+        "rev": "workspace"
+    },
+    {
+        "fbeta": 0.39560439560439564,
+        "feature_value": "Federal-gov",
+        "precision": 0.75,
+        "recall": 0.26865671641791045,
+        "rev": "workspace"
+    },
+    {
+        "fbeta": 0.5174825174825174,
+        "feature_value": "Self-emp-inc",
+        "precision": 0.9487179487179487,
+        "recall": 0.3557692307692308,
+        "rev": "workspace"
+    },
+    {
+        "fbeta": 0.3300970873786408,
+        "feature_value": "State-gov",
+        "precision": 0.6538461538461539,
+        "recall": 0.22077922077922077,
+        "rev": "workspace"
+    },
+    {
+        "fbeta": 1.0,
+        "feature_value": "Without-pay",
+        "precision": 1.0,
+        "recall": 1.0,
+        "rev": "workspace"
+    },
+    {
+        "fbeta": 1.0,
+        "feature_value": "Never-worked",
+        "precision": 1.0,
+        "recall": 1.0,
+        "rev": "workspace"
+    }
+]
+    },
+    "title": "Slicing Scores",
+    "width": 300,
+    "height": 300,
+    "layer": [
+        {
+            "encoding": {
+                "x": {
+                    "field": "recall",
+                    "type": "quantitative",
+                    "title": "recall"
+                },
+                "y": {
+                    "field": "precision",
+                    "type": "quantitative",
+                    "title": "precision",
+                    "scale": {
+                        "zero": false
+                    }
+                },
+                "color": {
+                    "field": "rev",
+                    "type": "nominal"
+                }
+            },
+            "layer": [
+                {
+                    "mark": "line"
+                },
+                {
+                    "selection": {
+                        "label": {
+                            "type": "single",
+                            "nearest": true,
+                            "on": "mouseover",
+                            "encodings": [
+                                "x"
+                            ],
+                            "empty": "none",
+                            "clear": "mouseout"
+                        }
+                    },
+                    "mark": "point",
+                    "encoding": {
+                        "opacity": {
+                            "condition": {
+                                "selection": "label",
+                                "value": 1
+                            },
+                            "value": 0
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "transform": [
+                {
+                    "filter": {
+                        "selection": "label"
+                    }
+                }
+            ],
+            "layer": [
+                {
+                    "mark": {
+                        "type": "rule",
+                        "color": "gray"
+                    },
+                    "encoding": {
+                        "x": {
+                            "field": "recall",
+                            "type": "quantitative"
+                        }
+                    }
+                },
+                {
+                    "encoding": {
+                        "text": {
+                            "type": "quantitative",
+                            "field": "precision"
+                        },
+                        "x": {
+                            "field": "recall",
+                            "type": "quantitative"
+                        },
+                        "y": {
+                            "field": "precision",
+                            "type": "quantitative"
+                        }
+                    },
+                    "layer": [
+                        {
+                            "mark": {
+                                "type": "text",
+                                "align": "left",
+                                "dx": 5,
+                                "dy": -5
+                            },
+                            "encoding": {
+                                "color": {
+                                    "type": "nominal",
+                                    "field": "rev"
+                                }
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
+;
+            vegaEmbed('#plot_starter_model_slicing_scores_json', spec);
+        </script>
+    </div>
+    
+</body>
+</html>

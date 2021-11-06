@@ -19,6 +19,10 @@ def go(args: argparse.Namespace):
     # remove whitespaces from column names
     census_df.columns = [col.strip() for col in census_df.columns]
 
+    # remove whitespace from all object columns
+    df_obj = census_df.select_dtypes(['object'])
+    census_df[df_obj.columns] = df_obj.apply(lambda x: x.str.strip())
+
     output_artifact = os.path.join(os.getcwd(), "starter", "data", args.output_artifact)
     logger.info("Saving cleaned artifact: %s", output_artifact)
     census_df.to_csv(output_artifact, index=False)

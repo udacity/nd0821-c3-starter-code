@@ -8,6 +8,8 @@ help:
 		@echo "  lint        lint code"
 		@echo "  test        run all the tests"
 		@echo "  dvc-repro   run dvc pull and repro commands"
+		@echo "  training    train machine learning model"
+		@echo "  run         start FastAPI application"
 		@echo "  all         runs both lint and test commands"
 		@echo ""
 		@echo "Check the Makefile to know exactly what each target is doing."
@@ -20,7 +22,7 @@ install:
 	conda env update --file starter/environment.yml --name ml_census_fastap
 
 test:
-	pytest -vv -p no:logging
+	pytest -vv
 
 lint:
 	flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
@@ -29,5 +31,11 @@ lint:
 dvc-repro:
 	dvc pull
 	dvc repro
+
+training:
+	python ./starter/starter/train_model.py
+
+run:
+	uvicorn starter.main:app --reload --workers 1 --host 0.0.0.0 --port 8000
 
 all: lint test

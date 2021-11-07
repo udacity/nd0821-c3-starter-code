@@ -41,7 +41,7 @@ jobs:
     - uses: iterative/setup-dvc@v1
     - name: DVC
       run: |
-        dvc pull clean_data
+        dvc pull train_model
     - name: Lint with flake8
       run: |
         # conda install flake8

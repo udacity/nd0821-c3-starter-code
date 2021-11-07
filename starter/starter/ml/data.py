@@ -71,7 +71,8 @@ def process_data(
     else:
         X_categorical = encoder.transform(X_categorical)
         try:
-            y = lb.transform(y.values).ravel()
+            if y.shape[0] > 0:
+                y = lb.transform(y.values).ravel()
         # Catch the case where y is None because we're doing inference.
         except AttributeError:
             logger.warning("LabelBinarizer caused error, label passed in: %s, training: %s", label, training)

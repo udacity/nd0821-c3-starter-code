@@ -5,8 +5,8 @@ from sklearn.linear_model import LogisticRegression
 
 import starter.starter.ml.model as model
 
-logger = logging.getLogger(__name__)
-logger.setLevel(logging.INFO)
+logging.basicConfig(level=logging.INFO, format="%(asctime)-15s %(message)s")
+logger = logging.getLogger()
 
 
 def test_can_train_model(get_process_data):

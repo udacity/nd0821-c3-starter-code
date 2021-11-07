@@ -12,10 +12,14 @@ from starter.starter.ml.model import inference
 logging.basicConfig(level=logging.INFO, format="%(asctime)-15s %(message)s")
 logger = logging.getLogger()
 
+
+if "DYNO" in os.environ and os.path.isdir(".dvc"):
+    os.system("dvc config core.no_scm true")
+    if os.system("dvc pull train_model") != 0:
+        exit("dvc pull failed")
+    os.system("rm -r .dvc .apt/usr/lib/dvc")
+
 app = FastAPI()
-logger.info("start %s", os.getcwd())
-# starter/main.py
-# starter/model/census_classifier.joblib
 model = load("./starter/model/census_classifier.joblib")
 encoder = load("./starter/model/census_encoder.joblib")
 lb = load("./starter/model/census_lb.joblib")

@@ -97,3 +97,31 @@ DVC pipeline can be run with `dvc repro` command.
     * Hint: think about how paths will differ in your local environment vs. on Heroku.
     * Hint: development in Python is fast! But how fast you can iterate slows down if you rely on your CI/CD to fail before fixing an issue. I like to run flake8 locally before I commit changes.
 * Write a script that uses the requests module to do one POST on your live API.
+
+
+Create Heroku application
+```cli
+heroku create marcus-census-fastapi --buildpack heroku/python
+```
+
+set git remote heroku to https://git.heroku.com/marcus-census-fastapi.git
+```cli
+heroku git:remote --app marcus-census-fastapi
+```
+
+Add extra buildpack layer for DVC, also see `Aptfile`
+```cli
+heroku buildpacks:add --index 1 heroku-community/apt
+```
+
+Run git push heroku main to create a new release using these buildpacks.
+```cli
+git push heroku main
+```
+
+Add AWS configuration keys
+```cli
+heroku config:set AWS_ACCESS_KEY_ID=xxx AWS_SECRET_ACCESS_KEY=yyy
+```
+
+[DVC on Heroku](https://ankane.org/dvc-on-heroku) article by Andrew Kane.

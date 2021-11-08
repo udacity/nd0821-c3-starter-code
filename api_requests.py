@@ -41,6 +41,7 @@ def present_prediction(base_url, body):
 
 def make_prediction(url: str, body: Dict):
     response = requests.post(url, json=body)
+    print(f"Response status code: {response.status_code}")
     return response.json()
 
 

@@ -10,6 +10,7 @@ help:
 		@echo "  dvc-repro   run dvc pull and repro commands"
 		@echo "  training    train machine learning model"
 		@echo "  run         start FastAPI application"
+		@echo "  requests    run sample HTTP requests against FastAPI application"
 		@echo "  all         runs both lint and test commands"
 		@echo ""
 		@echo "Check the Makefile to know exactly what each target is doing."
@@ -37,5 +38,8 @@ training:
 
 run:
 	uvicorn starter.main:app --reload --workers 1 --host 0.0.0.0 --port 8000
+
+requests:
+	python api_requests.py
 
 all: lint test

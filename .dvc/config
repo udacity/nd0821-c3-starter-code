@@ -2,4 +2,3 @@
     remote = storage
 ['remote "storage"']
     url = s3://marcus-census-udacity
-    profile = udacity

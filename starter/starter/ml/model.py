@@ -65,12 +65,14 @@ def inference(model, X):
     return preds
 
 
-def performance_on_slices(data, cat_features, model):
+def performance_on_slices(data, encoder, lb, cat_features, model):
     """ Get performance metrics for each categorical value slice.
 
     Inputs
     ------
-    data : data for inference    
+    data : data for inference  
+    encoder : Trained sklearn OneHotEncoder
+    lb : Trained sklearn LabelBinarizer
     cat_features : Categorical features.
     model : Trained machine learning model.
     Returns
@@ -79,9 +81,14 @@ def performance_on_slices(data, cat_features, model):
     """
     results_list = list()
     # Proces the input data with the process_data function.
-    X, y, encoder, lb = process_data(
-        data, categorical_features=cat_features, label="salary", training=True
-    )
+    X, y, _, _ = process_data(
+        data, 
+        categorical_features=cat_features,
+        encoder = encoder,
+        lb = lb,
+        label="salary",        
+        training=False
+    )    
     for cat_column in cat_features:
         cat_values = list(data[cat_column].unique())
         for cat_value in cat_values:

@@ -1,8 +1,8 @@
 from fastapi import FastAPI
 from pydantic import BaseModel, Field
 from sklearn.model_selection import train_test_split
-from starter.ml.data import process_data
-from starter.ml.model import *
+from starter.starter.ml.data import process_data
+from starter.starter.ml.model import *
 import pandas as pd
 import joblib
 import os

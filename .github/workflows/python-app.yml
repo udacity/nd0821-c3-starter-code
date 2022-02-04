@@ -21,7 +21,12 @@ jobs:
       uses: aws-actions/configure-aws-credentials@v1
       with:
         role-to-assume: arn:aws:iam::658225180057:user/user_proj3
-        aws-region: us-east-1        
+        aws-region: us-east-1   
+    - name: setup DVC
+      uses: iterative/setup-dvc@v1
+    - name: DVC Pull
+      run : |
+        dvc pull             
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip

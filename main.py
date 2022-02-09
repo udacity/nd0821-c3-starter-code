@@ -7,12 +7,12 @@ import pandas as pd
 import joblib
 import os
 
-if "DYNO" in os.environ and os.path.isdir(".dvc"):
-    os.system("dvc config core.no_scm true")
-    os.system("dvc remote add -d s3-bucket s3://udacityproj3/data")
-    if os.system("dvc pull") != 0:
-        exit("dvc pull failed")
-    os.system("rm -r .dvc .apt/usr/lib/dvc")
+# if "DYNO" in os.environ and os.path.isdir(".dvc"):
+#     os.system("dvc config core.no_scm true")
+#     os.system("dvc remote add -d s3-bucket s3://udacityproj3/data")
+#     if os.system("dvc pull") != 0:
+#         exit("dvc pull failed")
+#     os.system("rm -r .dvc .apt/usr/lib/dvc")
 
 # Instantiate the app.
 app = FastAPI()

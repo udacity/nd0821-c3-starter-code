@@ -37,4 +37,4 @@ jobs:
         run: |
           dvc remote add -d s3remote s3://udacity-3-project
           dvc pull
-          pytest -v --raw_data './data/census.csv'
+          pytest -v --raw_data starter/data/cleaned_census.csv

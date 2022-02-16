@@ -1,3 +1,10 @@
+'''
+pytest configuration
+
+Author: Oliver
+Date: February 2022
+
+'''
 import pytest
 import pandas as pd
 import logging

@@ -35,6 +35,6 @@ jobs:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         run: |
-          dvc remote add -d s3://udacity-3-project
+          dvc remote add -d s3remote s3://udacity-3-project
           dvc pull
           pytest -v --raw_data './data/census.csv'

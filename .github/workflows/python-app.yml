@@ -36,4 +36,4 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         run: |
           dvc pull
-          pytest -v
+          pytest -v --raw_data './data/census.csv'

@@ -7,7 +7,7 @@ from sklearn.linear_model import LogisticRegression
 param_grid = { 
     'n_estimators': [200, 500],
     'max_features': ['auto', 'sqrt'],
-    'max_depth' : [4,5,10],
+    'max_depth' : [4,5,15],
     'criterion' :['gini', 'entropy']
 }
 

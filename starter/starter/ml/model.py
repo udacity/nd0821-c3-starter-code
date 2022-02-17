@@ -4,6 +4,13 @@ from sklearn.model_selection import GridSearchCV
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.linear_model import LogisticRegression
 
+param_grid = { 
+    'n_estimators': [200, 500],
+    'max_features': ['auto', 'sqrt'],
+    'max_depth' : [4,5,10],
+    'criterion' :['gini', 'entropy']
+}
+
 # Optional: implement hyperparameter tuning.
 def train_model(X_train, y_train):
     """
@@ -20,17 +27,16 @@ def train_model(X_train, y_train):
     model
         Trained machine learning model.
     """
-
-    # random forest
-    # rfc = RandomForestClassifier(random_state=42)
-    # cv_rfc = GridSearchCV(estimator=rfc, param_grid=param_grid, cv=5)
-    # cv_rfc.fit(X_train, y_train)
-
     # logistic regression
-    lrc = LogisticRegression(max_iter=1000)
-    lrc.fit(X_train, y_train)
-
-    return lrc
+    # lrc = LogisticRegression(max_iter=1000)
+    # lrc.fit(X_train, y_train)
+    
+    # random forest
+    rfc = RandomForestClassifier(random_state=42)
+    cv_rfc = GridSearchCV(estimator=rfc, param_grid=param_grid, cv=5)
+    cv_rfc.fit(X_train, y_train)
+    
+    return cv_rfc.best_estimator_, str("RainForest")
 
 
 def compute_model_metrics(y, preds):

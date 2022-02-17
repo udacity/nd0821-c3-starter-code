@@ -42,18 +42,17 @@ num_features = [
 ]
 
 
-def save_model_artifacts(file_dir, name, model, encoder, score):
+def save_model_artifacts(file_dir, model, encoder, score):
 
     # save the model and the OneHot encoder
-    model_pth = str(file_dir + '/' + name + '_model.pkl')
-    encoder_pth = str(file_dir + '/' + name + '_encoder.pkl')
-    score_pth = str(file_dir + '/' + name + '_score.json')
+    model_pth = str(file_dir + '/' + 'model.pkl')
+    encoder_pth = str(file_dir + '/' + 'encoder.pkl')
+    score_pth = str(file_dir + '/' + 'score.json')
 
     if os.path.exists(file_dir):
         joblib.dump(model, model_pth)
         joblib.dump(encoder, encoder_pth)
         json_dump(score, score_pth)
-        logger.info(f"Model and encoder saved to: {file_dir}")
     else:
         logger.error("Failed to save the model and encoder. Filepath incorrect!")
 
@@ -61,9 +60,9 @@ def save_model_artifacts(file_dir, name, model, encoder, score):
 def load_model_artifacts(file_dir, name):
 
     # load model and encoder
-    model_pth = str(file_dir + '/' + name + '_model.pkl')
-    encoder_pth = str(file_dir + '/' + name + '_encoder.pkl')
-    score_pth = str(file_dir + '/' + name + '_score.json')
+    model_pth = str(file_dir + '/' + 'model.pkl')
+    encoder_pth = str(file_dir + '/' + 'encoder.pkl')
+    score_pth = str(file_dir + '/' + 'score.json')
 
     if os.path.exists(file_dir):
         model = joblib.load(model_pth)
@@ -76,7 +75,7 @@ def load_model_artifacts(file_dir, name):
     return model, encoder, score
 
 
-def start_train_pipeline(file_pth):
+def start_train_pipeline(file_pth, model_artifacts_pth):
 
     # Add code to load in the data.
     df = pd.read_csv(file_pth)
@@ -96,21 +95,26 @@ def start_train_pipeline(file_pth):
     logger.info(f"Train {X_train.shape} and test {X_test.shape} data preprocessed with label salary.")
 
     # Train and save a model.
-    model = train_model(X_train, y_train)
+    model, model_type = train_model(X_train, y_train)
     logger.info(f"Model trained.")
 
     test_preds = model.predict(X_test)
     precision, recall, fbeta = compute_model_metrics(y_test, test_preds)
-    score = {"precision": precision, "recall": recall, "fbeta": fbeta}
+    score = {"name": model_type, "precision": precision, "recall": recall, "fbeta": fbeta}
     logger.info(f"Metrics: {score}")
-    
+
+    # save model artifacts
+    save_model_artifacts(model_artifacts_pth, model, encoder, score)
+    logger.info(f"Model, encoder and score saved to: {model_artifacts_pth}")
+
     return model, encoder, score
 
-if __name__ == "__main__":
-    try:
 
-        model, encoder, score = start_train_pipeline("./data/cleaned_census.csv")
-        save_model_artifacts(str("./model"), str("lr"), model, encoder, score)
+if __name__ == "__main__":
+
+    try:
+        model, encoder, score = start_train_pipeline("./data/cleaned_census.csv", "./model")
+        
         # model, encoder, score = load_model_artifacts(str("./model"), str("lr"))
         # inference(model, X)
 

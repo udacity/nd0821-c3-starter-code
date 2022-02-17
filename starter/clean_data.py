@@ -15,7 +15,7 @@ logger = logging.getLogger()
 def remove_duplicates(file_pth):
     # Add code to load in the data.
     file_dir, file_name = os.path.split(file_pth)
-    df = pd.read_csv(file_pth, sep = '\s*,\s*')
+    df = pd.read_csv(file_pth, sep = '\s*,\s*', engine = 'python')
 
     if (df.duplicated().any()):
         df.drop_duplicates(keep='first', inplace=True)

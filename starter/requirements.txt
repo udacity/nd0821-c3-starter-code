@@ -45,6 +45,7 @@ dvc @ file:///Users/runner/miniforge3/conda-bld/dvc_1640426671511/work
 entrypoints @ file:///home/conda/feedstock_root/build_artifacts/entrypoints_1643888246732/work
 executing @ file:///home/conda/feedstock_root/build_artifacts/executing_1633213722787/work
 fastapi @ file:///home/conda/feedstock_root/build_artifacts/fastapi_1642991510114/work
+flake8==4.0.1
 flatten-dict @ file:///home/conda/feedstock_root/build_artifacts/flatten-dict_1629457542349/work
 flit_core @ file:///home/conda/feedstock_root/build_artifacts/flit-core_1640697294996/work/source/flit_core
 flufl.lock @ file:///home/conda/feedstock_root/build_artifacts/flufl.lock_1642030783107/work
@@ -89,6 +90,7 @@ mailchecker @ file:///home/conda/feedstock_root/build_artifacts/mailchecker_1643
 MarkupSafe @ file:///Users/runner/miniforge3/conda-bld/markupsafe_1635833661769/work
 matplotlib @ file:///Users/runner/miniforge3/conda-bld/matplotlib-suite_1639359004870/work
 matplotlib-inline @ file:///home/conda/feedstock_root/build_artifacts/matplotlib-inline_1631080358261/work
+mccabe==0.6.1
 missingno==0.5.0
 mistune @ file:///Users/runner/miniforge3/conda-bld/mistune_1635844768785/work
 multidict @ file:///Users/runner/miniforge3/conda-bld/multidict_1643055618149/work
@@ -126,9 +128,11 @@ ptyprocess @ file:///home/conda/feedstock_root/build_artifacts/ptyprocess_160941
 pure-eval @ file:///home/conda/feedstock_root/build_artifacts/pure_eval_1642875951954/work
 py @ file:///home/conda/feedstock_root/build_artifacts/py_1636301881863/work
 pyasn1==0.4.8
+pycodestyle==2.8.0
 pycparser @ file:///home/conda/feedstock_root/build_artifacts/pycparser_1636257122734/work
 pydantic @ file:///Users/runner/miniforge3/conda-bld/pydantic_1641053161981/work
 pydot @ file:///Users/runner/miniforge3/conda-bld/pydot_1636047909408/work
+pyflakes==2.4.0
 pygit2 @ file:///Users/runner/miniforge3/conda-bld/pygit2_1643973031621/work
 Pygments @ file:///home/conda/feedstock_root/build_artifacts/pygments_1641580240686/work
 pygtrie @ file:///home/conda/feedstock_root/build_artifacts/pygtrie_1609712740518/work

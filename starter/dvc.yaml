@@ -2,7 +2,20 @@ stages:
   clean_data:
     cmd: python clean_data.py
     deps:
-    - clean_data.py
-    - data/census.csv
+      - clean_data.py
+      - data/census.csv
     outs:
-    - data/cleaned_census.csv
+      - data/cleaned_census.csv
+  train_model:
+    cmd: python starter/train_model.py
+    deps:
+      - starter/train_model.py
+      - starter/ml/data.py
+      - starter/ml/model.py
+      - data/cleaned_census.csv
+    outs:
+      - model/model.pkl
+      - model/encoder.pkl
+    metrics:
+      - model/score.json:
+          cache: false

@@ -34,6 +34,7 @@ jobs:
           pytest -v --raw_data starter/data/cleaned_census.csv
       - name: cml
         uses: iterative/setup-cml@v1
+      - name: cml run
         run: |
           git fetch --prune
           dvc metrics diff --show-md master > report.md

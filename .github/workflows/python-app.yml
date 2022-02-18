@@ -35,3 +35,8 @@ jobs:
 
           git fetch --prune
           dvc metrics diff --show-md master > report.md
+
+          ## add info
+          echo "## Testing"
+          cml-publish starter/screenshots/test.png >> report.md
+          cml-send-comment report.md

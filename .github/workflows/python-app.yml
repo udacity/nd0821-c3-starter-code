@@ -10,10 +10,10 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      - name: Set up Python 3.8
-        uses: actions/setup-python@v2
+      - uses: actions/setup-python@v2
         with:
           python-version: "3.8"
+      - uses: iterative/setup-cml@v1
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
@@ -32,8 +32,6 @@ jobs:
           dvc pull
           dvc repro starter/dvc.yaml
           pytest -v --raw_data starter/data/cleaned_census.csv
-      - name: cml
-        uses: iterative/setup-cml@v1
       - name: cml run
         run: |
           git fetch --prune

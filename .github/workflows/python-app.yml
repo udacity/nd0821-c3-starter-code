@@ -32,8 +32,9 @@ jobs:
           dvc pull
           dvc repro starter/dvc.yaml
           pytest -v --raw_data starter/data/cleaned_census.csv
-      - uses: iterative/setup-cml@v1
       - name: cml
+        uses: iterative/setup-cml@v1
+        run: |
           git fetch --prune
           dvc metrics diff --show-md master > report.md
           cml-publish starter/screenshots/test.png >> report.md

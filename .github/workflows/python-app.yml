@@ -24,8 +24,7 @@ jobs:
           flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
           # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
           flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
-      - uses: iterative/setup-cml@v1
-      - name: Train and test
+      - name: Run pipeline and test
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
@@ -33,6 +32,8 @@ jobs:
           dvc pull
           dvc repro starter/dvc.yaml
           pytest -v --raw_data starter/data/cleaned_census.csv
+      - uses: iterative/setup-cml@v1
+      - name: cml
           git fetch --prune
           dvc metrics diff --show-md master > report.md
           cml-publish starter/screenshots/test.png >> report.md

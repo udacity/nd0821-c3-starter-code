@@ -10,6 +10,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
+      - uses: iterative/setup-cml@v1
       - name: Set up Python 3.8
         uses: actions/setup-python@v2
         with:
@@ -25,7 +26,6 @@ jobs:
           # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
           flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
       - name: Test with pytest
-        uses: iterative/setup-cml@v1
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}

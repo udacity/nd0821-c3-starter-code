@@ -1,39 +1,37 @@
-  name: CI/CD
-  on:
-    push:
-      branches: [ master ]
-    pull_request:
-      branches: [ master ]
-
-    workflow_dispatch:
-
-  jobs:
-    build:
-      runs-on: ubuntu-latest
-      steps:
-        - name: Check-out repository
-          uses: actions/checkout@v2
-        - name: Set-up python
-          uses: actions/setup-python@v1
-          with:
-            python-version: 3.8
-        - name: Configure AWS Credentials
-          uses: aws-actions/configure-aws-credentials@v1
-          with:
-            aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-            aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-            aws-region: us-east-1
+# Configuration for CI
+name: CI
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check-out repository
+        uses: actions/checkout@v2
+      - name: Set-up python
+        uses: actions/setup-python@v1
+        with:
+          python-version: 3.8
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1
       - name: Set-up DVC
-          uses: iterative/setup-dvc@v1
-        - name: Pull DVC's data
-          run: dvc pull
-        - name: Install dependencies
-          run: |
-            if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-        - name: Lint with flake8
-          run: |
-            flake8 . --count --select=E9,F63,F7,F82,F401 --show-source --statistics
-            flake8 . --count --exit-zero --max-complexity=10 --max-line-length=130 --statistics
-        - name: Test with pytest
-          run: |
-            python -m pytest -vv
+        uses: iterative/setup-dvc@v1
+      - name: Pull DVC's data
+        run: dvc pull
+      - name: Install dependencies
+        run: |
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+      - name: Lint with flake8
+        run: |
+          flake8 . --count --select=E9,F63,F7,F82,F401 --show-source --statistics
+          flake8 . --count --exit-zero --max-complexity=10 --max-line-length=130 --statistics
+      - name: Test with pytest
+        run: |
+          python -m pytest -vv

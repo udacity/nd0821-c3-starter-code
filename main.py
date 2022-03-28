@@ -13,6 +13,7 @@ if "DYNO" in os.environ and os.path.isdir(".dvc"):
         exit("dvc pull failed")
     os.system("rm -r .dvc .apt/usr/lib/dvc")
 
+
 app = FastAPI(
     title="API for salary predictor",
     description="This API helps to classify",
@@ -21,5 +22,5 @@ app = FastAPI(
 
 
 @app.get("/")
-def root():
+async def welcome():
     return {'message': 'Welcome to the salary predictor'}

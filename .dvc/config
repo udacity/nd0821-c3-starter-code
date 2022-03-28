@@ -1,2 +1,4 @@
+[core]
+    remote = storage
 ['remote "storage"']
     url = s3://census-udacity-project-3

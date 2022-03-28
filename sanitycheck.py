@@ -3,7 +3,6 @@ from os import path
 import argparse
 import importlib
 import inspect
-import os
 import sys
 
 FAIL_COLOR = '\033[91m'

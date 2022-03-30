@@ -1,0 +1,33 @@
+schema: '2.0'
+stages:
+  build_model:
+    cmd: python train_model.py
+    deps:
+    - path: ../data/census_clean.csv
+      md5: 5eb5d1a4862601d030cce8c291532512
+      size: 3808816
+    - path: metrics.py
+      md5: 0a5c8389240ae30faf3ae40533c0bd50
+      size: 982
+    - path: ml/data.py
+      md5: 7a5d03f6703af2f1b72e9705e366eb69
+      size: 2543
+    - path: ml/model.py
+      md5: 43302b4b4b049c3b57a1e476387c37fb
+      size: 1539
+    - path: train_model.py
+      md5: e8d25007515635e0d5cf43f70f650c71
+      size: 2377
+    outs:
+    - path: ../metrics/slice_output.txt
+      md5: 7e337a316fac8d9b1f31f1ad76778198
+      size: 1394
+    - path: ../model/cl_model.joblib
+      md5: 34c6b074f0eb1e4943b9f4374ac44dea
+      size: 34402044
+    - path: ../model/encoder.joblib
+      md5: 26ffbe1eea47094a932e912fd33b7511
+      size: 4000
+    - path: ../model/lb.joblib
+      md5: 7fa2de23a5eb1763a5e5c53a58e8867f
+      size: 411

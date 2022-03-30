@@ -1,0 +1,14 @@
+stages:
+  build_model:
+    cmd: python train_model.py
+    deps:
+    - ../data/census_clean.csv
+    - ml/data.py
+    - ml/model.py
+    - train_model.py
+    - metrics.py
+    outs:
+    - ../model/cl_model.joblib
+    - ../model/encoder.joblib
+    - ../model/lb.joblib
+    - ../metrics/slice_output.txt

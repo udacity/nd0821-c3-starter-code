@@ -1,8 +1,8 @@
-from starter.ml.data import process_data
 from sklearn.preprocessing import LabelBinarizer, OneHotEncoder
+from starter.ml.data import process_data
 
 
-def test_raw_data(data):
+def test_raw_data(categorical_features, data):
     all_columns = [
         "age",
         "workclass",
@@ -20,32 +20,12 @@ def test_raw_data(data):
         "native-country",
         "salary",
     ]
-    categorical_features = [
-        "workclass",
-        "education",
-        "marital-status",
-        "occupation",
-        "relationship",
-        "race",
-        "sex",
-        "native-country",
-    ]
+
     assert set(data.columns.values) == set(all_columns)
     assert set(data.columns.values).issuperset(set(categorical_features))
 
 
-def test_process_data(data):
-
-    categorical_features = [
-        "workclass",
-        "education",
-        "marital-status",
-        "occupation",
-        "relationship",
-        "race",
-        "sex",
-        "native-country",
-    ]
+def test_process_data(categorical_features, data):
 
     X, y, encoder, lb = process_data(
         data, categorical_features=categorical_features, label="salary", training=True
@@ -64,4 +44,4 @@ def test_process_data(data):
     )
 
     assert n_encoder == encoder
-    assert n_lb == n_lb
+    assert n_lb == lb

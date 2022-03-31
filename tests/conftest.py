@@ -29,6 +29,7 @@ def model():
     model = load("model/cl_model.joblib")
     return model
 
+
 @pytest.fixture
 def data_train(categorical_features, data):
     train, _ = train_test_split(data, test_size=0.20, random_state=42)

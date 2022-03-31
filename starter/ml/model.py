@@ -19,7 +19,7 @@ def train_model(X_train, y_train):
     """
 
     model = RandomForestClassifier(
-        n_estimators=500, max_depth=15, min_samples_split=4, min_samples_leaf=3
+        n_estimators=1000, max_depth=15, min_samples_split=4, min_samples_leaf=3
     )
     model.fit(X_train, y_train)
     return model

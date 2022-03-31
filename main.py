@@ -12,17 +12,13 @@ from starter.ml.model import inference
 logging.basicConfig(level=logging.DEBUG, format="%(asctime)-15s %(message)s")
 logger = logging.getLogger()
 logger.info("Using dvc")
+
 if "DYNO" in os.environ and os.path.isdir(".dvc"):
     os.system("dvc config core.no_scm true")
-    if os.system("dvc pull") != 0:
+    if os.system("dvc pull -v") != 0:
         exit("dvc pull failed")
     os.system("rm -r .dvc .apt/usr/lib/dvc")
 
-logger.info("Loading models")
-
-encoder = load("model/encoder.joblib")
-lb = load("model/lb.joblib")
-model = load("model/cl_model.joblib")
 
 app = FastAPI(
     title="API for salary predictor",
@@ -59,6 +55,12 @@ async def welcome():
 async def prediction(input_data: InputData):
     logger.info("Input data")
     df = pd.DataFrame.from_dict([input_data.dict(by_alias=True)])
+    logger.info("Loading models")
+
+    encoder = load("model/encoder.joblib")
+    lb = load("model/lb.joblib")
+    model = load("model/cl_model.joblib")
+
     X, _, _, _ = process_data(
         X=df,
         label=None,

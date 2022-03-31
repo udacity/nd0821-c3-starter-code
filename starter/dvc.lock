@@ -20,11 +20,11 @@ stages:
       size: 2281
     outs:
     - path: ../metrics/slice_output.txt
-      md5: 32f87cee6d6f21efbd97504a67c7672f
-      size: 1364
+      md5: d7a5662a332011d18156048fe71efa14
+      size: 1374
     - path: ../model/cl_model.joblib
-      md5: 6c65785493dc891c87d99a579007f8a0
-      size: 67861752
+      md5: 65932d136908e6f345a217d9c65945b2
+      size: 68139384
     - path: ../model/encoder.joblib
       md5: 26ffbe1eea47094a932e912fd33b7511
       size: 4000

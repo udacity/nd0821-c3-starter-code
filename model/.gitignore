@@ -2,3 +2,6 @@
 /cl_model.joblib
 /encoder.joblib
 /lb.joblib
+/ci_model.joblib
+/encoder_model.joblib
+/lb_model.joblib

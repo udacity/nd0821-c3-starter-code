@@ -6,7 +6,7 @@ from joblib import dump, load
 import os
 import logging
 
-from metrics import calculate_education_slice_metrics
+from metrics import calculate_slice_metrics
 
 logging.basicConfig(level=logging.DEBUG, format="%(asctime)-15s %(message)s")
 logger = logging.getLogger()
@@ -61,7 +61,7 @@ loaded_model = load(os.path.join(MODEL_PATH, MODEL_NAME))
 preds = inference(loaded_model, X_test)
 precision, recall, fbeta = compute_model_metrics(y_test, preds)
 logger.info(f"Precision: {precision}, Recall: {recall}, Fbeta: {fbeta}")
-calculate_education_slice_metrics(
+calculate_slice_metrics(
     model=loaded_model,
     encoder=encoder,
     lb=lb,

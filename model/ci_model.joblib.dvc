@@ -1,0 +1,4 @@
+outs:
+- md5: 65932d136908e6f345a217d9c65945b2
+  size: 68139384
+  path: ci_model.joblib

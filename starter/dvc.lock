@@ -7,8 +7,8 @@ stages:
       md5: 5eb5d1a4862601d030cce8c291532512
       size: 3808816
     - path: metrics.py
-      md5: 981227ed0fee3a75c5f403ccde32699d
-      size: 1037
+      md5: afc4a3833b284a20cd79c24d4f89ca5a
+      size: 1056
     - path: ml/data.py
       md5: 7a5d03f6703af2f1b72e9705e366eb69
       size: 2543
@@ -16,15 +16,15 @@ stages:
       md5: c05cab47182bffd6671b0fd61b5d0ed2
       size: 1501
     - path: train_model.py
-      md5: 922e7f3ca3d5ede1f32ef77871cd3b29
-      size: 2281
+      md5: 81e7bc003f7c1c3d04733ee33c527a35
+      size: 2261
     outs:
     - path: ../metrics/slice_output.txt
-      md5: d7a5662a332011d18156048fe71efa14
-      size: 1374
+      md5: 9d17716f9650c856bf103d59e0591531
+      size: 1387
     - path: ../model/cl_model.joblib
-      md5: 65932d136908e6f345a217d9c65945b2
-      size: 68139384
+      md5: 49ea44f8e62f23fd5aafa5aa7e769e60
+      size: 67920216
     - path: ../model/encoder.joblib
       md5: 26ffbe1eea47094a932e912fd33b7511
       size: 4000

@@ -14,7 +14,6 @@ from ml.data import process_data
 # Add code to load in the data.
 data = pd.read_csv(config.DATA_PATH)
 
-
 # Optional enhancement, use K-fold cross validation instead of a
 # train-test split.
 train, test = train_test_split(data, test_size=config.TEST_SPLIT_SIZE)

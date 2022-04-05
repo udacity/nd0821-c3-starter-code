@@ -1,0 +1,2 @@
+['remote "s3_remote"']
+    url = s3://award40-udacity/

@@ -1,18 +1,25 @@
-We need to give Heroku the ability to pull in data from DVC upon app start up. We will install a [buildpack](https://elements.heroku.com/buildpacks/heroku/heroku-buildpack-apt) that allows the installation of apt-files and then define the Aptfile that contains a path to DVC. I.e., in the CLI run:
+# Model Card
 
-`heroku buildpacks:add --index 1 heroku-community/apt`
+For additional information see the Model Card paper: https://arxiv.org/pdf/1810.03993.pdf
 
-Then in your root project folder create a file called `Aptfile` that specifies the release of DVC you want installed, e.g.
-https://github.com/iterative/dvc/releases/download/2.0.18/dvc_2.0.18_amd64.deb
- 
-Add the following code block to your main.py:
+## Model Details
+- Model consists of a Random Forest classifier which predicts whether someones salary is above $50,000. 
+For this use case a binary classification approach was taken, whereby a sample showing a probability of 1.0 being positive and 0.0 being negative case.
 
-```
-import os
+## Intended Use
+- This model isn't inteded to be used in a production setting. Just for this udacity projects :)
 
-if "DYNO" in os.environ and os.path.isdir(".dvc"):
-    os.system("dvc config core.no_scm true")
-    if os.system("dvc pull") != 0:
-        exit("dvc pull failed")
-    os.system("rm -r .dvc .apt/usr/lib/dvc")
+## Training Data
+- The data utilized for training this model came from the <b>Census Beurau</b>, and consists of salary information.
+Dataset: https://archive.ics.uci.edu/ml/datasets/census+income
+
+## Evaluation Data
+- Evaluation data comes from the same dataset, a 20% split of the samples that are not used during train.
+
+## Metrics
+
+```python
+Precision: 0.7421
+Recall: 0.6303
+F1: 0.6817
 ```

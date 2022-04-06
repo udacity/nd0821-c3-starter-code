@@ -54,3 +54,10 @@ class BasicInputData(BaseModel):
                     "native-country": "United-States",
             }
         }
+
+
+class BasicInputDataPost(BaseModel):
+    """Modelo de saída para o método GET.
+    """
+    response_message: str = Field(..., title="Teste GET", description='Testa de a api está no ar.', example='Sucesso!')
+    status_code: int = Field(..., title="Status code", example=200)

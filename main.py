@@ -1,13 +1,14 @@
 # Put the code for your API here.
-import os
-import pickle as pkl
 import pandas as pd
+import pickle as pkl
+import os
 import uvicorn
+import starter.config as config
+from starlette.status import HTTP_200_OK
+
+from data_model import BasicInputData, BasicInputDataPost
 from fastapi.responses import JSONResponse
 from fastapi import FastAPI
-
-from data_model import BasicInputData
-import starter.config as config
 from starter.ml.data import process_data
 from starter.ml.model import inference
 
@@ -21,23 +22,21 @@ if "DYNO" in os.environ and os.path.isdir(".dvc"):
 
 app = FastAPI(
     title="API for Salary Model",
-    description="Return prediction for salary",
-    version="0.0.1",
+    description="Return prediction for salary.",
+    version="1.0.0",
 )
 with open(config.MODEL_PATH, 'rb') as f:
     encoder, lb, model = pkl.load(f)
 
 
-@app.get("/")
-async def welcome():
+@app.get("/", status_code=HTTP_200_OK, response_model=BasicInputDataPost, summary="Teste Get.",
+             description='Testa de a api está em pé via GET.')
+async def hello() -> dict:
     """
-    Example function for returning home directory.
-    Args:
-    Returns:
-        example_message (Dict) : Example message response for home directory
-        GET request.
+        Rota para verificação, apenas um get.
     """
-    return {'message': 'Hello'}
+
+    return {'response_message': 'Hello', 'status_code': 200}
 
 @app.post("/model")
 async def prediction(input_data: BasicInputData):

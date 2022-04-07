@@ -6,9 +6,9 @@ Heroku.
 import os
 import requests
 
-URL = "https://award40-udacity.herokuapp.com"
+URL = "terceira-atividade.herokuapp.com"
 
-response = requests.post(os.path.join(URL, "/model"), json={
+response = requests.post('https://terceira-atividade.herokuapp.com/model', json={
                     "age": 55,
                     "workclass": "Private",
                     "fnlgt": 77516,

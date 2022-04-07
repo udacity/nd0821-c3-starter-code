@@ -75,3 +75,27 @@ def test_process_data(input_df):
 
     assert len(X_train) == len(y_train)
     assert len(X_test) == len(y_test)
+
+
+def test_compute_metrics(input_df):
+    """_summary_
+
+    Args:
+        input_df (pandas df): testing comuting metrics.
+    """
+    train, _ = input_df
+
+    X_train, y_train, encoder, lb = process_data(
+        X=train,
+        categorical_features=config.cat_features,
+        label=config.TARGET,
+        training=True
+    )
+
+    clf = train_model(X_train, y_train)
+    preds = inference(clf, X_train)
+
+    precision, recall, f_one = compute_model_metrics(y_train, preds)
+
+    for metric in [precision, recall, f_one]:
+        assert metric <= 1.0

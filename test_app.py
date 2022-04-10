@@ -81,22 +81,20 @@ def test_predict_status2():
 
 
 def test_predict_response1():
-    data = {
-    "age": 55,
-    "workclass": "Private",
-    "fnlgt": 77516,
-    "education": "Masters",
-    "education-num": 1,
-    "marital-status": "Never-married",
-    "occupation": "Adm-clerical",
-    "relationship": "Not-in-family",
-    "race": "White",
-    "sex": "Female",
-    "capital-gain": 345234523,
-    "capital-loss": 1,
-    "hours-per-week": 50,
-    "native-country": "United-States"
-    }
+    data = {"age": 55,
+            "workclass": "Private",
+            "fnlgt": 77516,
+            "education": "Masters",
+            "education-num": 1,
+            "marital-status": "Never-married",
+            "occupation": "Adm-clerical",
+            "relationship": "Not-in-family",
+            "race": "White",
+            "sex": "Female",
+            "capital-gain": 345234523,
+            "capital-loss": 1,
+            "hours-per-week": 50,
+            "native-country": "United-States"}
 
     response = client.post("/model", json=data)
     assert response.json()["Result"] == 1

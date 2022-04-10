@@ -1,7 +1,8 @@
 """
 Schema for the input data using pydantic.
 NOTE: pydantic is primarily a parsing library: not a validation library.
-Pydantic guarantees the types and constrains of the output model: not the input data.
+Pydantic guarantees the types and constrains of
+the output model: not the input data.
 """
 
 from pydantic import BaseModel, Field
@@ -59,5 +60,8 @@ class BasicInputData(BaseModel):
 class BasicInputDataPost(BaseModel):
     """Modelo de saída para o método GET.
     """
-    response_message: str = Field(..., title="Teste GET", description='Testa de a api está no ar.', example='Sucesso!')
-    status_code: int = Field(..., title="Status code", example=200)
+    response_message: str = Field(..., title="Teste GET",
+                                  description='Testa de a api está no ar.',
+                                  example='Sucesso!')
+    status_code: int = Field(..., title="Status code",
+                             example=200)

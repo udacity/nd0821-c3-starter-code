@@ -7,6 +7,7 @@ from main import app
 
 client = TestClient(app)
 
+
 def test_hello():
     """
     Teste Get hello route
@@ -15,6 +16,7 @@ def test_hello():
     assert response.status_code == HTTPStatus.OK
     assert response.request.method == "GET"
     assert response.json() == 'Greetings and salutations everybody'
+
 
 @pytest.mark.parametrize('test_input, expected', [
     ('age', "Age of the person - numerical - int"),
@@ -25,6 +27,7 @@ def test_feature_info_status(test_input: str):
     response = client.get(f'/feature_info/{test_input}')
     assert response.status_code == HTTPStatus.OK
     assert response.request.method == "GET"
+
 
 @pytest.mark.parametrize('test_input, expected', [
     ('age', "Age of the person - numerical - int"),
@@ -37,9 +40,10 @@ def test_feature_info_response(test_input: str, expected: str):
     Args:
         test_input (np.array): input test
         expected (np.array): results expected
-    """    
+    """
     response = client.get(f'/feature_info/{test_input}')
     assert response.json() == expected
+
 
 def test_predict_status():
     """
@@ -56,6 +60,7 @@ def test_predict_status():
     response = client.post("/predict/", json=data)
     assert response.status_code == HTTPStatus.OK
     assert response.request.method == "POST"
+
 
 def test_predict_response():
     data = {

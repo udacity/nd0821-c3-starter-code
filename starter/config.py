@@ -4,7 +4,7 @@ DATA_PATH = "./data/census.csv"
 MODEL_PATH = "./model/classifier.pkl"
 METRICS_OUTPUT_PATH = "./model/slice_output.txt"
 
-cat_features = [
+cat_feat = [
     "workclass",
     "education",
     "marital-status",

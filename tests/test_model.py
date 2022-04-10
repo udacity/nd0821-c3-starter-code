@@ -8,13 +8,14 @@ try:
     import starter.config as config
     from starter.ml.data import process_data
     from starter.ml.model import (train_model, inference,
-                                compute_model_metrics, compute_metrics_by_slice)
+                                  compute_model_metrics)
 except ModuleNotFoundError:
     sys.path.append('./')
     import starter.config as config
     from starter.ml.data import process_data
     from starter.ml.model import (train_model, inference,
-                        compute_model_metrics, compute_metrics_by_slice)
+                                  compute_model_metrics)
+
 
 @pytest.fixture()
 def input_df():
@@ -22,7 +23,7 @@ def input_df():
 
     Returns:
         pandas df: train and test dataset
-    """    
+    """
     df = pd.read_csv(config.DATA_PATH)
     train, test = train_test_split(df, test_size=config.TEST_SPLIT_SIZE)
     return train, test
@@ -54,7 +55,7 @@ def test_process_data(input_df):
 
     Args:
         input_df (np.array): train and test dataframe
-    """    
+    """
 
     train_df, test_df = input_df
 

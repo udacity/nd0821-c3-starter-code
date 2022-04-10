@@ -1,12 +1,10 @@
-"""
-Script for modelling related functions
-
-"""
+from .data import process_data
 
 import pandas as pd
-from sklearn.metrics import fbeta_score, precision_score, recall_score
+
 from sklearn.ensemble import RandomForestClassifier as rf
-from .data import process_data
+from sklearn.metrics import fbeta_score, precision_score, recall_score
+
 
 def train_model(X_train, y_train):
     """
@@ -32,7 +30,8 @@ def train_model(X_train, y_train):
 
 def compute_model_metrics(y, preds):
     """
-    Validates the trained machine learning model using precision, recall, and F1.
+    Validates the trained machine learning model using
+        precision, recall, and F1.
 
     Inputs
     ------
@@ -78,7 +77,6 @@ def compute_metrics_by_slice(df,
                              output_path):
     """
     This function outputs the performance of the model on slices of the data
-
     args:
         - df (pd.DataFrame): Input dataframe
         - model (ml.model): Trained model binary file
@@ -89,15 +87,13 @@ def compute_metrics_by_slice(df,
         - output_path (str:) Path to output the results
     returns:
         - metrics (pd.DataFrame): Output dataframe containing metric
-
-
     """
 
     rows_list = list()
     for col in cat_columns:
         for category in df[col].unique():
             row = {}
-            tmp_df = df[df[col]==category]
+            tmp_df = df[df[col] == category]
 
             x, y, _, _ = process_data(
                 X=tmp_df,
@@ -105,8 +101,7 @@ def compute_metrics_by_slice(df,
                 label=target,
                 training=False,
                 encoder=encoder,
-                lb=lb
-            )
+                lb=lb)
 
             preds = inference(model, x)
             precision, recall, f_one = compute_model_metrics(y, preds)
@@ -119,7 +114,9 @@ def compute_metrics_by_slice(df,
 
             rows_list.append(row)
 
-    metrics = pd.DataFrame(rows_list, columns=["col", "category", "precision", "recall", "f1"])
+    metrics = pd.DataFrame(rows_list, columns=["col", "category",
+                                               "precision",
+                                               "recall", "f1"])
 
     if output_path:
         metrics.to_csv(output_path)

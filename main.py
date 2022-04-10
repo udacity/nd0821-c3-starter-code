@@ -2,7 +2,6 @@
 import pandas as pd
 import pickle as pkl
 import os
-import uvicorn
 import starter.config as config
 from starlette.status import HTTP_200_OK
 
@@ -29,8 +28,9 @@ with open(config.MODEL_PATH, 'rb') as f:
     encoder, lb, model = pkl.load(f)
 
 
-@app.get("/", status_code=HTTP_200_OK, response_model=BasicInputDataPost, summary="Teste Get.",
-             description='Testa de a api está em pé via GET.')
+@app.get("/", status_code=HTTP_200_OK,
+         response_model=BasicInputDataPost, summary="Teste Get.",
+         description='Testa de a api está em pé via GET.')
 async def hello() -> dict:
     """
         Rota para verificação, apenas um get.
@@ -38,17 +38,23 @@ async def hello() -> dict:
 
     return {'response_message': 'Hello', 'status_code': 200}
 
+
 @app.post("/model")
 async def prediction(input_data: BasicInputData):
     """
-    Example function for returning model output from POST request.
-    The function take in a single web form entry and converts it to a single
-    row of input data conforming to the constraints of the features used in the model.
+    Example function for returning model output from
+    POST request.
+    The function take in a single web form entry and
+    converts it to a single
+    row of input data conforming to the constraints of
+    the features used in the model.
     Args:
-        input_data (BasicInputData) : Instance of a BasicInputData object. Collected data from
+        input_data (BasicInputData) : Instance of a
+        BasicInputData object. Collected data from
         web form submission.
     Returns:
-        json_res (JSONResponse) : A JSON serialized response dictionary containing
+        json_res (JSONResponse) : A JSON serialized
+        response dictionary containing
         model classification of input data.
     """
     # Formatting input_data
@@ -57,7 +63,6 @@ async def prediction(input_data: BasicInputData):
     )
 
     input_df.columns = [_.replace('_', '-') for _ in input_df.columns]
-
 
     x_data, _, _, _ = process_data(
         X=input_df,

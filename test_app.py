@@ -57,7 +57,7 @@ def test_predict_status():
         'capital_loss': 0,
         'hours_per_week': 5
     }
-    response = client.post("/predict/", json=data)
+    response = client.post("/model/", json=data)
     assert response.status_code == HTTPStatus.OK
     assert response.request.method == "POST"
 
@@ -71,7 +71,7 @@ def test_predict_response():
         'capital_loss': 0,
         'hours_per_week': 5
     }
-    response = client.post("/predict/", json=data)
+    response = client.post("/model/", json=data)
     assert response.json()['label'] == 0 or response.json()['label'] == 1
     assert response.json()['prob'] >= 0 and response.json()['label'] <= 1
     assert response.json()['salary'] == ' >50k' or response.json()[
@@ -85,7 +85,7 @@ def test_missing_feature_predict():
     data = {
         "age": 0
     }
-    response = client.post("/predict/", json=data)
+    response = client.post("/model/", json=data)
     assert response.status_code == HTTPStatus.UNPROCESSABLE_ENTITY
     assert response.request.method == "POST"
     assert response.json()["detail"][0]["type"] == "value_error.missing"

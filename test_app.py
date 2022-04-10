@@ -129,7 +129,7 @@ def test_predict_response():
     # assert response.json()['prob'] >= 0 and response.json()['label'] <= 1
     # assert response.json()['salary'] == ' >50k' or response.json()[
         # 'salary'] == ' <=50k'
-    assert response.json() == {"Result": 0}
+    assert response.json() == {"Result": "0"}
 
 
 def test_missing_feature_predict():

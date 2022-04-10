@@ -8,14 +8,30 @@ from main import app
 client = TestClient(app)
 
 
-def test_hello():
+def test_hello1():
     """
     Teste Get hello route
     """
     response = client.get('/')
     # assert response.status_code == HTTPStatus.OK
     assert response.request.method == "GET"
+
+
+def test_hello2():
+    """
+    Teste Get hello route
+    """
+    response = client.get('/')
+    # assert response.status_code == HTTPStatus.OK
     assert response.json() == {'response_message': 'Hello', 'status_code': 200}
+
+
+def test_hello3():
+    """
+    Teste Get hello route
+    """
+    response = client.get('/')
+    assert response.status_code == HTTPStatus.OK
 
 
 # @pytest.mark.parametrize('test_input', [
@@ -45,7 +61,30 @@ def test_hello():
 #     assert response.json() == expected
 
 
-def test_predict_status():
+def test_predict_status1():
+    """
+    Tests POST route predict.
+    """
+    data = {"age": 55,
+            "workclass": "Private",
+            "fnlgt": 77516,
+            "education": "Masters",
+            "education-num": 13,
+            "marital-status": "Never-married",
+            "occupation": "Adm-clerical",
+            "relationship": "Not-in-family",
+            "race": "White",
+            "sex": "Female",
+            "capital-gain": 2174,
+            "capital-loss": 0,
+            "hours-per-week": 40,
+            "native-country": "United-States"
+            }
+    response = client.post("/model", json=data)
+    assert response.request.method == "POST"
+
+
+def test_predict_status2():
     """
     Tests POST route predict.
     """
@@ -66,7 +105,6 @@ def test_predict_status():
             }
     response = client.post("/model", json=data)
     assert response.status_code == HTTPStatus.OK
-    assert response.request.method == "POST"
 
 
 def test_predict_response():
@@ -83,7 +121,8 @@ def test_predict_response():
             "capital-gain": 2174,
             "capital-loss": 0,
             "hours-per-week": 40,
-            "native-country": "United-States"}
+            "native-country": "United-States"
+            }
 
     response = client.post("/model/", json=data)
     # assert response.json()['label'] == 0 or response.json()['label'] == 1

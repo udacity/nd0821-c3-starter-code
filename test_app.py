@@ -49,28 +49,42 @@ def test_predict_status():
     """
     Tests POST route predict.
     """
-    data = {
-        'age': 38,
-        'fnlgt': 15,
-        'education_num': 1,
-        'capital_gain': 0,
-        'capital_loss': 0,
-        'hours_per_week': 5
-    }
+    data = {"age": 55,
+            "workclass": "Private",
+            "fnlgt": 77516,
+            "education": "Masters",
+            "education-num": 13,
+            "marital-status": "Never-married",
+            "occupation": "Adm-clerical",
+            "relationship": "Not-in-family",
+            "race": "White",
+            "sex": "Female",
+            "capital-gain": 2174,
+            "capital-loss": 0,
+            "hours-per-week": 40,
+            "native-country": "United-States"
+            }
     response = client.post("/model/", json=data)
     assert response.status_code == HTTPStatus.OK
     assert response.request.method == "POST"
 
 
 def test_predict_response():
-    data = {
-        'age': 38,
-        'fnlgt': 15,
-        'education_num': 1,
-        'capital_gain': 0,
-        'capital_loss': 0,
-        'hours_per_week': 5
-    }
+    data = {"age": 55,
+            "workclass": "Private",
+            "fnlgt": 77516,
+            "education": "Masters",
+            "education-num": 13,
+            "marital-status": "Never-married",
+            "occupation": "Adm-clerical",
+            "relationship": "Not-in-family",
+            "race": "White",
+            "sex": "Female",
+            "capital-gain": 2174,
+            "capital-loss": 0,
+            "hours-per-week": 40,
+            "native-country": "United-States"
+            }
     response = client.post("/model/", json=data)
     assert response.json()['label'] == 0 or response.json()['label'] == 1
     assert response.json()['prob'] >= 0 and response.json()['label'] <= 1

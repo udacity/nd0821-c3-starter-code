@@ -10,3 +10,4 @@ gunicorn
 dvc
 s3fs
 boto3
+uvicorn

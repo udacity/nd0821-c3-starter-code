@@ -2,7 +2,7 @@ import pytest
 
 from fastapi.testclient import TestClient
 from http import HTTPStatus
-from main import app
+from nd0821_c3_starter_code.main import app
 
 
 client = TestClient(app)

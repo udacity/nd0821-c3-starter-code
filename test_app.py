@@ -15,7 +15,7 @@ def test_hello():
     response = client.get('/')
     # assert response.status_code == HTTPStatus.OK
     assert response.request.method == "GET"
-    assert response.json() == 'Hello'
+    assert response.json() == {'response_message': 'Hello', 'status_code': 200}
 
 
 @pytest.mark.parametrize('test_input', [

@@ -83,13 +83,14 @@ def test_predict_response():
             "capital-gain": 2174,
             "capital-loss": 0,
             "hours-per-week": 40,
-            "native-country": "United-States"
-            }
+            "native-country": "United-States"}
+
     response = client.post("/model/", json=data)
-    assert response.json()['label'] == 0 or response.json()['label'] == 1
-    assert response.json()['prob'] >= 0 and response.json()['label'] <= 1
-    assert response.json()['salary'] == ' >50k' or response.json()[
-        'salary'] == ' <=50k'
+    # assert response.json()['label'] == 0 or response.json()['label'] == 1
+    # assert response.json()['prob'] >= 0 and response.json()['label'] <= 1
+    # assert response.json()['salary'] == ' >50k' or response.json()[
+        # 'salary'] == ' <=50k'
+    assert response.json() == {"Result": 0}
 
 
 def test_missing_feature_predict():

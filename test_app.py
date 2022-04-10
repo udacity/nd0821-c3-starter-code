@@ -64,7 +64,7 @@ def test_predict_status():
             "hours-per-week": 40,
             "native-country": "United-States"
             }
-    response = client.post("/model/", json=data)
+    response = client.post("/model", json=data)
     assert response.status_code == HTTPStatus.OK
     assert response.request.method == "POST"
 

@@ -26,7 +26,7 @@ def run_sanity_check(test_dir):
 
     test_function_names = list(filter(lambda x:
                                inspect.isfunction(getattr(module, x))
-                                     and not x.startswith('__'), dir(module)))
+                                   and not x.startswith('__'), dir(module)))
 
     test_functions_for_get = list(filter(lambda x:
                                   inspect.getsource(
@@ -44,9 +44,9 @@ def run_sanity_check(test_dir):
     TEST_FOR_GET_METHOD_RESPONSE_CODE = False
     TEST_FOR_GET_METHOD_RESPONSE_BODY = False
     if not test_functions_for_get:
-        print(FAIL_COLOR+f"[{WARNING_COUNT}]")
+        print(f"[{WARNING_COUNT}]")
         WARNING_COUNT += 1
-        print(FAIL_COLOR+"No test cases were detected for the GET() method.")
+        print("No test cases were detected for the GET() method.")
         print("\nPlease make sure you have a test case for the GET method.\
               This MUST test both the status code as well as the contents\
               of the request object.\n")
@@ -62,13 +62,13 @@ def run_sanity_check(test_dir):
                 TEST_FOR_GET_METHOD_RESPONSE_BODY = True
 
         if not TEST_FOR_GET_METHOD_RESPONSE_CODE:
-            print(FAIL_COLOR+f"[{WARNING_COUNT}]")
+            print(f"[{WARNING_COUNT}]")
             WARNING_COUNT += 1
             print("Your test case for GET() does not\
                   seem to be testing the response code.\n")
 
         if not TEST_FOR_GET_METHOD_RESPONSE_BODY:
-            print(FAIL_COLOR+f"[{WARNING_COUNT}]")
+            print(FAIL_COLOR + f"[{WARNING_COUNT}]")
             WARNING_COUNT += 1
             print("Your test case for GET() does not seem to be\
                   testing the CONTENTS of the response.\n")
@@ -78,9 +78,9 @@ def run_sanity_check(test_dir):
     COUNT_POST_METHOD_TEST_FOR_INFERENCE_RESULT = 0
 
     if not test_functions_for_post:
-        print(FAIL_COLOR+f"[{WARNING_COUNT}]")
+        print(FAIL_COLOR + f"[{WARNING_COUNT}]")
         WARNING_COUNT += 1
-        print(FAIL_COLOR+"No test cases were detected for the POST() method.")
+        print("No test cases were detected for the POST() method.")
         print("Please make sure you have \
               TWO test cases for the POST() method." +
               "\nOne test case for EACH of the possible inferences \

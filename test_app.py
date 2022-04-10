@@ -18,31 +18,31 @@ def test_hello():
     assert response.json() == {'response_message': 'Hello', 'status_code': 200}
 
 
-@pytest.mark.parametrize('test_input', [
-    ('age', "Age of the person - numerical - int"),
-    ('fnlgt', 'MORE INFO NEEDED - numerical - int'),
-    ('race', 'Race of the person - nominal categorical - str')
-])
-def test_feature_info_status(test_input: str):
-    response = client.get(f'/feature_info/{test_input}')
-    assert response.status_code == HTTPStatus.OK
-    assert response.request.method == "GET"
+# @pytest.mark.parametrize('test_input', [
+#     ('age', "Age of the person - numerical - int"),
+#     ('fnlgt', 'MORE INFO NEEDED - numerical - int'),
+#     ('race', 'Race of the person - nominal categorical - str')
+# ])
+# def test_feature_info_status(test_input: str):
+#     response = client.get(f'/feature_info/{test_input}')
+#     assert response.status_code == HTTPStatus.OK
+#     assert response.request.method == "GET"
 
 
-@pytest.mark.parametrize('test_input, expected', [
-    ('age', "Age of the person - numerical - int"),
-    ('fnlgt', 'MORE INFO NEEDED - numerical - int'),
-    ('race', 'Race of the person - nominal categorical - str')
-])
-def test_feature_info_response(test_input: str, expected: str):
-    """Testing features
+# @pytest.mark.parametrize('test_input, expected', [
+#     ('age', "Age of the person - numerical - int"),
+#     ('fnlgt', 'MORE INFO NEEDED - numerical - int'),
+#     ('race', 'Race of the person - nominal categorical - str')
+# ])
+# def test_feature_info_response(test_input: str, expected: str):
+#     """Testing features
 
-    Args:
-        test_input (np.array): input test
-        expected (np.array): results expected
-    """
-    response = client.get(f'/feature_info/{test_input}')
-    assert response.json() == expected
+#     Args:
+#         test_input (np.array): input test
+#         expected (np.array): results expected
+#     """
+#     response = client.get(f'/feature_info/{test_input}')
+#     assert response.json() == expected
 
 
 def test_predict_status():

@@ -2,7 +2,7 @@ import pytest
 
 from fastapi.testclient import TestClient
 from http import HTTPStatus
-from nd0821_c3_starter_code.main import app
+from main import app
 
 
 client = TestClient(app)
@@ -18,7 +18,7 @@ def test_hello():
     assert response.json() == 'Greetings and salutations everybody'
 
 
-@pytest.mark.parametrize('test_input, expected', [
+@pytest.mark.parametrize('test_input', [
     ('age', "Age of the person - numerical - int"),
     ('fnlgt', 'MORE INFO NEEDED - numerical - int'),
     ('race', 'Race of the person - nominal categorical - str')

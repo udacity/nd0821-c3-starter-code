@@ -39,7 +39,7 @@ def test_inference(input_df):
 
     X_train, y_train, _, _ = process_data(
         X=train_df,
-        categorical_features=config.cat_features,
+        categorical_features=config.cat_feat,
         label=config.TARGET,
         training=True
     )
@@ -61,14 +61,14 @@ def test_process_data(input_df):
 
     X_train, y_train, _, _ = process_data(
         X=train_df,
-        categorical_features=config.cat_features,
+        categorical_features=config.cat_feat,
         label=config.TARGET,
         training=True
     )
 
     X_test, y_test, _, _ = process_data(
         X=test_df,
-        categorical_features=config.cat_features,
+        categorical_features=config.cat_feat,
         label=config.TARGET,
         training=True,
 
@@ -88,7 +88,7 @@ def test_compute_metrics(input_df):
 
     X_train, y_train, encoder, lb = process_data(
         X=train,
-        categorical_features=config.cat_features,
+        categorical_features=config.cat_feat,
         label=config.TARGET,
         training=True
     )

@@ -66,7 +66,7 @@ async def prediction(input_data: BasicInputData):
 
     x_data, _, _, _ = process_data(
         X=input_df,
-        categorical_features=config.cat_features,
+        categorical_features=config.cat_feat,
         label=None,
         training=False,
         encoder=encoder,

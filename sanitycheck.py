@@ -133,7 +133,7 @@ def run_sanity_check(test_dir):
         COUNT_POST_METHOD_TEST_FOR_INFERENCE_RESULT >= 2
 
     if SANITY_TEST_PASSING:
-        print(OK_COLOR+"Your test cases look good!")
+        print("Your test cases look good!")
 
     print("This is a heuristic based sanity testing.")
     print("You should still check your work.")

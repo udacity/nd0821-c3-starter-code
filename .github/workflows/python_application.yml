@@ -37,8 +37,8 @@ jobs:
         uses: aws-actions/configure-aws-credentials@v1
         with:
           aws-region: us-east-1
-          aws-access-key-id: AKIAS7OPPXTPPIFHR5FV
-          aws-secret-access-key: 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
+          aws-access-key-id: AKIAS7OPPXTPOMH3QN73
+          aws-secret-access-key: 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
           
           
       - name: Setup dvc

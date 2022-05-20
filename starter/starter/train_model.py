@@ -4,10 +4,10 @@ import pandas as pd
 import pickle
 import logging
 from sklearn import linear_model
-from ml.model import train_model, inference, compute_model_metrics, slice_performance
+from starter.ml.model import train_model, inference, compute_model_metrics, slice_performance
 from sklearn.metrics import mean_absolute_error
 from sklearn.model_selection import train_test_split
-from ml.data import process_data
+from starter.ml.data import process_data
 
 
 # Add the necessary imports for the starter code.

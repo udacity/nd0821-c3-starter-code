@@ -1,7 +1,7 @@
 from sklearn.metrics import fbeta_score, precision_score, recall_score
 from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor
 from sklearn.linear_model import LogisticRegression
-from ml.data import process_data
+from starter.ml.data import process_data
 import csv
 import logging
 

@@ -43,11 +43,7 @@ jobs:
           
       - name: Setup dvc
         uses: iterative/setup-dvc@v1
-      - name: Pull data from DVC
-        run: |
-         dvc remote add -df s3-bucket s3://my3rdproject
-         dvc pull
-        
+
       - name: Pull data
         run: |
           python -m pip install --upgrade pip

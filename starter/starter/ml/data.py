@@ -1,9 +1,27 @@
 import numpy as np
-from sklearn.preprocessing import LabelBinarizer, OneHotEncoder
+import pandas as pd
+import os
 
+from sklearn.preprocessing import LabelBinarizer, OneHotEncoder
+from sklearn.preprocessing import StandardScaler
+from sklearn.compose import ColumnTransformer
+
+
+def load_data(root_path, file_name):
+    df = pd.read_csv(os.path.join(root_path, "data", file_name))
+
+    return df
+
+def save_data(df, root_path, file_name):
+    df.to_csv(os.path.join(root_path, "data", file_name), index=False)
 
 def process_data(
-    X, categorical_features=[], label=None, training=True, encoder=None, lb=None
+    data,
+    categorical_features,
+    label=None,
+    training=True,
+    preprocessor=None,
+    label_binarizer=None,
 ):
     """ Process the data used in the machine learning pipeline.
 
@@ -45,26 +63,52 @@ def process_data(
     """
 
     if label is not None:
-        y = X[label]
-        X = X.drop([label], axis=1)
+        y = data[label]
+        X = data.drop([label], axis=1)
     else:
         y = np.array([])
+        X = data
 
-    X_categorical = X[categorical_features].values
-    X_continuous = X.drop(*[categorical_features], axis=1)
+    continuous_features = list(set(X.columns) - set(categorical_features))
 
     if training is True:
-        encoder = OneHotEncoder(sparse=False, handle_unknown="ignore")
-        lb = LabelBinarizer()
-        X_categorical = encoder.fit_transform(X_categorical)
-        y = lb.fit_transform(y.values).ravel()
+        preprocessor = ColumnTransformer(
+            transformers=[
+                ("continuous_feats", StandardScaler(), continuous_features),
+                ("categorical_feats", OneHotEncoder(sparse=False, handle_unknown="ignore"), categorical_features),
+            ],
+            remainder="drop",  # This drops the columns that we do not transform
+        )
+
+        label_binarizer = LabelBinarizer()
+
+        X = preprocessor.fit_transform(X)
+        y = label_binarizer.fit_transform(y.values).ravel()
     else:
-        X_categorical = encoder.transform(X_categorical)
-        try:
-            y = lb.transform(y.values).ravel()
+        X = preprocessor.transform(X)
+
         # Catch the case where y is None because we're doing inference.
+        try:
+            y = label_binarizer.transform(y.values).ravel()
         except AttributeError:
             pass
 
-    X = np.concatenate([X_continuous, X_categorical], axis=1)
-    return X, y, encoder, lb
+    return X, y, preprocessor, label_binarizer
+
+
+if __name__ == "__main__":
+    root_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "../..")
+    df = load_data(root_path, "clean_census.csv")
+
+    cat_features = [
+        "workclass",
+        "education",
+        "marital-status",
+        "occupation",
+        "relationship",
+        "race",
+        "sex",
+        "native-country",
+    ]
+
+    X, y, preprocessor, label_binarizer = process_data(df, cat_features, 'salary')

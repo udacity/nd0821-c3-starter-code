@@ -1,13 +1,24 @@
 from sklearn.metrics import fbeta_score, precision_score, recall_score
-from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor
 from sklearn.linear_model import LogisticRegression
-from starter.ml.data import process_data
-import csv
+import pickle
 import logging
+import pandas as pd
+import numpy as np 
+import os
+
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)-15s %(message)s")
 logger = logging.getLogger()
 
+def load_model(root_path, model_name):
+    with open(os.path.join(root_path, "model", model_name), "rb") as f:
+        model = pickle.load(f)
+
+    return model
+
+def save_model(model, root_path, model_name):
+    with open(os.path.join(root_path, "model", model_name), "wb") as f:
+        pickle.dump(model, f)
 
 # Optional: implement hyperparameter tuning.
 def train_model(X_train, y_train):
@@ -25,15 +36,10 @@ def train_model(X_train, y_train):
     model
         Trained machine learning model.
     """
-    rf_pipe = RandomForestClassifier()
-    logger.info("Fitting")
-    rf_pipe.fit(X_train,y_train)
+    model = LogisticRegression(max_iter=300, random_state=42)
+    model.fit(X_train, y_train)
 
-    lr_pipe = LogisticRegression()
-    lr_pipe.fit(X_train, y_train)
-
-    return rf_pipe, lr_pipe
-    
+    return model
 
 def compute_model_metrics(y, preds):
     """
@@ -74,48 +80,48 @@ def inference(model, X):
     preds = model.predict(X)
     return preds
 
-def slice_performance(model, data, encoder, lb, save_path):
-    """ Outputs the performance of the model on slices of the data into a csv file.
-    Inputs
-    ------
-    model : ???
-        Trained machine learning model.
-    data : pd.Dataframe
-        Data to be sliced and used for model prediction.
-    encoder : sklearn.preprocessing._encoders.OneHotEncoder
-        Trained sklearn OneHotEncoder, only used if training=False.
-    lb : sklearn.preprocessing._label.LabelBinarizer
-        Trained sklearn LabelBinarizer, only used if training=False.
-    save_path : String 
-        Absolute path and filename to save the output )
+def compute_slice_metrics(features,
+                          labels,
+                          predictions,
+                          cat_features):
+
     """
-    cat_features = [
-        "workclass",
-        "education",
-        "marital_status",
-        "occupation",
-        "relationship",
-        "race",
-        "sex",
-        "native_country",
-    ]
-    slice_performance = []
+    Computes the performance on categorical slices of the data
+    Inputs:
+        features: pandas DataFrame
+            Contains the features on which a machine learning model was trained on
+        labels: numpy array
+            Ground-truth labels of each sample in features
+        predictions: numpy array
+            Predictions of each sample in features achieved by the model
+        cat_features: list
+            Categorical features on which we want to analyze the model performance
+    Returns:
+        slice_performance: pandas DataFrame
+            Contains precision, recall, TNR, and NPV of the groups in cat_features
+    """
 
-    for category in cat_features:
-        unique_values = data[category].unique()
-        for value in unique_values:
-            slice_data = data[data[category] == value]
-            X_slice, y_slice, encoder, lb = process_data(
-                slice_data, categorical_features=cat_features, label="salary", training=False, encoder=encoder, lb=lb
-            )
-            y_slice_pred = inference(model, X_slice)
-            precision, recall, fbeta = compute_model_metrics(y_slice, y_slice_pred)
-            slice_performance.append((category, value, precision, recall, fbeta))
-            slice_performance.append('\n')
+    # Convert labels and predictions into pandas Series
+    labels = pd.Series(np.squeeze(labels))
+    predictions = pd.Series(np.squeeze(predictions))
 
-    with open(save_path, 'w', newline='') as file:
-        wr = csv.writer(file, quoting=csv.QUOTE_ALL)
-        wr.writerow(slice_performance)
+    # Construct the full dataframe containing labels and predictions
+    df = pd.concat([features, labels, predictions], axis=1)
+    df.columns = list(features.columns) + ['labels', 'predictions']
 
+    # Calculate TP, FP, TN, and FN
+    TP = df[df['labels'] == 1].groupby(cat_features)['predictions'].sum()
+    FP = df[df['labels'] == 1].groupby(cat_features)['predictions'].apply(lambda x: x.count() - x.sum())
+    TN = df[df['labels'] == 0].groupby(cat_features)['predictions'].apply(lambda x: x.count() - x.sum())
+    FN = df[df['labels'] == 0].groupby(cat_features)['predictions'].sum()
 
-    return 0
+    precision = (TP / (TP + FP))
+    recall = (TP / (TP + FN))
+    TNR = (TN / (TN + FP))  # True Negative Rate
+    NPV = (TN / (TN + FN))  # Negative Predictive Value
+    f_score = 2*((precision * recall) / (precision + recall))
+
+    slice_performance = pd.concat([precision, recall, TNR, NPV, f_score], axis=1)
+    slice_performance.columns = ['Precision', 'Recall', 'TNR', 'NPV', 'F-Score']
+
+    return slice_performance

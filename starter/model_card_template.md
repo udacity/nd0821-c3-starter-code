@@ -29,9 +29,18 @@ The model should be used to predict the salary based on a set of attributes. The
 Data can be found here Census Income data set and locally in /data/census.csv
 
 ## Evaluation Data
-
+The Census data was split into training and test with test_size = 20%
 ## Metrics
-_Please include the metrics used and your model's performance on those metrics._
+Metrics used are:
+
+Precision: 0.72
+Recall: 0.60
+F-Score: 0.66
+For slice performances two additional metrics were added:
+
+TNR: True Negative Rate
+NPR: Negative Predictive Value
+The slice performances are included in slice_output.txt
 
 ## Ethical Considerations
 The data used to train the model might contain biases. Some attributes that are collected from conducting a survey, such as hours per week, might contain biases based on influence from friends, co-workers or expectations. Not all countries are represented in the native country attribute and the data set is probably not large enough to assume that the model predicts well with native country attribute.

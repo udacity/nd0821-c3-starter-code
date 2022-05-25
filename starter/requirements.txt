@@ -8,3 +8,4 @@ fastapi==0.63.0
 uvicorn
 gunicorn
 sklearn
+flake8

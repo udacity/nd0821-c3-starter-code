@@ -7,12 +7,7 @@ from starter.starter.ml.model import compute_model_metrics, compute_slice_metric
 import pandas as pd
 
 
-def test_load_model(root_path):
-    model = load_model(root_path, "model.pkl")
 
-    assert isinstance(model, LogisticRegression)
-    assert model.max_iter == 300
-    assert model.n_features_in_ == 108
 
 
 def test_train_model(data):

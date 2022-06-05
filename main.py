@@ -6,8 +6,8 @@ import yaml
 from fastapi import FastAPI
 from pydantic import BaseModel, Field
 
-from starter.ml.model import load_model, inference
-from starter.ml.data import process_data
+from starter.starter.ml.model import load_model, inference
+from starter.starter.ml.data import process_data
 
 if "DYNO" in os.environ and os.path.isdir(".dvc"):
     os.system("dvc config core.no_scm true")
@@ -47,7 +47,7 @@ app = FastAPI()
 
 @app.get("/")
 async def welcome_message():
-    return {'Greetings From Aakash': 'Welcome To Udacity Project on Model Deployment'}
+    return {'Greetings': 'Welcome To Udacity Project on Model Deployment'}
 
 
 @app.post("/model_inference")

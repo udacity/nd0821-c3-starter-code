@@ -6,8 +6,8 @@ import yaml
 from fastapi import FastAPI
 from pydantic import BaseModel, Field
 
-from starter.starter.ml.model import load_model, inference
-from starter.starter.ml.data import process_data
+from starter.ml.model import load_model, inference
+from starter.ml.data import process_data
 
 if "DYNO" in os.environ and os.path.isdir(".dvc"):
     os.system("dvc config core.no_scm true")

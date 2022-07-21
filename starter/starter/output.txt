@@ -1,0 +1,16 @@
+score for Bachelors: precision: 0.8269986893840104 recall: 0.28410625844214316 fbeta: 0.4229222520107238 
+score for HS-grad: precision: 0.5534883720930233 recall: 0.21313432835820895 fbeta: 0.30775862068965515 
+score for 11th: precision: 0.5333333333333333 recall: 0.4 fbeta: 0.4571428571428572 
+score for Masters: precision: 0.8757225433526011 recall: 0.3159541188738269 fbeta: 0.46436781609195404 
+score for 9th: precision: 0.3 recall: 0.1111111111111111 fbeta: 0.16216216216216217 
+score for Some-college: precision: 0.6079207920792079 recall: 0.2213410237923576 fbeta: 0.3245243128964059 
+score for Assoc-acdm: precision: 0.7263157894736842 recall: 0.26037735849056604 fbeta: 0.38333333333333336 
+score for Assoc-voc: precision: 0.6541353383458647 recall: 0.2409972299168975 fbeta: 0.3522267206477733 
+score for 7th-8th: precision: 0.28 recall: 0.175 fbeta: 0.2153846153846154 
+score for Doctorate: precision: 0.9595959595959596 recall: 0.3104575163398693 fbeta: 0.46913580246913583 
+score for Prof-school: precision: 0.9617486338797814 recall: 0.4160756501182033 fbeta: 0.5808580858085809 
+score for 5th-6th: precision: 0.26666666666666666 recall: 0.25 fbeta: 0.2580645161290323 
+score for 10th: precision: 0.42857142857142855 recall: 0.24193548387096775 fbeta: 0.3092783505154639 
+score for 1st-4th: precision: 0.25 recall: 0.16666666666666666 fbeta: 0.2 
+score for Preschool: precision: 0.0 recall: 1.0 fbeta: 0.0 
+score for 12th: precision: 0.5 recall: 0.21212121212121213 fbeta: 0.2978723404255319 

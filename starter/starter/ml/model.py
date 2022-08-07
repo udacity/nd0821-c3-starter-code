@@ -1,8 +1,12 @@
+import json
+import os
+import numpy as np
+from sklearn.ensemble import RandomForestRegressor
 from sklearn.metrics import fbeta_score, precision_score, recall_score
 
 
 # Optional: implement hyperparameter tuning.
-def train_model(X_train, y_train):
+def train_model(X_train: np.array, y_train: np.array):
     """
     Trains a machine learning model and returns it.
 
@@ -17,8 +21,13 @@ def train_model(X_train, y_train):
     model
         Trained machine learning model.
     """
+    curr_path = os.path.dirname(os.path.realpath(__file__))
+    with open(os.path.join(curr_path, "model_config.json")) as f:
+        model_config = json.load(f)
 
-    pass
+    rf_model = RandomForestRegressor(X_train, y_train, **model_config)
+
+    return rf_model
 
 
 def compute_model_metrics(y, preds):
@@ -57,4 +66,6 @@ def inference(model, X):
     preds : np.array
         Predictions from the model.
     """
-    pass
+    y_pred = model.predict(X)
+
+    return y_pred

@@ -7,7 +7,7 @@ from yaml import load, Loader
 import pandas as pd
 import numpy as np
 
-paths_dict = load(open("../starter/path.yml"), Loader=Loader)
+paths_dict = load(open("starter/path.yml"), Loader=Loader)
 DATA_PATH = paths_dict["DATA_PATH"]
 
 

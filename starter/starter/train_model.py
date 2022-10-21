@@ -10,6 +10,7 @@ from yaml import load, Loader
 from typing import Tuple
 import os
 
+
 def train_eval_model(model_name: str) -> Tuple[float, float, float]:
     """ Train and save ML model create to predict the salary of a person based on their demographic features.
     Inputs
@@ -21,7 +22,7 @@ def train_eval_model(model_name: str) -> Tuple[float, float, float]:
     precision: float
     recall: float
     fbeta: float
-    """    
+    """
     # Load the path file containing the paths to the data and model.
     paths_dict = load(open("path.yml"), Loader=Loader)
     MODEL_PATH = paths_dict["MODEL_PATH"]
@@ -50,8 +51,7 @@ def train_eval_model(model_name: str) -> Tuple[float, float, float]:
 
     # Proces the test data with the process_data function.
     X_test, y_test, _, _ = process_data(
-        test, categorical_features=cat_features, label="salary", training=False, encoder=encoder, lb=lb
-    )
+        test, categorical_features=cat_features, label="salary", training=False, encoder=encoder, lb=lb)
 
     # Train and save a model.
     print("Training model...")

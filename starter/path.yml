@@ -1,0 +1,3 @@
+DATA_PATH: "data/census.csv"
+MODEL_PATH: "model"
+ENCODER_PATH: "model/encoder.pkl"

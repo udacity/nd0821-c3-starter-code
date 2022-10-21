@@ -1,5 +1,22 @@
 import numpy as np
 from sklearn.preprocessing import LabelBinarizer, OneHotEncoder
+import pandas as pd
+
+def import_data(path: str) -> pd.DataFrame:
+    """ Import the data from the path.
+
+    Inputs
+    ------
+    path : str
+        Path to the data.
+
+    Returns
+    -------
+    data : pd.DataFrame
+        Dataframe containing the data.
+    """
+    data = pd.read_csv(path)
+    return data
 
 
 def process_data(
@@ -43,7 +60,7 @@ def process_data(
         Trained LabelBinarizer if training is True, otherwise returns the binarizer
         passed in.
     """
-
+    X.columns = X.columns.str.strip()
     if label is not None:
         y = X[label]
         X = X.drop([label], axis=1)
@@ -68,3 +85,4 @@ def process_data(
 
     X = np.concatenate([X_continuous, X_categorical], axis=1)
     return X, y, encoder, lb
+

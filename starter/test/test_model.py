@@ -1,6 +1,6 @@
 from typing import Any
 from pytest import fixture
-from starter.ml.data import process_data, import_data
+from starter.ml.data import import_data
 from starter.ml.model import train_model, compute_model_metrics, inference
 from sklearn.datasets import make_classification
 from yaml import load, Loader

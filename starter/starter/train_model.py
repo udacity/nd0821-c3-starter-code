@@ -1,6 +1,5 @@
 """Script to train machine learning model."""
 
-from pyexpat import model
 from sklearn.model_selection import train_test_split
 from starter.ml.data import process_data, import_data
 from starter.ml.model import train_model, compute_model_metrics, inference

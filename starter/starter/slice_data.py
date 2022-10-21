@@ -1,5 +1,4 @@
 """This module include fuction to compute model metrics on data categorical feature held values"""
-from typing import Any
 from aequitas.group import Group
 import pandas as pd
 import numpy as np

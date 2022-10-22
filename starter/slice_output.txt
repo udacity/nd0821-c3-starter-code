@@ -1,0 +1,17 @@
+Model performance by the feature: education
+Value:  10th 	 Recall: 0.17 	 Precision: 1.0 	 F1_score: 0.29
+Value:  11th 	 Recall: 0.33 	 Precision: 0.75 	 F1_score: 0.46
+Value:  12th 	 Recall: 0.4 	 Precision: 0.67 	 F1_score: 0.5
+Value:  1st-4th 	 Recall: 0.0 	 Precision: nan 	 F1_score: nan
+Value:  5th-6th 	 Recall: 0.5 	 Precision: 1.0 	 F1_score: 0.67
+Value:  7th-8th 	 Recall: 0.43 	 Precision: 0.6 	 F1_score: 0.5
+Value:  9th 	 Recall: 0.14 	 Precision: 1.0 	 F1_score: 0.25
+Value:  Assoc-acdm 	 Recall: 0.57 	 Precision: 0.7 	 F1_score: 0.63
+Value:  Assoc-voc 	 Recall: 0.51 	 Precision: 0.71 	 F1_score: 0.59
+Value:  Bachelors 	 Recall: 0.74 	 Precision: 0.72 	 F1_score: 0.73
+Value:  Doctorate 	 Recall: 0.91 	 Precision: 0.78 	 F1_score: 0.84
+Value:  HS-grad 	 Recall: 0.36 	 Precision: 0.62 	 F1_score: 0.46
+Value:  Masters 	 Recall: 0.8 	 Precision: 0.84 	 F1_score: 0.82
+Value:  Preschool 	 Recall: nan 	 Precision: 0.0 	 F1_score: nan
+Value:  Prof-school 	 Recall: 0.89 	 Precision: 0.9 	 F1_score: 0.89
+Value:  Some-college 	 Recall: 0.48 	 Precision: 0.71 	 F1_score: 0.57

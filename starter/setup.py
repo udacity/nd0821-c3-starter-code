@@ -1,8 +1,8 @@
 import setuptools
 
 setuptools.setup(
-    name="starter",
+    name="ML Classifier Project",
     version="0.0.0",
-    description="Starter code.",
-    author="Student",
+    description="CI/CD Project for ML Classifier",
+    author="ZaidGhazal",
 )

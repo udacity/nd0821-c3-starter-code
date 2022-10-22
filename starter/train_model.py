@@ -23,7 +23,7 @@ def train_eval_model(model_name: str) -> Tuple[float, float, float]:
     fbeta: float
     """
     # Load the path file containing the paths to the data and model.
-    paths_dict = load(open("starter/path.yml"), Loader=Loader)
+    paths_dict = load(open("path.yml"), Loader=Loader)
     MODEL_PATH = paths_dict["MODEL_PATH"]
     DATA_PATH = paths_dict["DATA_PATH"]
     ENCODER_PATH = paths_dict["ENCODER_PATH"]

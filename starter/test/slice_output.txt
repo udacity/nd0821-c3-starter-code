@@ -1,4 +1,0 @@
-Model performance by the feature values: cat
-Value: a 	 Recall: 0.93 	 Precision: 1.0 	 F1_score: 0.96
-Value: b 	 Recall: 0.85 	 Precision: 1.0 	 F1_score: 0.92
-Value: c 	 Recall: 0.89 	 Precision: 0.89 	 F1_score: 0.89

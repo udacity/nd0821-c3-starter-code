@@ -1,3 +1,3 @@
-DATA_PATH: "starter/data/census.csv"
-MODEL_PATH: "starter/model"
-ENCODER_PATH: "starter/model/encoder.pkl"
+DATA_PATH: "data/census.csv"
+MODEL_PATH: "model"
+ENCODER_PATH: "model/encoder.pkl"

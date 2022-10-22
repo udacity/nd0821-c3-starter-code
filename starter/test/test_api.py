@@ -2,13 +2,16 @@
 
 import requests
 from pytest import fixture
+from main import app
+from fastapi.testclient import TestClient
 
+client = TestClient(app)
 
 @fixture(scope='session')
 def metrics():
     """Test the inference path"""
-    response = requests.post(
-        "http://localhost:8000/model_inference",
+    response = client.post(
+        "/model_inference",
         json={
             "model_name": "model_1"})
     assert response.status_code == 200
@@ -17,7 +20,7 @@ def metrics():
 
 def test_read_root():
     """Test the root path"""
-    response = requests.get("http://localhost:8000/")
+    response = client.get("/")
     assert response.status_code == 200
     assert response.json() == {"msg": "Welcome to the API"}
 

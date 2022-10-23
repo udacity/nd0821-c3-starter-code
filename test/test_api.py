@@ -1,46 +1,80 @@
 """This module includes API testing functions"""
 
-import requests
-from pytest import fixture
 from main import app
 from fastapi.testclient import TestClient
-
-client = TestClient(app)
-
-
-@fixture(scope='session')
-def metrics():
-    """Test the inference path"""
-    response = client.post(
-        "/model_inference",
-        json={
-            "model_name": "model_1"})
-    assert response.status_code == 200
-
-    return response.json()["precision"], response.json()[
-        "recall"], response.json()["fbeta"]
+import pytest
 
 
-def test_read_root():
-    """Test the root path"""
-    response = client.get("/")
-    assert response.status_code == 200
-    assert response.json() == {"msg": "Welcome to the API"}
+@pytest.fixture
+def client():
+    """
+    Get dataset
+    """
+    api_client = TestClient(app)
+    return api_client
 
 
-def test_inference_precision(metrics):
-    """Test the inference path"""
-
-    assert isinstance(metrics[0], float)
-
-
-def test_inference_recall(metrics):
-    """Test the inference path"""
-
-    assert isinstance(metrics[1], float)
+def test_get(client):
+    """Test that the API is up and running (root)"""
+    r = client.get("/")
+    assert r.status_code == 200
+    assert r.json() == {"message": "Greetings to our API!"}
 
 
-def test_inference_fbeta(metrics):
-    """Test the inference path"""
+def test_get_malformed(client):
+    """Test that the API returns not successful (root)"""
+    r = client.get("/wrong_url")
+    assert r.status_code != 200
 
-    assert isinstance(metrics[2], float)
+
+def test_post_above(client):
+    """Test post request with data resulting in prediction above 50K"""
+    r = client.post("/", json={
+        "age": 32,
+        "workclass": "Private",
+        "education": "Some-college",
+        "maritalStatus": "Married-civ-spouse",
+        "occupation": "Exec-managerial",
+        "relationship": "Husband",
+        "race": "White",
+        "sex": "Male",
+        "hoursPerWeek": 60,
+        "nativeCountry": "United-States"
+    })
+    assert r.status_code == 200
+    assert r.json() == {"prediction": ">50K"}
+
+
+def test_post_below(client):
+    """Test post request with data resulting in prediction below 50K"""
+    r = client.post("/", json={
+        "age": 19,
+        "workclass": "Private",
+        "education": "HS-grad",
+        "maritalStatus": "Never-married",
+        "occupation": "Other-service",
+        "relationship": "Own-child",
+        "race": "Black",
+        "sex": "Male",
+        "hoursPerWeek": 40,
+        "nativeCountry": "United-States"
+    })
+    assert r.status_code == 200
+    assert r.json() == {"prediction": "<=50K"}
+
+
+def test_post_malformed(client):
+    """Test post request with malformed data"""
+    r = client.post("/", json={
+        "age": 32,
+        "workclass": "Private",
+        "education": "Some-college",
+        "maritalStatus": "ERROR",
+        "occupation": "Exec-managerial",
+        "relationship": "Husband",
+        "race": "Black",
+        "sex": "Male",
+        "hoursPerWeek": 60,
+        "nativeCountry": "United-States"
+    })
+    assert r.status_code == 422

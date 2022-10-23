@@ -1,3 +1,4 @@
 DATA_PATH: "data/census.csv"
-MODEL_PATH: "model"
+MODEL_PATH: "model/model.pkl"
 ENCODER_PATH: "model/encoder.pkl"
+LB_PATH: "model/lb.pkl"

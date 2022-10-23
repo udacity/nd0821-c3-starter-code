@@ -1,7 +1,7 @@
 from sklearn.metrics import fbeta_score, precision_score, recall_score
-from sklearn.ensemble import GradientBoostingClassifier
 from sklearn.model_selection import GridSearchCV
 from sklearn.linear_model import LogisticRegression
+
 
 def train_model(X_train, y_train):
     """
@@ -24,7 +24,7 @@ def train_model(X_train, y_train):
         "C": [0.001, 0.01, 0.1, 1, 10, 100, 1000],
         "penalty": ["l1", "l2"]
     }
-   
+
     CV_cls = GridSearchCV(estimator=lr, param_grid=param_grid, cv=5)
     CV_cls.fit(X_train, y_train)
 

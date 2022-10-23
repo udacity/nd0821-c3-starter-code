@@ -116,7 +116,7 @@ async def inference_model(user_data: User):
         df_temp,
         categorical_features=cat_features,
         encoder=encoder, lb=lb, training=False)
-        
+
     pred = inference(model, X)
     y = lb.inverse_transform(pred)[0]
     return {"prediction": y}

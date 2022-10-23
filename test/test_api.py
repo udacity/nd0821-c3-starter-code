@@ -33,7 +33,7 @@ def test_post_above(client):
         "age": 60,
         "workclass": "Private",
         "education": "Bachelors",
-        "maritalStatus":  "Separated",
+        "maritalStatus": "Separated",
         "occupation": "Sales",
         "relationship": "Own-child",
         "race": "Black",
@@ -56,7 +56,7 @@ def test_post_below(client):
         "relationship": "Own-child",
         "race": "White",
         "sex": "Male",
-        "hoursPerWeek": 40,
+        "hoursPerWeek": 20,
         "nativeCountry": "United-States"
     })
     assert r.status_code == 200

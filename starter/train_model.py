@@ -58,7 +58,6 @@ def train_ml_model():
     print("Training model...")
     model = train_model(X_train, y_train)
 
-
     with open(MODEL_PATH, "wb") as f:
         dump(model, f)
 
@@ -75,4 +74,5 @@ def train_ml_model():
     # Compute the model metrics.
     preds = model.predict(X_test)
     precision, recall, fbeta = compute_model_metrics(y_test, preds)
-    print(f"Model Performance Metrics: Precision: {precision}, Recall: {recall}, F1: {fbeta}")
+    print(
+        f"Model Performance Metrics: Precision: {precision}, Recall: {recall}, F1: {fbeta}")

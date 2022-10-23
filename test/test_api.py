@@ -30,19 +30,19 @@ def test_get_malformed(client):
 def test_post_above(client):
     """Test post request with data resulting in prediction above 50K"""
     r = client.post("/", json={
-        "age": 32,
+        "age": 60,
         "workclass": "Private",
-        "education": "Some-college",
-        "maritalStatus": "Married-civ-spouse",
-        "occupation": "Exec-managerial",
-        "relationship": "Husband",
-        "race": "White",
-        "sex": "Male",
-        "hoursPerWeek": 60,
+        "education": "Bachelors",
+        "maritalStatus":  "Separated",
+        "occupation": "Sales",
+        "relationship": "Own-child",
+        "race": "Black",
+        "sex": "Female",
+        "hoursPerWeek": 40,
         "nativeCountry": "United-States"
     })
     assert r.status_code == 200
-    assert r.json() == {"prediction": ">50K"}
+    assert r.json() == {"prediction": " >50K"}
 
 
 def test_post_below(client):
@@ -50,17 +50,17 @@ def test_post_below(client):
     r = client.post("/", json={
         "age": 19,
         "workclass": "Private",
-        "education": "HS-grad",
+        "education": "Doctorate",
         "maritalStatus": "Never-married",
-        "occupation": "Other-service",
+        "occupation": "Armed-Forces",
         "relationship": "Own-child",
-        "race": "Black",
+        "race": "White",
         "sex": "Male",
         "hoursPerWeek": 40,
         "nativeCountry": "United-States"
     })
     assert r.status_code == 200
-    assert r.json() == {"prediction": "<=50K"}
+    assert r.json() == {"prediction": " <=50K"}
 
 
 def test_post_malformed(client):

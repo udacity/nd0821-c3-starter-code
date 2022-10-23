@@ -1,7 +1,7 @@
 from sklearn.metrics import fbeta_score, precision_score, recall_score
-from sklearn.ensemble import RandomForestClassifier
+from sklearn.ensemble import GradientBoostingClassifier
 from sklearn.model_selection import GridSearchCV
-
+from sklearn.linear_model import LogisticRegression
 
 def train_model(X_train, y_train):
     """
@@ -19,17 +19,16 @@ def train_model(X_train, y_train):
         Trained machine learning model.
     """
 
-    rfc = RandomForestClassifier(n_jobs=-1, oob_score=True)
-
+    lr = LogisticRegression(solver='liblinear', random_state=0)
     param_grid = {
-        'n_estimators': [50],
-        'max_depth': [4, 7]
+        "C": [0.001, 0.01, 0.1, 1, 10, 100, 1000],
+        "penalty": ["l1", "l2"]
     }
+   
+    CV_cls = GridSearchCV(estimator=lr, param_grid=param_grid, cv=5)
+    CV_cls.fit(X_train, y_train)
 
-    CV_rfc = GridSearchCV(estimator=rfc, param_grid=param_grid, cv=5)
-    CV_rfc.fit(X_train, y_train)
-
-    return CV_rfc.best_estimator_
+    return CV_cls.best_estimator_
 
 
 def compute_model_metrics(y, preds):

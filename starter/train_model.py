@@ -2,7 +2,7 @@
 
 from sklearn.model_selection import train_test_split
 from starter.ml.data import process_data, import_data
-from starter.ml.model import train_model
+from starter.ml.model import train_model, compute_model_metrics
 from pickle import dump
 from yaml import load, Loader
 
@@ -18,6 +18,20 @@ def train_ml_model():
 
     # load in the data.
     data = import_data(DATA_PATH)
+    desired_cols = [
+        "age",
+        "workclass",
+        "education",
+        "marital-status",
+        "occupation",
+        "relationship",
+        "race",
+        "sex",
+        "hours-per-week",
+        "native-country",
+        "salary"]
+    data.columns = data.columns.str.strip()
+    data = data[desired_cols]
 
     train, test = train_test_split(data, test_size=0.20)
 
@@ -44,6 +58,7 @@ def train_ml_model():
     print("Training model...")
     model = train_model(X_train, y_train)
 
+
     with open(MODEL_PATH, "wb") as f:
         dump(model, f)
 
@@ -57,12 +72,7 @@ def train_ml_model():
 
     print("SUCCESS: Model trained and saved.")
 
-    # print("Evaluating model...")
-    # # Compute the model metrics by categorical value: Education feature.
-    # preds = inference(model, X_test)
-    # slice_data(preds, y_test, test, "education")
-
-    # # Compute the model metrics.
-    # precision, recall, fbeta = compute_model_metrics(preds, y_test)
-
-    # return precision, recall, fbeta
+    # Compute the model metrics.
+    preds = model.predict(X_test)
+    precision, recall, fbeta = compute_model_metrics(y_test, preds)
+    print(f"Model Performance Metrics: Precision: {precision}, Recall: {recall}, F1: {fbeta}")

@@ -72,9 +72,9 @@ async def inference_model(user_data: User):
         print("No Model Found. Training a new model.")
         train_ml_model()
 
-    model = load("MODEL_PATH")
-    encoder = load("ENCODER_PATH")
-    lb = load("LB_PATH")
+    model = load(open(MODEL_PATH, "rb"))
+    encoder = load(open(ENCODER_PATH, "rb"))
+    lb = load(open(LB_PATH, "rb"))
 
     array = np.array([[
                      user_data.age,
@@ -116,6 +116,7 @@ async def inference_model(user_data: User):
         df_temp,
         categorical_features=cat_features,
         encoder=encoder, lb=lb, training=False)
+        
     pred = inference(model, X)
     y = lb.inverse_transform(pred)[0]
     return {"prediction": y}

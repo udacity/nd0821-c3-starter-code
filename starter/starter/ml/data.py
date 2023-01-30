@@ -1,27 +1,42 @@
+import os
 import numpy as np
 import pandas as pd
 from sklearn.preprocessing import LabelBinarizer, OneHotEncoder
 
+def remove_processed_dataset(processed_dataset_name: str):
+    os.remove(os.path.join('starter', 'data', processed_dataset_name))
 
-def make_dataset(raw_dataset_path: str, dataset_path: str):
-    """Creates dataset from raw dataset ('census.csv')
+def make_dataset(raw_dataset_name: str, processed_dataset_name: str) -> pd.DataFrame:
+    """Creates processed dataset from raw dataset ('census.csv') and save it
+    to starter/data folder.
 
     Inputs
     ------
-    raw_dataset_path: str
+    raw_dataset_name: str
         relative path with name of the raw dataset ('census.csv')
 
-    dataset_path: str
+    processed_dataset_name: str
         relative path with name of the dataset
 
+    Returns
+    -------
+    dataset : pd.Dataframe
+        project processed dataset
     """
+    raw_dataset_path = os.path.join('starter', 'data', raw_dataset_name)
+    processed_dataset_path = os.path.join('starter', 'data', processed_dataset_name)
+
     df_raw = pd.read_csv(
         raw_dataset_path, sep=",", skipinitialspace=True, na_values="?"
     )
 
     # make columns compatible with FASTAPI BaseModel
     df_raw.columns = df_raw.columns.str.replace('-', '_')
-    df_raw.to_csv(dataset_path, index=False)
+
+    # save datset to processed folder
+    df_raw.to_csv(processed_dataset_path, index=False)
+
+    return df_raw
 
 
 def process_data(

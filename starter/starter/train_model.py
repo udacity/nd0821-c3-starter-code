@@ -8,12 +8,8 @@ from sklearn.model_selection import train_test_split
 from ml.data import make_dataset, process_data
 from ml.model import train_model, compute_model_metrics, inference
 
-# Add code to load in the data.
 # Fist we generate the processed dataset.csv from the raw census.csv
-make_dataset(
-    os.path.join('starter', 'data', 'census.csv'),
-    os.path.join('starter', 'data', 'dataset.csv'),
-)
+make_dataset('census.csv', 'dataset.csv')
 
 # Then, we load the processed datset
 data = pd.read_csv(os.path.join('starter', 'data', 'dataset.csv'))
@@ -59,8 +55,8 @@ with open(os.path.join('starter', 'model', 'lb_dtc.pkl'), 'wb') as file:
 # Train model
 model = train_model(X_train=X_train, y_train=y_train)
 
-print (X_test)
-       
+print(X_test)
+
 # Compute model metrics
 precision, recall, fbeta = compute_model_metrics(
     y=y_test, preds=inference(model, X=X_test)

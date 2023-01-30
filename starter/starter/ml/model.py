@@ -1,5 +1,7 @@
+import pickle
+import os
 from sklearn.metrics import fbeta_score, precision_score, recall_score
-
+from sklearn.tree import DecisionTreeClassifier
 
 # Optional: implement hyperparameter tuning.
 def train_model(X_train, y_train):
@@ -18,7 +20,14 @@ def train_model(X_train, y_train):
         Trained machine learning model.
     """
 
-    pass
+    dtc_model = DecisionTreeClassifier()
+    dtc_model.fit(X_train, y_train)
+
+    # Save model to file
+    with open(os.path.join('starter', 'model', 'model_dtc.pkl'), 'wb') as file:
+        pickle.dump(dtc_model, file)
+
+    return dtc_model
 
 
 def compute_model_metrics(y, preds):
@@ -44,7 +53,7 @@ def compute_model_metrics(y, preds):
 
 
 def inference(model, X):
-    """ Run model inferences and return the predictions.
+    """Run model inferences and return the predictions.
 
     Inputs
     ------
@@ -52,9 +61,30 @@ def inference(model, X):
         Trained machine learning model.
     X : np.array
         Data used for prediction.
+
     Returns
     -------
     preds : np.array
         Predictions from the model.
     """
-    pass
+    return model.predict(X)
+
+
+def load_model(model_name):
+    """Load a model from the model folder
+
+    Args:
+        model_name (pickle): name of the model to load
+
+    Returns:
+        model: sklearn model
+    """
+    return pickle.load(open(os.path.join('starter', 'model', model_name), 'rb'))
+
+
+def load_encoder(encoder_name):
+    return pickle.load(open(os.path.join('starter', 'model', encoder_name), 'rb'))
+
+
+def load_lb(lb_name):
+    return pickle.load(open(os.path.join('starter', 'model', lb_name), 'rb'))

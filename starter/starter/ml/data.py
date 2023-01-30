@@ -1,5 +1,24 @@
 import numpy as np
+import pandas as pd
 from sklearn.preprocessing import LabelBinarizer, OneHotEncoder
+
+
+def make_dataset(raw_dataset_path: str, processed_dataset_path: str):
+    """ Creates processed dataset from raw dataset
+
+    Inputs
+    ------
+    raw_dataset_path: str
+        relative path with name of the raw dataset
+
+    processed_dataset_path: str
+        relative path with name of the processed dataset
+
+    """
+    df_raw = pd.read_csv(raw_dataset_path, sep=',',
+                         skipinitialspace=True,
+                         na_values='?')
+    df_raw.to_csv(processed_dataset_path, index=False)
 
 
 def process_data(

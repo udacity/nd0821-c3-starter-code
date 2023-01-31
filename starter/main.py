@@ -52,4 +52,4 @@ async def predict(input_data: ModelInput):
     pred = inference(model=api_model, X=X_infer)
 
     # Run: inverse of the binarizer to get: "<=50K" or "">50K"
-    return lb.inverse_transform(pred)[0]
+    return {"Prediction": lb.inverse_transform(pred)[0]}

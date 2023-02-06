@@ -1,7 +1,7 @@
 import pickle
 import os
 from numpy import nan
-from starter.ml.data import process_data
+from ml.data import process_data
 from sklearn.metrics import fbeta_score, precision_score, recall_score
 from sklearn.tree import DecisionTreeClassifier
 

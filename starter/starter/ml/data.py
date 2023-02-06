@@ -3,8 +3,10 @@ import numpy as np
 import pandas as pd
 from sklearn.preprocessing import LabelBinarizer, OneHotEncoder
 
+
 def remove_processed_dataset(processed_dataset_name: str):
     os.remove(os.path.join('starter', 'data', processed_dataset_name))
+
 
 def make_dataset(raw_dataset_name: str, processed_dataset_name: str) -> pd.DataFrame:
     """Creates processed dataset from raw dataset ('census.csv') and save it
@@ -25,7 +27,6 @@ def make_dataset(raw_dataset_name: str, processed_dataset_name: str) -> pd.DataF
     """
     raw_dataset_path = os.path.join('starter', 'data', raw_dataset_name)
     processed_dataset_path = os.path.join('starter', 'data', processed_dataset_name)
-
     df_raw = pd.read_csv(
         raw_dataset_path, sep=",", skipinitialspace=True, na_values="?"
     )

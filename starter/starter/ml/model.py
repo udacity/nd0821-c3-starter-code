@@ -1,7 +1,10 @@
 import pickle
 import os
+from numpy import nan
+from ml.data import process_data
 from sklearn.metrics import fbeta_score, precision_score, recall_score
 from sklearn.tree import DecisionTreeClassifier
+
 
 # Optional: implement hyperparameter tuning.
 def train_model(X_train, y_train):
@@ -70,21 +73,60 @@ def inference(model, X):
     return model.predict(X)
 
 
-def load_model(model_name):
+def load_model(model_path):
     """Load a model from the model folder
 
     Args:
-        model_name (pickle): name of the model to load
+        model_path (pickle): name of the model to load
 
     Returns:
         model: sklearn model
     """
-    return pickle.load(open(os.path.join('starter', 'model', model_name), 'rb'))
+    return pickle.load(open(model_path, 'rb'))
 
 
-def load_encoder(encoder_name):
-    return pickle.load(open(os.path.join('starter', 'model', encoder_name), 'rb'))
+def load_encoder(encoder_path):
+    return pickle.load(open(encoder_path, 'rb'))
 
 
-def load_lb(lb_name):
-    return pickle.load(open(os.path.join('starter', 'model', lb_name), 'rb'))
+def load_lb(encoder_path):
+    return pickle.load(open(encoder_path, 'rb'))
+
+
+def performance_on_model_slices(test, cat_features, model, encoder, lb):
+    """ computes and performance on model slices.
+
+    Args:
+        X: X data
+        y: y data
+        model: model for inference
+        cat_features: category features
+    """
+
+
+    with open(os.path.join('starter', 'outputs', 'slice_output.txt'),
+              'w',
+              encoding="utf-8") as file:
+
+        for category in cat_features:
+            cat_values = test[category].unique()
+            file.write(f"Fixed Feature: {category}\n")
+
+            for value in cat_values:
+                # filter test_df
+                filter_df = test[test[category] == value]
+                if filter_df.shape[0] != 0:
+                    # Proces the test data with the process_data function.
+                    X_test, y_test, _, _ = process_data(
+                        filter_df,
+                        categorical_features=cat_features,
+                        label="salary",
+                        training=False,
+                        encoder=encoder,
+                        lb=lb,
+                        )
+
+                    preds = inference(model, X_test)
+                    precision, recall, fbeta = compute_model_metrics(y_test, preds)
+                    file.write(f"\t{category}={value}\t\tprecision:{round(precision,2)}\trecall{round(recall,2)}\tfbeta{round(fbeta,2)}\n")
+            print('\n')

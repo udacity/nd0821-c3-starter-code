@@ -6,7 +6,7 @@ from sklearn.model_selection import train_test_split
 
 # Add the necessary imports for the starter code.
 from ml.data import make_dataset, process_data
-from ml.model import train_model, compute_model_metrics, inference
+from ml.model import train_model, compute_model_metrics, inference, performance_on_model_slices
 
 # Fist we generate the processed dataset.csv from the raw census.csv
 make_dataset('census.csv', 'dataset.csv')
@@ -55,13 +55,17 @@ with open(os.path.join('starter', 'model', 'lb_dtc.pkl'), 'wb') as file:
 # Train model
 model = train_model(X_train=X_train, y_train=y_train)
 
-print(X_test)
-
 # Compute model metrics
 precision, recall, fbeta = compute_model_metrics(
     y=y_test, preds=inference(model, X=X_test)
 )
-
 print(f'precision: {precision}')
 print(f'recall: {recall}')
 print(f'fbeta: {fbeta}')
+
+# Computes performance on model slices
+performance_on_model_slices(test,
+                            cat_features=cat_features,
+                            model=model,
+                            encoder=encoder,
+                            lb=lb)

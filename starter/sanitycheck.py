@@ -126,10 +126,8 @@ def run_sanity_check(test_dir):
     print(WARN_COLOR+"You should still check your work against the rubric to ensure you meet the criteria.")
 
 
-
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument('test_dir',metavar='test_dir',nargs='?',default='tests',help='Name of the directory that has test files.')
     args = parser.parse_args()
     run_sanity_check(args.test_dir)
-

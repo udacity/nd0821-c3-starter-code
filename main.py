@@ -27,8 +27,7 @@ app = FastAPI()
 # Define a GET on the specified endpoint.
 @app.get("/")
 async def say_hello():
-    return {"greeting": "New Hi!"}
-
+    return {'greeting': 'Hello World!'}
 
 @app.post("/predict")
 async def predict(input_data: ModelInput):

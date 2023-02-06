@@ -12,7 +12,7 @@ from ml.model import train_model, compute_model_metrics, inference, performance_
 make_dataset('census.csv', 'dataset.csv')
 
 # Then, we load the processed datset
-data = pd.read_csv(os.path.join('starter', 'data', 'dataset.csv'))
+data = pd.read_csv(os.path.join('data', 'dataset.csv'))
 
 # Optional enhancement, use K-fold cross validation instead of a train-test
 # split.
@@ -45,11 +45,11 @@ X_test, y_test, encoder, lb = process_data(
 )
 
 # Save encoder to file
-with open(os.path.join('starter', 'model', 'encoder_dtc.pkl'), 'wb') as file:
+with open(os.path.join('model', 'encoder_dtc.pkl'), 'wb') as file:
     pickle.dump(encoder, file)
 
 # Save lb to file
-with open(os.path.join('starter', 'model', 'lb_dtc.pkl'), 'wb') as file:
+with open(os.path.join('model', 'lb_dtc.pkl'), 'wb') as file:
     pickle.dump(lb, file)
 
 # Train model

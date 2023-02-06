@@ -1,7 +1,6 @@
 import pickle
 import os
-from numpy import nan
-from ml.data import process_data
+from starter.ml.data import process_data
 from sklearn.metrics import fbeta_score, precision_score, recall_score
 from sklearn.tree import DecisionTreeClassifier
 
@@ -27,7 +26,7 @@ def train_model(X_train, y_train):
     dtc_model.fit(X_train, y_train)
 
     # Save model to file
-    with open(os.path.join('starter', 'model', 'model_dtc.pkl'), 'wb') as file:
+    with open(os.path.join('model', 'model_dtc.pkl'), 'wb') as file:
         pickle.dump(dtc_model, file)
 
     return dtc_model
@@ -104,7 +103,7 @@ def performance_on_model_slices(test, cat_features, model, encoder, lb):
     """
 
 
-    with open(os.path.join('starter', 'outputs', 'slice_output.txt'),
+    with open(os.path.join('outputs', 'slice_output.txt'),
               'w',
               encoding="utf-8") as file:
 
@@ -129,4 +128,3 @@ def performance_on_model_slices(test, cat_features, model, encoder, lb):
                     preds = inference(model, X_test)
                     precision, recall, fbeta = compute_model_metrics(y_test, preds)
                     file.write(f"\t{category}={value}\t\tprecision:{round(precision,2)}\trecall{round(recall,2)}\tfbeta{round(fbeta,2)}\n")
-            print('\n')

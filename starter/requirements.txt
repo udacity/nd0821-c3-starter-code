@@ -5,3 +5,4 @@ requests
 fastapi
 uvicorn
 gunicorn
+httpx

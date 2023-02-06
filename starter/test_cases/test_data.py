@@ -1,12 +1,11 @@
 import os
 from starter.ml.data import make_dataset
 
-
 def test_raw_data():
-    assert os.path.isfile(os.path.join('.', 'starter','data', 'census.csv'))
+    assert os.path.isfile(os.path.join('.', 'starter', 'data', 'census.csv'))
 
 def test_processed_data():
-    assert os.path.isfile(os.path.join('.', 'starter','data', 'dataset.csv'))
+    assert os.path.isfile(os.path.join('.', 'starter', 'data', 'dataset.csv'))
 
 def test_make_dataset():
     # make datset and verify files

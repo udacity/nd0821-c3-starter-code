@@ -6,7 +6,6 @@ from ml.model import train_model, compute_model_metrics, inference
 import pandas as pd
 from sklearn.metrics import accuracy_score
 from joblib import dump, load
-
 data = pd.read_csv('../data/census.csv')
 
 # Optional enhancement, use K-fold cross validation instead of a train-test split.
@@ -34,8 +33,11 @@ X_test, y_test, _, _= process_data(
 # Train and save a model.
 model = train_model(X_train, y_train)
 dump(model, "../model/model.joblib")
+dump(encoder, "../model/encoder.joblib")
+dump(lb, "../model/lb.joblib")
 
 saved_model = load("../model/model.joblib")
+
 
 y_pred_test = inference(saved_model, X_test)
 print(compute_model_metrics(y_test, y_pred_test))

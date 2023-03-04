@@ -1,10 +1,10 @@
 from fastapi import FastAPI
 from joblib import load
 from pydantic import BaseModel
-from starter.ml.model import inference
+from starter.starter.ml.model import inference
 import pandas as pd
 from typing import List
-from starter.ml.data import process_data
+from starter.starter.ml.data import process_data
 app = FastAPI()
 
 def to_hyphen(string: str) -> str:
@@ -40,9 +40,9 @@ async def post_inference(person_info: PersonInfo):
     person_info_df = pd.DataFrame([person_info_dict])
 
     # Load model and encoder, lb
-    saved_model = load("model/model.joblib")
-    encoder = load("model/encoder.joblib")
-    lb = load("model/lb.joblib")
+    saved_model = load("starter/model/model.joblib")
+    encoder = load("starter/model/encoder.joblib")
+    lb = load("starter/model/lb.joblib")
 
     # Process data using encoder, lb
     cat_features = [

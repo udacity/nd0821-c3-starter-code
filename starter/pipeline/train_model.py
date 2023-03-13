@@ -2,7 +2,7 @@
 
 from sklearn.model_selection import train_test_split
 
-# Add the necessary imports for the starter code.
+# Add the necessary imports for the pipeline code.
 
 # Add code to load in the data.
 

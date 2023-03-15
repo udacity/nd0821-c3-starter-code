@@ -1,7 +1,6 @@
 import numpy as np
 from project.pipeline.ml.model import compute_model_metrics, inference
 
-
 def test_column_names(data):
     expected_columns = [
         "workclass",

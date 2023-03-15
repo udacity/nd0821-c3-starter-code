@@ -5,6 +5,7 @@ from ml.data import process_data, import_data
 from ml.model import train_model, compute_model_metrics, inference
 import joblib
 
+
 # Add code to load in the data.
 data = import_data("../data/clean_census.csv")
 # Optional enhancement, use K-fold cross validation instead of a train-test split.

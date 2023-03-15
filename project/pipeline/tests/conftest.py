@@ -1,11 +1,8 @@
-import pandas as pd
 import pytest
 import joblib
-import numpy as np
-
 from sklearn.model_selection import train_test_split
 from project.pipeline.ml.data import process_data, import_data
-from project.pipeline.ml.model import compute_model_metrics, inference
+
 
 @pytest.fixture(scope='session')
 def data():

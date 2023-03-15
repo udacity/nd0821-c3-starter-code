@@ -1,5 +1,11 @@
 import numpy as np
+import pandas as pd
 from sklearn.preprocessing import LabelBinarizer, OneHotEncoder
+
+
+def import_data(pth):
+    df = pd.read_csv(pth)
+    return df
 
 
 def process_data(
@@ -32,6 +38,7 @@ def process_data(
 
     Returns
     -------
+
     X : np.array
         Processed data.
     y : np.array

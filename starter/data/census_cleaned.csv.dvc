@@ -1,0 +1,4 @@
+outs:
+- md5: 04c16ef8cf62e8bcd3ea02edda232327
+  size: 3995911
+  path: census_cleaned.csv

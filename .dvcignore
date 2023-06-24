@@ -1,0 +1,3 @@
+# .dvcignore files (optional) contain a list of paths for DVC to ignore,
+# which can dramatically increase its operational performance.
+# see: https://dvc.org/doc/user-guide/project-structure/dvcignore-files

@@ -1,0 +1,133 @@
+workclass
+--------------
+                 precision    recall     fbeta
+Local-gov              1.0  0.157895  0.272727
+Private            0.96129  0.150353  0.260035
+State-gov              1.0  0.131868   0.23301
+Self-emp-not-inc  0.964286  0.184932  0.310345
+Self-emp-inc           1.0  0.266667  0.421053
+Never-worked           1.0       1.0       1.0
+?                 0.857143  0.176471  0.292683
+Federal-gov            1.0  0.131579  0.232558
+Without-pay            1.0       1.0       1.0
+
+education
+--------------
+             precision    recall     fbeta
+Some-college      0.95  0.134276  0.235294
+HS-grad       0.928571  0.113703  0.202597
+Assoc-voc          1.0  0.146667  0.255814
+Bachelors          1.0  0.185446  0.312871
+7th-8th            1.0       0.0       0.0
+Assoc-acdm         1.0  0.145833  0.254545
+11th          0.666667  0.105263  0.181818
+12th               1.0  0.222222  0.363636
+Masters       0.948718  0.194737  0.323144
+1st-4th            1.0       0.0       0.0
+5th-6th            1.0       0.0       0.0
+Doctorate          1.0  0.190476      0.32
+10th               1.0       0.0       0.0
+Prof-school        1.0  0.329268  0.495413
+9th                1.0       0.0       0.0
+Preschool          1.0       1.0       1.0
+
+marital-status
+--------------
+                      precision    recall     fbeta
+Married-civ-spouse     0.989796  0.142752  0.249518
+Never-married          0.861111  0.344444  0.492063
+Widowed                     1.0     0.375  0.545455
+Divorced                   0.95  0.208791  0.342342
+Separated                   1.0      0.25       0.4
+Married-spouse-absent       1.0      0.25       0.4
+Married-AF-spouse           1.0       1.0       1.0
+
+occupation
+--------------
+                  precision    recall     fbeta
+Protective-serv       0.875  0.162791   0.27451
+Machine-op-inspct       1.0  0.019231  0.037736
+Sales                   1.0  0.158416  0.273504
+Exec-managerial    0.986111   0.18299  0.308696
+Adm-clerical            1.0  0.105263  0.190476
+Craft-repair       0.888889   0.12766  0.223256
+Other-service           1.0  0.083333  0.153846
+Transport-moving        1.0  0.098361  0.179104
+Farming-fishing         1.0  0.074074  0.137931
+Prof-specialty     0.988235  0.226415  0.368421
+?                  0.857143  0.176471  0.292683
+Tech-support            1.0       0.1  0.181818
+Handlers-cleaners  0.666667  0.133333  0.222222
+Priv-house-serv         1.0       1.0       1.0
+Armed-Forces            1.0       1.0       1.0
+
+relationship
+--------------
+               precision    recall     fbeta
+Husband         0.988095   0.13719  0.240929
+Own-child            0.5       0.3     0.375
+Not-in-family   0.979167  0.281437  0.437209
+Wife                 1.0  0.184397  0.311377
+Unmarried       0.916667  0.297297   0.44898
+Other-relative       0.5  0.142857  0.222222
+
+race
+--------------
+                   precision    recall     fbeta
+White               0.969828  0.157013   0.27027
+Asian-Pac-Islander       1.0  0.185185    0.3125
+Black                 0.9375  0.202703  0.333333
+Amer-Indian-Eskimo       1.0      0.25       0.4
+Other                    1.0  0.666667       0.8
+
+sex
+--------------
+       precision    recall     fbeta
+Male    0.971831   0.15288  0.264199
+Female  0.959184  0.215596   0.35206
+
+native-country
+--------------
+                           precision    recall     fbeta
+United-States               0.965517  0.156315  0.269069
+Taiwan                           1.0  0.333333       0.5
+Puerto-Rico                      1.0       1.0       1.0
+Vietnam                          1.0       0.5  0.666667
+Mexico                           1.0  0.166667  0.285714
+?                                1.0  0.230769     0.375
+China                            1.0       0.0       0.0
+Guatemala                        1.0       1.0       1.0
+Japan                            1.0  0.166667  0.285714
+Greece                           1.0       1.0       1.0
+South                            1.0  0.666667       0.8
+Germany                          1.0     0.125  0.222222
+Columbia                         1.0       1.0       1.0
+Dominican-Republic               1.0       1.0       1.0
+India                            1.0  0.142857      0.25
+Haiti                            1.0       0.0       0.0
+Philippines                      1.0  0.272727  0.428571
+Iran                             1.0  0.333333       0.5
+Cuba                             1.0       0.5  0.666667
+Canada                           1.0  0.181818  0.307692
+Laos                             1.0       1.0       1.0
+England                          1.0  0.333333       0.5
+Italy                            1.0  0.333333       0.5
+Thailand                         1.0       1.0       1.0
+Peru                             1.0       0.0       0.0
+El-Salvador                      1.0  0.333333       0.5
+Trinadad&Tobago                  1.0       1.0       1.0
+Jamaica                          1.0       0.0       0.0
+Ireland                          1.0       1.0       1.0
+Hong                             1.0       0.0       0.0
+Yugoslavia                       1.0       0.0       0.0
+Scotland                         1.0       0.0       0.0
+France                           1.0       0.0       0.0
+Ecuador                          1.0       1.0       1.0
+Portugal                         1.0       0.0       0.0
+Cambodia                         1.0       1.0       1.0
+Poland                           1.0  0.333333       0.5
+Outlying-US(Guam-USVI-etc)       1.0       1.0       1.0
+Nicaragua                        1.0       0.0       0.0
+Honduras                         1.0       1.0       1.0
+Hungary                          1.0       1.0       1.0
+

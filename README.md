@@ -1,3 +1,11 @@
+# Creating and Deploying a Classifier Pipeline for US Census Data
+
+This is the third project of the course <i>MLOps Engineer Nanodegree</i> by Udacity, called <i>Deploying a Scalable Pipeline in Production</i>. Its instructions are available in udacity's [repository](https://github.com/udacity/nd0821-c3-starter-code/tree/master/starter).
+
+
+... future toDo: rework of readme text ...
+
+
 Working in a command line environment is recommended for ease of use with git and dvc. If on Windows, WSL1 or 2 is recommended.
 
 # Environment Set up

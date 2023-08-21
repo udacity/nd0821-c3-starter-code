@@ -1,0 +1,56 @@
+main:
+  project_name: us_census
+
+logging:
+  version: 1
+  disable_existing_loggers: False
+
+  formatters:
+    simple:
+      format: '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+      datefmt: '%Y-%m-%d %H:%M:%S'
+
+  handlers:
+    console:
+      class: logging.StreamHandler
+      level: DEBUG
+      formatter: simple
+      stream: ext://sys.stdout
+
+    file:
+      class: logging.FileHandler
+      level: INFO
+      formatter: simple
+      filename: ../../census_app.log
+
+  loggers:
+    development:
+      level: DEBUG
+      handlers: [console]
+      propagate: no
+
+    staging:
+      level: INFO
+      handlers: [console, file]
+      propagate: no
+
+    production:
+      level: WARNING
+      handlers: [file]
+      propagate: no
+
+  root:
+    level: DEBUG
+    handlers: [console]
+
+etl:
+  orig_census: "../../data/census.csv"
+  preproc_census: "../../data/preproc_census.csv"
+
+eda:
+  orig_report_title: "US Census Profiling Report - original data"
+  orig_census_report: "./eda_census_orig_report.html"
+  preproc_report_title: "US Census Profiling Report - original data"
+  preproc_census_report: "./eda_census_preproc_report.html"
+
+model:

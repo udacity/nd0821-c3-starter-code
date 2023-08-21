@@ -2,6 +2,11 @@
 
 This is the third project of the course <i>MLOps Engineer Nanodegree</i> by Udacity, called <i>Deploying a Scalable Pipeline in Production</i>. Its instructions are available in udacity's [repository](https://github.com/udacity/nd0821-c3-starter-code/tree/master/starter).
 
+We develop a classification model on publicly available US Census Bureau data. Regarding software engineering principles, we
+create _unit tests_ to monitor the model performance on various data slices. Then, we _deploy_ your model using the FastAPI package and create API tests. The slice validation and the API tests will be incorporated into a _CI/CD framework_ using GitHub Actions.
+
+For this classification prediction, we start with the ETL (Extract, Transform, Load) pipeline including EDA (Exploratory Data Analysis) activities, followed by the ML (Machine Learning) pipeline for the investigated prediction models.
+
 
 ... future toDo: rework of readme text ...
 

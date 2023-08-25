@@ -1,3 +1,5 @@
+#!/usr/bin/env -S python3 -i
+
 """
 Testsuite for data checks
 author: I. Brinkmeier
@@ -24,13 +26,17 @@ import yaml
 #
 ###################
 
+# set logging properties
+# info see: https://realpython.com/python-logging-source-code/
+logger = logging.getLogger(__name__)
+
 # read config file
 CONFIG_FILE = '../../config.yml'
 with open(CONFIG_FILE, 'r') as f:
     try:
         config = yaml.safe_load(f.read())
     except yaml.YAMLError as exc:
-        print(f'Cannot read config file: {exc}')
+        logger.exception(f'Cannot read config file: {exc}')
 
 
 @pytest.fixture(scope='session')

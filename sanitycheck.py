@@ -1,3 +1,5 @@
+#!/usr/bin/env -S python3 -i
+
 from os import path
 
 import argparse

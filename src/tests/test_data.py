@@ -6,6 +6,15 @@ author: I. Brinkmeier
 date:   2023-08
 """
 
+###################
+# Imports
+###################
+import logging
+
+###################
+# Coding
+###################
+
 # set logging properties
 # info see: https://realpython.com/python-logging-source-code/
 logger = logging.getLogger(__name__)

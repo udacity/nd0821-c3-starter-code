@@ -1,13 +1,16 @@
 #!/usr/bin/env -S python3 -i
 
-# Script to train machine learning model.
-
-from sklearn.model_selection import train_test_split
+"""
+Script to train machine learning model.
+author: I. Brinkmeier
+date:   2023-08
+"""
 
 #####################
 # Imports
 #####################
-
+import logging
+from sklearn.model_selection import train_test_split
 
 
 #####################
@@ -17,6 +20,7 @@ from sklearn.model_selection import train_test_split
 # set logging properties
 # info see: https://realpython.com/python-logging-source-code/
 logger = logging.getLogger(__name__)
+
 
 # load in the data.
 

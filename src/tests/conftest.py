@@ -11,19 +11,16 @@ for information about testing see e.g.:
 """
 
 ###################
-#
 # Imports
-#
 ###################
 import os
 import pytest
 import pandas as pd
 import yaml
+import logging
 
 ###################
-#
 # Coding
-#
 ###################
 
 # set logging properties

@@ -1,9 +1,21 @@
 #!/usr/bin/env -S python3 -i
 
+"""
+Script to process the data used in the ML pipeline.
+author: I. Brinkmeier
+date:   2023-08
+"""
+
+###################
+# Imports
+###################
+import logging
 import numpy as np
 from sklearn.preprocessing import LabelBinarizer, OneHotEncoder
 
-
+###################
+# Coding
+###################
 # set logging properties
 # info see: https://realpython.com/python-logging-source-code/
 logger = logging.getLogger(__name__)
@@ -52,6 +64,8 @@ def process_data(
     """
 
     if label is not None:
+        logger.info("Extracting labels from data.")
+        logger.info(f"columns, {X.columns}")
         y = X[label]
         X = X.drop([label], axis=1)
     else:
@@ -61,6 +75,7 @@ def process_data(
     X_continuous = X.drop(*[categorical_features], axis=1)
 
     if training is True:
+        logger.info("Training phase: process data.")
         encoder = OneHotEncoder(sparse=False, handle_unknown="ignore")
         lb = LabelBinarizer()
         X_categorical = encoder.fit_transform(X_categorical)
@@ -70,8 +85,9 @@ def process_data(
         try:
             y = lb.transform(y.values).ravel()
         # Catch the case where y is None because we're doing inference.
-        except AttributeError:
-            pass
+        except AttributeError as exc:
+            logger.warning(f"US census data: no y labels available for inference: {exc}")
 
     X = np.concatenate([X_continuous, X_categorical], axis=1)
+    logger.info("Data are processed ...")
     return X, y, encoder, lb

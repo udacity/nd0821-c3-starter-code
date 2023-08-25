@@ -1,0 +1,5 @@
+outs:
+- md5: 266f9ba7e3517c486a1bfff27d02c806
+  size: 3203951
+  hash: md5
+  path: preproc_census.csv

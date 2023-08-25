@@ -1,0 +1,4 @@
+[core]
+    remote = remote
+['remote "remote"']
+    url = /home/ilona/dvc_remote

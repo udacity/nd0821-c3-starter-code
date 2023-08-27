@@ -50,11 +50,42 @@ logging:
 etl:
   orig_census: "../../data/census.csv"
   preproc_census: "../../data/preproc_census.csv"
-
+  non_converting_countries: ['Canada', 'United-States', 'Mexico', 'Hongkong', 'China',
+                             'Japan', 'Taiwan', 'Russia', 'Outlying-US']
+  north_west_south_europe: ['Denmark', 'Estonia', 'Esthonia', 'Finland', 'Iceland', 'Latvia',
+                            'Lithuania', 'Norway', 'Sweden', 'Belgium', 'France',
+                            'Ireland', 'Eire', 'Liechtenstein', 'Luxembourg', 'Luxemburg', 
+                            'Netherland', 'Austria', 'Switzerland', 'United-Kingdom',
+                            'Andorra', 'Italy', 'Malta', 'Monaco', 'Portugal', 'San-Marino',
+                            'Slovenia', 'Spain', 'Vatican-City', 'Germany',
+                            'ex-German-Democratic-Republic', 'ex-GDR']
+  south_east_europe: ['Moldavia', 'Moldova', 'Poland', 'Slovakia', 'Czechia', 'Czech-Republic',
+                      'Ukraine', 'Hungary', 'Belarus', 'Belorussia', 'Byelorussia', 'Albania',
+                      'Bosnia-Herzegovina', 'Bosnia-and-Herzegovina', 'Bosnia&Herzegovina',
+                      'Bulgaria', 'Greece', 'Kosovo', 'Croatia', 'Macedonia', 'Montenegro',
+                      'Romania', 'Rumania', 'Serbia', 'Cybrus', 'ex-Yugoslavia']
+  caribbean: ['Antigua-and-Barbuda', 'Bahamas', 'Barbados', 'Cuba', 'Dominica',
+              'Dominican-Republic', 'Grenada', 'Haiti', 'Jamaica', 'Saint-Christopher-and-Nevis',
+              'Saint-Christopher&Nevis', 'Saint-Lucia', 'Saint-Vincent-and-the-Grenadines',
+              'Saint-Vincent&the-Grenadines', 'Trinidad-and-Tobago','Trinidad&Tobago', ]
+  central_america: ['Belize', 'Guatemala', 'Honduras', 'Costa-Rica', 'Nicaragua', 'Panama',
+                   'Salvador', 'El-Salvador']
+  south_america: ['Argentina', 'Bolivia', 'Brazil', 'Chile', 'Ecuador', 'Guyana', 'Columbia',
+                  'Paraguay', 'Peru', 'Surinam', 'Suriname', 'Uruguay', 'Venezuela']
+  australia: ['Australia', 'New-Zealand']
+  south_east_asia: ['Brunei', 'Indonesia', 'Cambodia', 'Laos', 'Malaysia', 'Myanmar', 'ex-Burma',
+                    'ex-Birma', 'East-Timor', 'Philippines', 'Singapore', 'Thailand', 'Vietnam',
+                    'Viet-Nam']
+  south_middle_asia: ['Afghanistan', 'Bangladesh', 'Bhutan', 'India', 'Iran', 'Kasakhstan',
+                      'Kasakhstan', 'Kyrgyzstan', 'Maldives', 'Nepal', 'Pakistan', 'Sri-Lanka',
+                      'Tajikistan', 'Turkmenistan', 'Uzbekistan']
+  
+  
+                    
 eda:
   orig_report_title: "US Census Profiling Report - original data"
   orig_census_report: "./eda_census_orig_report.html"
-  preproc_report_title: "US Census Profiling Report - modified data"
+  preproc_report_title: "US Census Profiling Report - modified, encoded final data"
   preproc_census_report: "./eda_census_preproc_report.html"
   plots_path: "../../plots/"
 

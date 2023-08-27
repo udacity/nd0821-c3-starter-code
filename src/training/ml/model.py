@@ -11,8 +11,7 @@ from sklearn.metrics import fbeta_score, precision_score, recall_score
 ###################
 # set logging properties
 # info see: https://realpython.com/python-logging-source-code/
-logger = logging.getLogger(__name__)
-
+logger = logging.getLogger(__name__) 
 
 
 # Optional: implement hyperparameter tuning.

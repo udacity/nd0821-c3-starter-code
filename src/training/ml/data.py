@@ -2,7 +2,6 @@
 
 """
 Script to process the data used in the ML pipeline.
-author: I. Brinkmeier
 date:   2023-08
 """
 
@@ -65,7 +64,7 @@ def process_data(
 
     if label is not None:
         logger.info("Extracting labels from data.")
-        logger.info(f"columns, {X.columns}")
+        logger.info(f"columns: {X.columns}")
         y = X[label]
         X = X.drop([label], axis=1)
     else:

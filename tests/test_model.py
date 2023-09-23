@@ -36,9 +36,9 @@ config_file = get_config()
 def test_model_evaluation(raw_test_data) -> None:
     """ Checks model type single xgb classifier evaluation metrics """
     assert len(raw_test_data) > 0, 'Empty dataframe for evaluation tests'
-    
+
     processor, X, y = process_data(raw_test_data, label='salary', scaling=True, config_file=config_file)
-    X_processed = processor.fit_transform(X)   
+    X_processed = processor.fit_transform(X)
     y_processed = SimpleImputer(strategy="most_frequent").fit_transform(
         y.values.reshape(-1, 1)
     )
@@ -58,7 +58,7 @@ def test_model_evaluation(raw_test_data) -> None:
                 ),
                 X_train, y_train, X_test, y_test,
                 param_grid=None, config=config_file, test_run=True)
-    
+
     assert isinstance(xgb_test, XGBClassifier), 'No XGBClassifier for evaluation tests'
 
     # check test predictions of single XGBClassifier instance
@@ -73,6 +73,6 @@ def test_model_evaluation(raw_test_data) -> None:
 
 
 if __name__ == "__main__":
-    # as cli command to create the model test report: 
+    # as cli command to create the model test report:
     # pytest ./tests/test_model.py --html=./tests/model_test_report.html --capture=tee-sys
     pytest.main(["--html=model_test_report.html", "-v"])

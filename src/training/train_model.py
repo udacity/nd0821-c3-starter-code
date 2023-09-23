@@ -9,23 +9,7 @@ date:   2023-09
 #####################
 # Imports
 #####################
-import os
-import sys
-import logging
-import logging.config
-import joblib
-import xgboost as xgb
-
-from datetime import datetime
-TODAY = datetime.today().strftime('%Y-%m-%d_%H-%M')
-
-MAIN_DIR = os.path.join(os.getcwd(), 'src/')
-sys.path.append(MAIN_DIR)
-sys.path.append(os.getcwd())
-print(f'-> train_model: sys.path: {sys.path}')
-
-from sklearn.model_selection import train_test_split
-from sklearn.impute import SimpleImputer
+from config import get_config, get_data_path, get_models_path
 from ml.data import load_data, process_data
 from ml.model import (
     train_model,
@@ -35,8 +19,24 @@ from ml.model import (
     plot_error_diagram,
     plot_roc_curve_diagram
 )
-import config
-from config import get_config, get_data_path, get_models_path, get_project_root_path
+
+from datetime import datetime
+TODAY = datetime.today().strftime('%Y-%m-%d_%H-%M')
+
+import os
+import sys
+MAIN_DIR = os.path.join(os.getcwd(), 'src/')
+sys.path.append(MAIN_DIR)
+sys.path.append(os.getcwd())
+print(f'-> train_model: sys.path: {sys.path}')
+
+import logging
+import logging.config
+import joblib
+import xgboost as xgb
+
+from sklearn.model_selection import train_test_split
+from sklearn.impute import SimpleImputer
 
 #####################
 # Coding
@@ -44,25 +44,25 @@ from config import get_config, get_data_path, get_models_path, get_project_root_
 
 def go():
     ''' Checks the training workflow for census data with configuration parameters.
-    
+
     Note:
     If as starting point no data could be read in, system exit happens.
-    
+
     By now, XGBoost binary classifier is used with and without GridSearchCV.
     Regarding Hyperparameter:
     Out-of-scope is usage of Hyperopt, which is a Python library for optimizing both
     discrete and continuous hyperparameters for XGBoost instances.
     Hyperopt uses Bayesian optimization to tune hyperparameters, so, it would return
-    a better prediction because it is not limited to the explicit given values of a 
+    a better prediction because it is not limited to the explicit given values of a
     parameter grid as defined for GridSearchCV.
-    
+
     Regarding Logging:
     For training 'staging' logger is used.
     '''
 
     # load in the configuration file
     config_file = get_config()
-    
+
     # get logging properties
     # info see: https://realpython.com/python-logging-source-code/
     logging.config.dictConfig(config_file['logging'])
@@ -89,17 +89,17 @@ def go():
                                    label='salary',
                                    scaling=True,
                                    config_file=config_file)
-    
-    X_processed = processor.fit_transform(X)   
+
+    X_processed = processor.fit_transform(X)
     y_processed = SimpleImputer(strategy="most_frequent").fit_transform(
         y.values.reshape(-1, 1)
     )
-        
+
     # save ColumnTransformer processor in model dir
     logger.info("Save ColumnTransformer as final pickle file in models dir")
     col_transformer_artifact_label = config_file['model']['col_transformer']
     filename = os.path.join(get_models_path(), col_transformer_artifact_label)
-    with open(filename, 'wb') as f:                                          
+    with open(filename, 'wb') as f:                                   
         joblib.dump(processor, f)
 
     # train test split
@@ -111,13 +111,13 @@ def go():
         test_size=config_file['model']['test_size'],
         random_state=config_file['model']['random_seed']
     )
-    
+
     # XGBoost Classifier
     # https://towardsdatascience.com/beginners-guide-to-xgboost-for-classification-problems-50f75aac5390
     # note: “binary:logistic” – logistic regression for binary classification, output probability
     logger.info('--- Start binary classification workflow for XGBClassifier ... ---')
-    
-    # first workflow: 
+
+    # first workflow:
     # single prediction with default classifier hyperparameters
     xgb_cls = train_model(
                 xgb.XGBClassifier(
@@ -131,8 +131,8 @@ def go():
                 param_grid=None,
                 config=config_file, test_run=None)
     logger.info("Single XGBClassifier model training params:\n %s", xgb_cls)
- 
-    # plot and store evaluation results diagram      
+
+    # plot and store evaluation results diagram
     # plot logloss diagramm
     title = 'Single XGB Classifier: Resulting Loss Diagram'
     # plot function adds date as first part of png name
@@ -143,7 +143,7 @@ def go():
     title = 'Single XGB Classifier: Resulting Classification Error Diagram'
     png_name = '_xgb-single_class_error_diagram.png'
     plot_error_diagram(xgb_cls, config_file, title, png_name)
- 
+
     # plot ROC curve diagram
     # https://www.turing.com/kb/auc-roc-curves-and-their-usage-for-classification-in-python
     title = 'Single XGB Classifier: Resulting ROC Curve Diagram'
@@ -152,7 +152,7 @@ def go():
                            X_train, y_train,
                            X_test, y_test,
                            config_file, title, png_name)
-    
+
     # prediction with created test data from split and get metrics on it
     y_preds = inference(xgb_cls, X_test)
     precision, recall, fbeta, cm, cls_report = compute_model_metrics(y_test, y_preds)
@@ -173,14 +173,13 @@ def go():
     logger.info('- Classification Report -')
     logger.info(cls_report)
     logger.info("----------")
-    
+
     # save basic XGBoost model in model dir
     logger.info("Save single, basic XGBClassifier as pickle file in models dir")
     artifact_label = ''.join([TODAY, '_', config_file['model']['xgb_cls']['output_artifact']])
     filename = os.path.join(get_models_path(), artifact_label)
-    with open(filename, 'wb') as f:                                          
-        joblib.dump(xgb_cls, f)    
-        
+    with open(filename, 'wb') as f:                                     
+        joblib.dump(xgb_cls, f)
 
     # second workflow:
     # usage of GridSearchCV (cross validataion approach),
@@ -206,22 +205,18 @@ def go():
         config=config_file,
         test_run=None)
     logger.info("Best CV XGBClassifier model training params:\n %s", best_xgb_cls_cv.get_params())
-    
+
     # retrain with best estimator params (call fit()),
     # without test data split; but such data is necessary for early stopping
     # https://scikit-learn.org/stable/modules/cross_validation.html
     # https://towardsdatascience.com/how-to-do-cross-validation-effectively-1bbeb1d69ee8
     # https://stats.stackexchange.com/questions/586298/is-it-required-to-train-the-model-in-entire-data-after-cross-validation
-    eval_param_grid = {
-        #'eval_metric': config_file['model']['xgb_cls_cv']['eval_metric'],
-        'eval_metric': ['logloss'],
-    }
     params = best_xgb_cls_cv.get_params()
     params['eval_metric'] = ['logloss']
     print('---')
     print(f'params dict of best cv xgb estimator with logloss eval_metric:\n{params}')
     print('---')
-    
+
     best_xgb_cls = xgb.XGBClassifier(**params)
     best_xgb_cls.fit(
         X_train, y_train,
@@ -238,9 +233,9 @@ def go():
 
     # plot classification error
     # Note: different eval metrics interfere with early stopping mechanism ...
-    #title = 'Best XGB CV Classifier: Resulting Classification Error Diagram'
-    #png_name = '_best_xgb-cv_class_error_diagram.png'
-    #plot_error_diagram(best_xgb_cls, config_file, title, png_name)
+    # title = 'Best XGB CV Classifier: Resulting Classification Error Diagram'
+    # png_name = '_best_xgb-cv_class_error_diagram.png'
+    # plot_error_diagram(best_xgb_cls, config_file, title, png_name)
 
     # plot ROC curve diagram
     title = 'Best Retrained XGB CV Classifier: Resulting ROC Curve Diagram'
@@ -254,7 +249,7 @@ def go():
     # regarding early stopping and getting optimal tree number, note:
     # with Scikit-Learn API of Xgboost param best_ntree_limit will be used directly
     y_preds_cv = inference(best_xgb_cls, X_test)
-    
+
     # evaluation with test data and predictions
     precision, recall, fbeta, cm, cls_report = compute_model_metrics(y_test, y_preds_cv)
     print('Validation:')
@@ -275,22 +270,22 @@ def go():
     logger.info(cls_report)
     logger.info("----------")
 
-    # save XGBoost cv model in model dir, 
-    # Note: during different runs: grid model has always been best compared to 
+    # save XGBoost cv model in model dir,
+    # Note: during different runs: grid model has always been best compared to
     # single estimator without cv, therefore no check is implemented
     logger.info('Save retrained cross validation best XGBClassifier as final pickle file in models dir')
     best_xgb_label = ''.join([TODAY, '_', config_file['model']['xgb_cls_cv']['output_artifact']])
     filename = os.path.join(get_models_path(), best_xgb_label)
-    with open(filename, 'wb') as f:                                          
+    with open(filename, 'wb') as f:
         joblib.dump(best_xgb_cls, f)
-        
+
     # in general: having different model types check which one is the best would happen;
     # now we have only one, so, by now it is the same ... only with artifact label change
     artifact_label = config_file['model']['final_xgb_artifact']
     filename = os.path.join(get_models_path(), artifact_label)
-    with open(filename, 'wb') as f:                                          
+    with open(filename, 'wb') as f:
         joblib.dump(best_xgb_cls, f)
-         
 
-if __name__ == "__main__":  
+
+if __name__ == "__main__":
     go()

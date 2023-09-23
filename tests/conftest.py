@@ -45,7 +45,7 @@ def raw_test_data() -> pd.DataFrame:
         Subset dataframe with 1500 rows loaded from original csv file
     """
     data = os.path.join(get_data_path(), config_file['etl']['orig_census'])
-    
+
     if not os.path.exists(data):
         pytest.fail("Fixture creation: Data not found at path: %s", data)
 
@@ -61,7 +61,7 @@ def cleaned_test_data() -> pd.DataFrame:
         Subset dataframe with 200 rows loaded from original csv file and cleaned
     """
     data = os.path.join(get_data_path(), config_file['etl']['orig_census'])
-    
+
     if not os.path.exists(data):
         pytest.fail("Fixture creation: Data not found at path: %s", data)
 

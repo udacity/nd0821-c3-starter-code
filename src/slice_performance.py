@@ -7,7 +7,7 @@ dataset.
 author: Ilona Brinkmeier
 date:   2023-09
 
-Note regarding preprocessing steps: 
+Note regarding preprocessing steps:
 sex is numerical, education_num used instead of education string
 and the native-country feature is modified.
 
@@ -23,12 +23,16 @@ So, the categorical features are:
 ###################
 # Imports
 ###################
+
+from training.ml.model import inference, compute_model_metrics
+from training.ml.data import clean_data, get_cat_features, process_data
+from config import get_config, get_data_path, get_models_path
+
 import os
 import sys
 import logging
 import pandas as pd
 import joblib
-import xgboost as xgb
 
 from sklearn.model_selection import train_test_split
 from pathlib import Path
@@ -40,10 +44,6 @@ MAIN_DIR = os.path.join(os.getcwd(), 'src/')
 sys.path.append(MAIN_DIR)
 sys.path.append(os.getcwd())
 print(f'sys.path : {sys.path}')
-
-from training.ml.model import inference, compute_model_metrics
-from training.ml.data import clean_data, get_cat_features, process_data
-from config import get_config, get_data_path, get_models_path
 
 #####################
 # Coding
@@ -62,7 +62,7 @@ def load_final_model_artifact():
     path = os.path.join(get_models_path(), config_file['model']['final_xgb_artifact'])
     assert Path(path).exists(), f'model artifact of given path does not exist: {path}'
     logger.info('Final model artifact path for slice performance exists: %s', path)
-    try: 
+    try:
         return joblib.load(path)
     except Exception as e:
         logger.exception("Census final model artifact not loaded for slice performance action")
@@ -74,7 +74,7 @@ def load_transformer_artifact():
     path = os.path.join(get_models_path(), config_file['model']['col_transformer'])
     assert Path(path).exists(), f'transformer artifact of given path does not exist: {path}'
     logger.info('Final column transformer artifact path for slice performance exists: %s', path)
-    try: 
+    try:
         return joblib.load(path)
     except Exception as e:
         logger.exception("Census final transformer artifact not loaded for slice performance action")
@@ -82,7 +82,7 @@ def load_transformer_artifact():
 
 
 def load_preproc_data() -> pd.DataFrame:
-    """ 
+    """
     Returns the preprocessed census dataset as dataframe,
     if available. If not raises FileNotFoundError exception.
     """
@@ -92,7 +92,7 @@ def load_preproc_data() -> pd.DataFrame:
     try:
         df = pd.read_csv(path)
         df = clean_data(df, config_file)
-        logger.info('Census preprocessed dataset: %s samples with %s features each', \
+        logger.info('Census preprocessed dataset: %s samples with %s features each',
                     df.shape[0], df.shape[1])
         logger.info('Its columns are: %s', df.columns)
         return df
@@ -116,7 +116,7 @@ def compute_slice_metrics_categorical():
     The metric results are not expected to be valid, because the model knows data already
     and data leakage issue may appear, overfitting is expected.
     """
-    
+
     # read in cleaned data, remember: salary is a binary number after cleaning
     try:
         df_data = load_preproc_data()
@@ -127,27 +127,26 @@ def compute_slice_metrics_categorical():
     except Exception as e:
         logger.exception("Exit: exception of type %s occurred. Details: %s", type(e).__name__, str(e))
         sys.exit(1)
-    
+
     # write to performance metric file - './<date>_slice_output.txt'
     FILE_HEADER = 'Performance Evaluation Metrics of Categorical Census Features\n'
     LINE = '_____________________________________________________________\n\n'
     file_name = os.path.join(MAIN_DIR, TODAY + '_' + config_file['model']['slice_output_file'])
-    
+
     slice_metrics = []
     for cat_feat in cat_features:
-        for cols in test[cat_feat].unique(): # look cols of categorical unique group
-            
-            logger.info('Slice performance evaluation for categorical value group and cols: %s',\
+        for cols in test[cat_feat].unique():   # look at cols of categorical unique group
+            logger.info('Slice performance evaluation for categorical value group and cols: %s',
                         cols)
             # prepare data
             df_cat_group = test[test[cat_feat] == cols]
             y = df_cat_group['salary']
             X = df_cat_group.drop(columns=['salary'])
-            X_processed = transformer_artifact.transform(X) # inference case, not training
-            
+            X_processed = transformer_artifact.transform(X)   # inference case, not training
+
             # predict
-            y_preds = inference(model_artifact, X_processed)              
-            
+            y_preds = inference(model_artifact, X_processed)
+
             # metrics, cls-report not used
             prec, rec, fbeta, cm, _ = compute_model_metrics(
                 y, y_preds

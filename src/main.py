@@ -10,8 +10,6 @@ date:   2023-09
 # Imports
 ###################
 
-import os
-import numpy as np
 import logging
 import uvicorn
 

@@ -35,13 +35,14 @@ def plot_error_diagram(estimator, config, title, png_name):
     results = estimator.evals_result()
     epochs = len(results["validation_0"]["error"])
     x_axis = range(0, epochs)
-    
-    fig, ax = plt.subplots(figsize=(10,7))
+
+    fig, ax = plt.subplots(figsize=(10, 7))
     plt.title(title, fontsize=13, fontweight='bold')
     ax.plot(x_axis, results["validation_0"]["error"], label="Training")
     ax.plot(x_axis, results["validation_1"]["error"], label="Testing")
     plt.axvline(estimator.best_ntree_limit,
-                color="gray", label="Optimal tree number")
+                color="gray",
+                label="Optimal tree number")
     plt.xlabel("Tree Numbers")
     plt.ylabel("Classification Error")
     plt.legend()
@@ -55,13 +56,14 @@ def plot_logloss_diagram(estimator, config, title, png_name):
     results = estimator.evals_result()
     epochs = len(results["validation_0"]["logloss"])
     x_axis = range(0, epochs)
-    
-    fig, ax = plt.subplots(figsize=(10,7))
+
+    fig, ax = plt.subplots(figsize=(10, 7))
     plt.title(title, fontsize=13, fontweight='bold')
     ax.plot(x_axis, results["validation_0"]["logloss"], label="Training")
     ax.plot(x_axis, results["validation_1"]["logloss"], label="Testing")
     plt.axvline(estimator.best_ntree_limit,
-                color="gray", label="Optimal tree number")
+                color="gray",
+                label="Optimal tree number")
     plt.xlabel("Tree Numbers")
     plt.ylabel("Loss")
     plt.legend()
@@ -71,18 +73,18 @@ def plot_logloss_diagram(estimator, config, title, png_name):
 
 
 def plot_roc_curve_diagram(estimator, X_train, y_train, X_test, y_test, config, title, png_name):
-        ''' Stores plotted ROC curve diagram in plots directory '''
-        fig, ax = plt.subplots(figsize=(10,7))
-        plt.title(title, fontsize=13, fontweight='bold')
-        RocCurveDisplay.from_estimator(estimator,
-                                       X_train, y_train, ax=ax, label='Training')
-        RocCurveDisplay.from_estimator(estimator,
-                                       X_test, y_test, ax=ax) #, label='Testing')
-        plt.legend()
-        plot_name = ''.join([TODAY, png_name])
-        plt.savefig(os.path.join(os.getcwd(), config['eda']['plots_path'], str(plot_name)),
-                    bbox_inches='tight')
-    
+    ''' Stores plotted ROC curve diagram in plots directory '''
+    fig, ax = plt.subplots(figsize=(10, 7))
+    plt.title(title, fontsize=13, fontweight='bold')
+    RocCurveDisplay.from_estimator(estimator,
+                                   X_train, y_train, ax=ax, label='Training')
+    RocCurveDisplay.from_estimator(estimator,
+                                   X_test, y_test, ax=ax)   # , label='Testing')
+    plt.legend()
+    plot_name = ''.join([TODAY, png_name])
+    plt.savefig(os.path.join(os.getcwd(), config['eda']['plots_path'], str(plot_name)),
+                bbox_inches='tight')
+
 
 def train_model(model, X_train, y_train, X_test, y_test, param_grid=None, config=None, test_run=None):
     """
@@ -93,7 +95,7 @@ def train_model(model, X_train, y_train, X_test, y_test, param_grid=None, config
 
     Inputs
     ------
-    model: 
+    model:
         machine learning model we have to train during training process,
         expected is XGBoost classifier
     X_train : pd.dataframe
@@ -111,22 +113,22 @@ def train_model(model, X_train, y_train, X_test, y_test, param_grid=None, config
     test_run: Boolean or None
         By default None, for application usage,
         is set to True for test suite run
-        
+
     Returns
     -------
     model : scikit-learn model or pipeline
         Trained machine learning model.
     """
-         
+
     # Future toDo:
     # - behavioral strategy pattern for different classifiers
-    
+
     try:
         assert isinstance(model, (XGBClassifier))
     except AssertionError as error:
         logging.error("Model should be XGBClassifier %s", error)
-    
-    if param_grid: # cross validation process
+
+    if param_grid:   # cross validation process
         if config:
             n_jobs = config['model']['n_jobs']
             cv = config['model']['cv']
@@ -135,23 +137,23 @@ def train_model(model, X_train, y_train, X_test, y_test, param_grid=None, config
             n_jobs = -1
             cv = 5
             verbose = 1
-            
+
         grid_cv = GridSearchCV(estimator=model,
                                param_grid=param_grid,
                                n_jobs=n_jobs,
                                cv=cv,
                                verbose=verbose)
-        
+
         # usage of early stopping
         grid_result = grid_cv.fit(
             X_train, y_train,
             eval_set=[(X_train, y_train), (X_test, y_test)])
-        
+
         best_estimator = grid_cv.best_estimator_
-                
+
         if test_run:
             return best_estimator
-        
+
         # Print the best score and corresponding hyperparameters
         print('---- Prediction Result: GridSearchCV - XGBClassifier ---')
         print(f'Best score is {grid_result.best_score_:.4f}')
@@ -162,20 +164,20 @@ def train_model(model, X_train, y_train, X_test, y_test, param_grid=None, config
         logger.info('---- Prediction Result: GridSearchCV - XGBClassifier ---')
         logger.info('Best score is %s', grid_result.best_score_)
         logger.info('Best hyperparameters are %s', grid_result.best_params_)
-        logger.info('Optimal number of trees is %s', best_estimator.best_ntree_limit) 
+        logger.info('Optimal number of trees is %s', best_estimator.best_ntree_limit)
         logger.info('Best cv estimator: %s', best_estimator)
         logger.info('----')
-        
+
         return best_estimator
-    else: # single model process
+    else:   # single model process
         # usage of early stopping
         model = model.fit(
             X_train, y_train,
             eval_set=[(X_train, y_train), (X_test, y_test)])
-                
+
         if test_run:
             return model
-        
+
         print('---- Prediction Result: Single basic - XGBClassifier model ---')
         print(model)
         print(f'Optimal number of trees is {model.best_ntree_limit}')
@@ -189,7 +191,7 @@ def train_model(model, X_train, y_train, X_test, y_test, param_grid=None, config
 
 def compute_model_metrics(y, preds):
     """
-    Validates the trained machine learning model using precision, recall, F1, 
+    Validates the trained machine learning model using precision, recall, F1,
     confusion matrix and whole classification report.
 
     Inputs
@@ -198,7 +200,7 @@ def compute_model_metrics(y, preds):
         Known labels, binarized. (refers to y_test)
     preds : np.array
         Predicted labels, binarized. (refers to y_preds)
-        
+
     Returns
     -------
     precision : float
@@ -212,7 +214,7 @@ def compute_model_metrics(y, preds):
     recall = recall_score(y, preds, zero_division=1)
     cm = confusion_matrix(y, preds)
     cls_report = classification_report(y, preds, output_dict=True)
-    
+
     return precision, recall, fbeta, cm, cls_report
 
 
@@ -225,7 +227,7 @@ def inference(model, X):
         Trained machine learning model.
     X : pd.DataFrame
         Test data used for prediction.
-        
+
     Returns
     -------
     preds : np.array

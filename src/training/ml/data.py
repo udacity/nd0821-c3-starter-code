@@ -138,7 +138,8 @@ def get_column_transformer(cat_cols, num_cols, bin_cols, scaling=None) -> Column
             ('bin_transf', bin_transformer, bin_cols),
         ],
         # remainder='passthrough', # unknown columns
-        n_jobs=-1)
+        n_jobs=-1
+    )
 
     return preprocessor
 

@@ -9,19 +9,6 @@ date:   2023-09
 #####################
 # Imports
 #####################
-from config import get_config, get_data_path, get_models_path
-from ml.data import load_data, process_data
-from ml.model import (
-    train_model,
-    inference,
-    compute_model_metrics,
-    plot_logloss_diagram,
-    plot_error_diagram,
-    plot_roc_curve_diagram
-)
-
-from datetime import datetime
-TODAY = datetime.today().strftime('%Y-%m-%d_%H-%M')
 
 import os
 import sys
@@ -35,8 +22,23 @@ import logging.config
 import joblib
 import xgboost as xgb
 
+from datetime import datetime
+TODAY = datetime.today().strftime('%Y-%m-%d_%H-%M')
+
 from sklearn.model_selection import train_test_split
 from sklearn.impute import SimpleImputer
+
+from config import get_config, get_data_path, get_models_path
+from ml.data import load_data, process_data
+from ml.model import (
+    train_model,
+    inference,
+    compute_model_metrics,
+    plot_logloss_diagram,
+    plot_error_diagram,
+    plot_roc_curve_diagram
+)
+
 
 #####################
 # Coding
@@ -68,7 +70,7 @@ def go():
     logging.config.dictConfig(config_file['logging'])
     logging.getLogger('matplotlib.font_manager').disabled = True
     logger = logging.getLogger('staging')
-    
+
     # load in the data
     data = os.path.join(get_data_path(), config_file['etl']['orig_census'])
     logger.info("Load data from path: %s", data)
@@ -99,7 +101,7 @@ def go():
     logger.info("Save ColumnTransformer as final pickle file in models dir")
     col_transformer_artifact_label = config_file['model']['col_transformer']
     filename = os.path.join(get_models_path(), col_transformer_artifact_label)
-    with open(filename, 'wb') as f:                                   
+    with open(filename, 'wb') as f:
         joblib.dump(processor, f)
 
     # train test split
@@ -178,7 +180,7 @@ def go():
     logger.info("Save single, basic XGBClassifier as pickle file in models dir")
     artifact_label = ''.join([TODAY, '_', config_file['model']['xgb_cls']['output_artifact']])
     filename = os.path.join(get_models_path(), artifact_label)
-    with open(filename, 'wb') as f:                                     
+    with open(filename, 'wb') as f:         
         joblib.dump(xgb_cls, f)
 
     # second workflow:
@@ -225,7 +227,7 @@ def go():
     )
     logger.info("Retrained best CV XGBClassifier model fit params:\n %s", best_xgb_cls)
 
-    # plot and store evaluation results diagram of retrained best xgb cv model    
+    # plot and store evaluation results diagram of retrained best xgb cv model
     # plot logloss diagramm
     title = 'Best Retrained XGB CV Classifier: Resulting Loss Diagram'
     png_name = '_best_retrained_xgb-cv_logloss_treeNo_diagram.png'

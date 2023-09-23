@@ -25,7 +25,7 @@ So, the categorical features are:
 ###################
 
 from training.ml.model import inference, compute_model_metrics
-from training.ml.data import clean_data, get_cat_features, process_data
+from training.ml.data import clean_data, get_cat_features
 from config import get_config, get_data_path, get_models_path
 
 import os
@@ -106,10 +106,10 @@ def compute_slice_metrics_categorical():
     Calculates metrics on data slices of specific categorical columns via inference.
     The metrics are Precision, Recall, F1 and Confusion Matrix.
     Evaluation information is stored in output file slice_output.txt.
-    
+
     Note:
     If as starting point data or pretrained artifacts could not be read in, system exit happens.
-    
+
     Using the model created before on the same data, means this is only a playground
     of a testing procedure and not a valid production one. Using this for production,
     new, unknown data must be used.

@@ -1,11 +1,10 @@
+import logging
+from logging import Formatter, NullHandler
+from colorama import Fore, Style
 from pkgutil import extend_path
 __path__ = extend_path(__path__, __name__)
 print(f'Invoking __init__.py for {__name__}')
 print(f'src package: __path__ : {__path__}')
-
-import logging
-from logging import Formatter, NullHandler
-from colorama import Fore, Style
 
 
 COLORS = {"DEBUG": Fore.BLUE,
@@ -20,7 +19,6 @@ class CustomColoredFormatter(Formatter):
         ''' Initialise customized formatter class '''
         Formatter.__init__(self, fmt=format)
         self.use_color = use_color
-
 
     def format(self, record):
         ''' Sets message colour according log level '''

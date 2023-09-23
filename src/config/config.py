@@ -64,7 +64,7 @@ def get_data_path():
     logger.info("config data_path: %s", data_path)
     return data_path
 
-     
+
 def get_models_path():
     ''' Returns the models directory path. '''
     ROOT = get_project_root_path()

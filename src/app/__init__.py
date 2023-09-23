@@ -10,12 +10,12 @@ COLORS = {"DEBUG": Fore.BLUE,
           "ERROR": Fore.RED,
           "CRITICAL": Fore.MAGENTA}
 
+
 class CustomColoredFormatter(Formatter):
     def __init__(self, *, format, use_color):
         ''' Initialise customized formatter class '''
         Formatter.__init__(self, fmt=format)
         self.use_color = use_color
-
 
     def format(self, record):
         ''' Sets message colour according log level '''
@@ -27,5 +27,6 @@ class CustomColoredFormatter(Formatter):
             if levelname in COLORS:
                 return f"{COLORS[levelname]}{msg}{Style.RESET_ALL}"
         return msg
+
 
 logging.getLogger(__name__).addHandler(NullHandler())

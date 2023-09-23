@@ -19,7 +19,6 @@ class CustomColoredFormatter(Formatter):
         Formatter.__init__(self, fmt=format)
         self.use_color = use_color
 
-
     def format(self, record):
         ''' Sets message colour according log level '''
         msg = super().format(record)

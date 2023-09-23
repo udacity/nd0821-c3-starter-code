@@ -56,7 +56,7 @@ def plot_logloss_diagram(estimator, config, title, png_name):
     results = estimator.evals_result()
     epochs = len(results["validation_0"]["logloss"])
     x_axis = range(0, epochs)
-    
+
     fig, ax = plt.subplots(figsize=(10, 7))
     plt.title(title, fontsize=13, fontweight='bold')
     ax.plot(x_axis, results["validation_0"]["logloss"], label="Training")
@@ -127,7 +127,7 @@ def train_model(model, X_train, y_train, X_test, y_test, param_grid=None, config
         assert isinstance(model, (XGBClassifier))
     except AssertionError as error:
         logging.error("Model should be XGBClassifier %s", error)
-    
+
     if param_grid:   # cross validation process
         if config:
             n_jobs = config['model']['n_jobs']

@@ -180,7 +180,7 @@ def go():
     logger.info("Save single, basic XGBClassifier as pickle file in models dir")
     artifact_label = ''.join([TODAY, '_', config_file['model']['xgb_cls']['output_artifact']])
     filename = os.path.join(get_models_path(), artifact_label)
-    with open(filename, 'wb') as f:         
+    with open(filename, 'wb') as f:
         joblib.dump(xgb_cls, f)
 
     # second workflow:

@@ -12,7 +12,7 @@ OK_COLOR = '\033[92m'
 WARN_COLOR = '\033[93m'
 
 def run_sanity_check(test_dir):
-   ''' Udacity file to check students test cases ''' 
+    ''' Udacity file to check students test cases ''' 
 
     assert path.isdir(test_dir), FAIL_COLOR+f"No directory named {test_dir} found in {os.getcwd()}"
     print('This script will perform a sanity test to ensure your code meets the criteria in the rubric.\n')

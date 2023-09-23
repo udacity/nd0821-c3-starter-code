@@ -60,12 +60,14 @@ def run_sanity_check(test_dir):
         if not TEST_FOR_GET_METHOD_RESPONSE_CODE:
             print(FAIL_COLOR+f"[{WARNING_COUNT}]")
             WARNING_COUNT += 1
-            print(FAIL_COLOR+"Your test case for GET() does not seem to be testing the response code.\n")
+            print(FAIL_COLOR+\
+                  "Your test case for GET() does not seem to be testing the response code.\n")
         
         if not TEST_FOR_GET_METHOD_RESPONSE_BODY:
             print(FAIL_COLOR+f"[{WARNING_COUNT}]")
             WARNING_COUNT += 1
-            print(FAIL_COLOR+"Your test case for GET() does not seem to be testing the CONTENTS of the response.\n")
+            print(FAIL_COLOR+\
+                  "Your test case for GET() does not seem to be testing the CONTENTS of the response.\n")
 
 
 
@@ -101,16 +103,19 @@ def run_sanity_check(test_dir):
         if not TEST_FOR_POST_METHOD_RESPONSE_CODE:
             print(FAIL_COLOR+f"[{WARNING_COUNT}]")
             WARNING_COUNT += 1
-            print(FAIL_COLOR+"One or more of your test cases for POST() do not seem to be testing the response code.\n")
+            print(FAIL_COLOR+\
+                  "One or more of your test cases for POST() do not seem to be testing the response code.\n")
         if not TEST_FOR_POST_METHOD_RESPONSE_BODY:
             print(FAIL_COLOR+f"[{WARNING_COUNT}]")
             WARNING_COUNT += 1
-            print(FAIL_COLOR+"One or more of your test cases for POST() do not seem to be testing the contents of the response.\n")
+            print(FAIL_COLOR+\
+                  "One or more of your test cases for POST() do not seem to be testing the contents of the response.\n")
 
         if len(test_functions_for_post) >= 2 and COUNT_POST_METHOD_TEST_FOR_INFERENCE_RESULT < 2:
             print(FAIL_COLOR+f"[{WARNING_COUNT}]")
             WARNING_COUNT += 1
-            print(FAIL_COLOR+"You do not seem to have TWO separate test cases, one for each possible prediction that your model can make.")
+            print(FAIL_COLOR+\
+                  "You do not seem to have TWO separate test cases, one for each possible prediction that your model can make.")
 
 
 
@@ -131,7 +136,11 @@ def run_sanity_check(test_dir):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument('test_dir',metavar='test_dir',nargs='?',default='tests',help='Name of the directory that has test files.')
+    parser.add_argument('test_dir',
+                        metavar='test_dir',
+                        nargs='?',
+                        default='tests',
+                        help='Name of the directory that has test files.')
     args = parser.parse_args()
     run_sanity_check(args.test_dir)
 

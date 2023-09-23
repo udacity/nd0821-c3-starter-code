@@ -1,0 +1,167 @@
+main:
+  project_name: us_census
+
+logging:
+  version: 1
+  disable_existing_loggers: False
+
+  formatters:
+    simple:
+      format: '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+      datefmt: '%Y-%m-%d %H:%M:%S'
+    color:
+      format: "%(asctime)s - %(threadName)s - %(name)s - %(levelname)s - %(message)s - %(lineno)s"
+      (): __init__.CustomColoredFormatter
+      use_color: true
+
+  handlers:
+    console:
+      class: logging.StreamHandler
+      level: DEBUG
+      formatter: color
+      stream: ext://sys.stdout
+
+    file:
+      class: logging.FileHandler
+      level: INFO
+      formatter: simple
+      filename: 'logs/census_app.log'
+      
+  loggers:
+    development:
+      level: DEBUG
+      handlers: [console]
+      propagate: no
+
+    staging:
+      level: INFO
+      handlers: [console, file]
+      propagate: no
+
+    production:
+      level: WARNING
+      handlers: [file]
+      propagate: no
+
+  root:
+    level: DEBUG
+    handlers: [console]  
+
+etl:
+  data_path: 'data'
+  orig_census: "census.csv"
+  preproc_census: "preproc_census.csv"
+  fnlgt_range: range(0, 1550000, 50000)
+  non_converting_countries: ['Canada', 'United-States', 'Mexico', 'Hongkong', 'China',
+                             'Japan', 'Taiwan', 'Russia', 'Outlying-US']
+  north_west_south_europe: ['Denmark', 'Estonia', 'Esthonia', 'Finland', 'Iceland', 'Latvia',
+                            'Lithuania', 'Norway', 'Sweden', 'Belgium', 'France',
+                            'Ireland', 'Eire', 'Liechtenstein', 'Luxembourg', 'Luxemburg', 
+                            'Netherland', 'Austria', 'Switzerland', 'United-Kingdom',
+                            'Andorra', 'Italy', 'Malta', 'Monaco', 'Portugal', 'San-Marino',
+                            'Slovenia', 'Spain', 'Vatican-City', 'Germany',
+                            'ex-German-Democratic-Republic', 'ex-GDR']
+  south_east_europe: ['Moldavia', 'Moldova', 'Poland', 'Slovakia', 'Czechia', 'Czech-Republic',
+                      'Ukraine', 'Hungary', 'Belarus', 'Belorussia', 'Byelorussia', 'Albania',
+                      'Bosnia-Herzegovina', 'Bosnia-and-Herzegovina', 'Bosnia&Herzegovina',
+                      'Bulgaria', 'Greece', 'Kosovo', 'Croatia', 'Macedonia', 'Montenegro',
+                      'Romania', 'Rumania', 'Serbia', 'Cybrus', 'ex-Yugoslavia']
+  caribbean: ['Antigua-and-Barbuda', 'Bahamas', 'Barbados', 'Cuba', 'Dominica',
+              'Dominican-Republic', 'Grenada', 'Haiti', 'Jamaica', 'Saint-Christopher-and-Nevis',
+              'Saint-Christopher&Nevis', 'Saint-Lucia', 'Saint-Vincent-and-the-Grenadines',
+              'Saint-Vincent&the-Grenadines', 'Trinidad-and-Tobago','Trinidad&Tobago', ]
+  central_america: ['Belize', 'Guatemala', 'Honduras', 'Costa-Rica', 'Nicaragua', 'Panama',
+                   'Salvador', 'El-Salvador']
+  south_america: ['Argentina', 'Bolivia', 'Brazil', 'Chile', 'Ecuador', 'Guyana', 'Columbia',
+                  'Paraguay', 'Peru', 'Surinam', 'Suriname', 'Uruguay', 'Venezuela']
+  australia: ['Australia', 'New-Zealand']
+  south_east_asia: ['Brunei', 'Indonesia', 'Cambodia', 'Laos', 'Malaysia', 'Myanmar', 'ex-Burma',
+                    'ex-Birma', 'East-Timor', 'Philippines', 'Singapore', 'Thailand', 'Vietnam',
+                    'Viet-Nam']
+  south_middle_asia: ['Afghanistan', 'Bangladesh', 'Bhutan', 'India', 'Iran', 'Kasakhstan',
+                      'Kasakhstan', 'Kyrgyzstan', 'Maldives', 'Nepal', 'Pakistan', 'Sri-Lanka',
+                      'Tajikistan', 'Turkmenistan', 'Uzbekistan']
+  east_asia: ['China', 'Japan', 'North-Korea', 'South-Korea', 'Mongolia', 'Taiwan']
+                    
+eda:
+  eda_path: "src/eda"
+  plots_path: "plots"
+  orig_report_title: "US Census Profiling Report - original data"
+  orig_census_report: "eda_census_orig_report.html"
+  preproc_report_title: "US Census Profiling Report - modified, encoded final data"
+  preproc_census_report: "eda_census_preproc_report.html"
+
+model:
+  # slice performance output file
+  slice_output_file: 'slice_output.txt'
+  # directory to store the model files
+  models_path: 'models'
+  # ColumnTransformer artifact
+  col_transformer: 'final_col_transformer_artifact.pkl'
+  # name of final xgb classifier artifact
+  final_xgb_artifact: 'final_xgb_cls_artifact.pkl'
+  # target label for supervised learning classification, used for stratification after preproc
+  training_target: "salary"
+  # fraction of data to use for test (the remaining will be used for train and validation)
+  test_size: 0.2
+  # fraction of remaining data to use for validation
+  val_size: 0.2
+  # fix this for reproducibility, change to have new splits
+  random_seed: 42
+  # here -1 means all available cores
+  n_jobs: -1
+  # cross validation sequence
+  cv: 5
+  # log verbosity, 0 (silent), 1 (warning), 2 (info), 3 (debug) 
+  verbose: 1
+  # if necessary, define own scoring setting
+  scoring: None
+  # early stopping for XGB
+  early_stopping_rounds: 30
+  # NOTE: you can put here any parameter that is accepted by the constructor of
+  # RandomForestClassifier. This is a subsample, but more could be added:
+  random_forest:
+    n_estimators: 100
+    max_depth: 15
+    min_samples_split: 4
+    min_samples_leaf: 3
+    criterion: "gini"
+    max_features: "sqrt"
+    # DO not change the following, see:
+    # https://www.geeksforgeeks.org/oob-errors-for-random-forests-in-scikit-learn/
+    oob_score: true
+    output_artifact: "rf_cls_model.pkl"
+  # NOTE: you can put here any parameter that is accepted by the constructor of
+  # XGBoostClassifier: see: https://xgboost.readthedocs.io/en/stable/parameter.html
+  # this is a subsample, but more could be added:
+  xgb_cls:
+    objective: "binary:logistic"
+    eval_metric: ["error", "logloss"]
+    n_estimators: 100
+    max_depth: 6
+    min_child_weight: 1
+    subsample: 1
+    colsample_bytree: 1
+    learning_rate: 0.3
+    output_artifact: "xgb_cls_model.pkl"
+  xgb_cls_cv:
+    # for our binary classification, output probability
+    objective: ["binary:logistic"]
+    # evaluation metrics used e.g. for model plots of best estimator
+    eval_metric: ["error", "logloss"]
+    # specifies the number of decision trees to be boosted
+    n_estimators: [100, 150, 200, 250]
+    # max_depth is the tree's maximum depth. Increasing it increases the model complexity
+    max_depth: [5, 6, 8, 9] #,12]
+    # learning_rate shrinks the weights to make the boosting process more conservative
+    learning_rate: [0.01, 0.1, 0.5]
+    # gamma specifies the minimum loss reduction required to make a split
+    gamma: [0, 1, 10]
+    # percentage of columns to be samples for each tree
+    colsample_bytree: [0.5, 0.7, 1]
+    # reg_alpha provides l1 regularization to the weight, higher values are more conservative
+    reg_alpha: [0.01, 0.1, 0.5]
+    # reg_lambda provides l2 regularization to the weight, higher values are more conservative
+    reg_lambda: [0.01, 0.1, 0.5]
+    output_artifact: "xgb_cls_cv_model.pkl"
+    

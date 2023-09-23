@@ -1,0 +1,335 @@
+Performance Evaluation Metrics of Categorical Census Features
+_____________________________________________________________
+
+workclass - Private:
+   Precision:  0.83, Recall:  0.66, Fbeta:  0.73
+   Confusion Matrix: 
+[[2907  119]
+ [ 297  572]]
+
+workclass - Self-emp-not-inc:
+   Precision:  0.83, Recall:  0.57, Fbeta:  0.68
+   Confusion Matrix: 
+[[358  16]
+ [ 58  77]]
+
+workclass - Local-gov:
+   Precision:  0.86, Recall:  0.73, Fbeta:  0.79
+   Confusion Matrix: 
+[[303  14]
+ [ 32  88]]
+
+workclass - State-gov:
+   Precision:  0.83, Recall:  0.79, Fbeta:  0.81
+   Confusion Matrix: 
+[[165  11]
+ [ 15  55]]
+
+workclass - Self-emp-inc:
+   Precision:  0.84, Recall:  0.84, Fbeta:  0.84
+   Confusion Matrix: 
+[[ 72  20]
+ [ 20 108]]
+
+workclass - Other:
+   Precision:  0.79, Recall:  0.43, Fbeta:  0.56
+   Confusion Matrix: 
+[[271   4]
+ [ 20  15]]
+
+workclass - Federal-gov:
+   Precision:  0.80, Recall:  0.59, Fbeta:  0.68
+   Confusion Matrix: 
+[[98 13]
+ [35 51]]
+
+workclass - Never-worked:
+   Precision:  1.00, Recall:  1.00, Fbeta:  1.00
+   Confusion Matrix: 
+[[2]]
+
+workclass - Without-pay:
+   Precision:  1.00, Recall:  1.00, Fbeta:  1.00
+   Confusion Matrix: 
+[[2]]
+
+marital_status - Married-civ-spouse:
+   Precision:  0.82, Recall:  0.72, Fbeta:  0.77
+   Confusion Matrix: 
+[[1263  188]
+ [ 338  869]]
+
+marital_status - Never-married:
+   Precision:  0.89, Recall:  0.46, Fbeta:  0.61
+   Confusion Matrix: 
+[[1709    5]
+ [  49   42]]
+
+marital_status - Separated:
+   Precision:  1.00, Recall:  0.60, Fbeta:  0.75
+   Confusion Matrix: 
+[[208   0]
+ [  2   3]]
+
+marital_status - Widowed:
+   Precision:  1.00, Recall:  0.14, Fbeta:  0.25
+   Confusion Matrix: 
+[[183   0]
+ [ 12   2]]
+
+marital_status - Divorced:
+   Precision:  0.92, Recall:  0.39, Fbeta:  0.55
+   Confusion Matrix: 
+[[724   4]
+ [ 68  44]]
+
+marital_status - Married-spouse-absent:
+   Precision:  1.00, Recall:  0.40, Fbeta:  0.57
+   Confusion Matrix: 
+[[89  0]
+ [ 6  4]]
+
+marital_status - Married-AF-spouse:
+   Precision:  1.00, Recall:  0.50, Fbeta:  0.67
+   Confusion Matrix: 
+[[2 0]
+ [2 2]]
+
+occupation - Adm-clerical:
+   Precision:  0.83, Recall:  0.45, Fbeta:  0.59
+   Confusion Matrix: 
+[[579  10]
+ [ 58  48]]
+
+occupation - Sales:
+   Precision:  0.83, Recall:  0.61, Fbeta:  0.70
+   Confusion Matrix: 
+[[425  21]
+ [ 65 102]]
+
+occupation - Machine-op-inspct:
+   Precision:  1.00, Recall:  0.39, Fbeta:  0.57
+   Confusion Matrix: 
+[[289   0]
+ [ 23  15]]
+
+occupation - Priv-house-serv:
+   Precision:  1.00, Recall:  1.00, Fbeta:  1.00
+   Confusion Matrix: 
+[[38]]
+
+occupation - Exec-managerial:
+   Precision:  0.83, Recall:  0.85, Fbeta:  0.84
+   Confusion Matrix: 
+[[325  66]
+ [ 57 313]]
+
+occupation - Transport-moving:
+   Precision:  0.78, Recall:  0.30, Fbeta:  0.43
+   Confusion Matrix: 
+[[222   5]
+ [ 43  18]]
+
+occupation - Farming-fishing:
+   Precision:  0.80, Recall:  0.27, Fbeta:  0.40
+   Confusion Matrix: 
+[[184   1]
+ [ 11   4]]
+
+occupation - Other-service:
+   Precision:  1.00, Recall:  0.35, Fbeta:  0.52
+   Confusion Matrix: 
+[[604   0]
+ [ 15   8]]
+
+occupation - Craft-repair:
+   Precision:  0.85, Recall:  0.46, Fbeta:  0.59
+   Confusion Matrix: 
+[[475  12]
+ [ 82  69]]
+
+occupation - Tech-support:
+   Precision:  0.78, Recall:  0.69, Fbeta:  0.73
+   Confusion Matrix: 
+[[120  11]
+ [ 18  40]]
+
+occupation - Handlers-cleaners:
+   Precision:  0.75, Recall:  0.16, Fbeta:  0.26
+   Confusion Matrix: 
+[[210   1]
+ [ 16   3]]
+
+occupation - Prof-specialty:
+   Precision:  0.84, Recall:  0.85, Fbeta:  0.85
+   Confusion Matrix: 
+[[350  59]
+ [ 53 306]]
+
+occupation - Protective-serv:
+   Precision:  0.78, Recall:  0.61, Fbeta:  0.68
+   Confusion Matrix: 
+[[83  7]
+ [16 25]]
+
+occupation - Other:
+   Precision:  0.79, Recall:  0.43, Fbeta:  0.56
+   Confusion Matrix: 
+[[273   4]
+ [ 20  15]]
+
+occupation - Armed-Forces:
+   Precision:  1.00, Recall:  1.00, Fbeta:  1.00
+   Confusion Matrix: 
+[[1]]
+
+relationship - Husband:
+   Precision:  0.82, Recall:  0.73, Fbeta:  0.77
+   Confusion Matrix: 
+[[1063  166]
+ [ 292  770]]
+
+relationship - Other-relative:
+   Precision:  1.00, Recall:  0.38, Fbeta:  0.55
+   Confusion Matrix: 
+[[179   0]
+ [  5   3]]
+
+relationship - Unmarried:
+   Precision:  0.94, Recall:  0.39, Fbeta:  0.55
+   Confusion Matrix: 
+[[634   1]
+ [ 27  17]]
+
+relationship - Not-in-family:
+   Precision:  0.90, Recall:  0.41, Fbeta:  0.56
+   Confusion Matrix: 
+[[1322    8]
+ [ 101   69]]
+
+relationship - Own-child:
+   Precision:  1.00, Recall:  0.50, Fbeta:  0.67
+   Confusion Matrix: 
+[[814   0]
+ [  9   9]]
+
+relationship - Wife:
+   Precision:  0.82, Recall:  0.70, Fbeta:  0.75
+   Confusion Matrix: 
+[[166  22]
+ [ 43  98]]
+
+race - White:
+   Precision:  0.83, Recall:  0.67, Fbeta:  0.74
+   Confusion Matrix: 
+[[3392  178]
+ [ 426  875]]
+
+race - Other:
+   Precision:  1.00, Recall:  0.50, Fbeta:  0.67
+   Confusion Matrix: 
+[[40  0]
+ [ 2  2]]
+
+race - Black:
+   Precision:  0.83, Recall:  0.65, Fbeta:  0.73
+   Confusion Matrix: 
+[[567   9]
+ [ 24  45]]
+
+race - Asian-Pac-Islander:
+   Precision:  0.80, Recall:  0.62, Fbeta:  0.70
+   Confusion Matrix: 
+[[134   9]
+ [ 23  37]]
+
+race - Amer-Indian-Eskimo:
+   Precision:  0.88, Recall:  0.78, Fbeta:  0.82
+   Confusion Matrix: 
+[[45  1]
+ [ 2  7]]
+
+mod_native_country - United-States:
+   Precision:  0.83, Recall:  0.67, Fbeta:  0.74
+   Confusion Matrix: 
+[[3659  178]
+ [ 437  873]]
+
+mod_native_country - Mexico:
+   Precision:  1.00, Recall:  0.43, Fbeta:  0.60
+   Confusion Matrix: 
+[[131   0]
+ [  4   3]]
+
+mod_native_country - Central_America:
+   Precision:  1.00, Recall:  0.60, Fbeta:  0.75
+   Confusion Matrix: 
+[[38  0]
+ [ 2  3]]
+
+mod_native_country - Other:
+   Precision:  0.69, Recall:  0.71, Fbeta:  0.70
+   Confusion Matrix: 
+[[148  11]
+ [ 10  24]]
+
+mod_native_country - South_East_Asia:
+   Precision:  0.92, Recall:  0.65, Fbeta:  0.76
+   Confusion Matrix: 
+[[41  1]
+ [ 6 11]]
+
+mod_native_country - North_West_South_Europe:
+   Precision:  0.80, Recall:  0.67, Fbeta:  0.73
+   Confusion Matrix: 
+[[42  2]
+ [ 4  8]]
+
+mod_native_country - South_Middle_Asia:
+   Precision:  0.91, Recall:  0.67, Fbeta:  0.77
+   Confusion Matrix: 
+[[14  1]
+ [ 5 10]]
+
+mod_native_country - South_America:
+   Precision:  1.00, Recall:  0.50, Fbeta:  0.67
+   Confusion Matrix: 
+[[18  0]
+ [ 1  1]]
+
+mod_native_country - South_East_Europe:
+   Precision:  1.00, Recall:  1.00, Fbeta:  1.00
+   Confusion Matrix: 
+[[11  0]
+ [ 0  5]]
+
+mod_native_country - China:
+   Precision:  1.00, Recall:  0.71, Fbeta:  0.83
+   Confusion Matrix: 
+[[11  0]
+ [ 2  5]]
+
+mod_native_country - Japan:
+   Precision:  1.00, Recall:  0.80, Fbeta:  0.89
+   Confusion Matrix: 
+[[8 0]
+ [1 4]]
+
+mod_native_country - Caribbean:
+   Precision:  0.89, Recall:  0.80, Fbeta:  0.84
+   Confusion Matrix: 
+[[41  1]
+ [ 2  8]]
+
+mod_native_country - Canada:
+   Precision:  0.73, Recall:  0.73, Fbeta:  0.73
+   Confusion Matrix: 
+[[11  3]
+ [ 3  8]]
+
+mod_native_country - Taiwan:
+   Precision:  1.00, Recall:  1.00, Fbeta:  1.00
+   Confusion Matrix: 
+[[5 0]
+ [0 3]]
+

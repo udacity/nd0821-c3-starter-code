@@ -1,5 +1,7 @@
 # a user can manipulate/configure logger from project libraries like any other Python object
 
+print(f'Invoking __init__.py for {__name__}')
+
 import logging
 from logging import Formatter, NullHandler
 import colorama
@@ -25,6 +27,5 @@ class CustomColoredFormatter(Formatter):
             if levelname in COLORS:
                 return f"{COLORS[levelname]}{msg}{Style.RESET_ALL}"
         return msg
-
     
 logging.getLogger(__name__).addHandler(NullHandler())

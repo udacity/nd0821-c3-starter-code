@@ -24,10 +24,6 @@ So, the categorical features are:
 # Imports
 ###################
 
-from training.ml.model import inference, compute_model_metrics
-from training.ml.data import clean_data, get_cat_features
-from config import get_config, get_data_path, get_models_path
-
 import os
 import sys
 import logging
@@ -44,6 +40,11 @@ MAIN_DIR = os.path.join(os.getcwd(), 'src/')
 sys.path.append(MAIN_DIR)
 sys.path.append(os.getcwd())
 print(f'sys.path : {sys.path}')
+
+from training.ml.model import inference, compute_model_metrics
+from training.ml.data import clean_data, get_cat_features
+from config import get_config, get_data_path, get_models_path
+
 
 #####################
 # Coding
@@ -127,6 +128,8 @@ def compute_slice_metrics_categorical():
     except Exception as e:
         logger.exception("Exit: exception of type %s occurred. Details: %s", type(e).__name__, str(e))
         sys.exit(1)
+    else:
+        logger.info('Read-in of data, transformer, model artifacts was successful. Do performance evaluation.')
 
     # write to performance metric file - './<date>_slice_output.txt'
     FILE_HEADER = 'Performance Evaluation Metrics of Categorical Census Features\n'

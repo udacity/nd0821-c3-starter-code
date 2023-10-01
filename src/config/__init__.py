@@ -3,6 +3,7 @@
 import logging
 from logging import Formatter, NullHandler
 from colorama import Fore, Style
+from src.config.config import get_config, get_data_path, get_models_path, get_project_root_path
 
 
 print(f'Invoking __init__.py for {__name__}')

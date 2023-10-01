@@ -10,6 +10,9 @@ pytest_html==4.0.0
 requests==2.31.0
 fastapi==0.98.0
 uvicorn==0.22.0
+starlette==0.27.0
+httpx==0.25.0
+pydantic==1.10.4
 gunicorn==20.1.0
 matplotlib==3.6.2
 seaborn==0.12.2

@@ -1,0 +1,97 @@
+features_labels:
+  "age": "Person's age - numerical value (int)"
+  "workclass": "Person's work class - categorical value (str)"
+  "fnlgt": "Index information - numerical value (int), internally removed"
+  "education": "Person's education level - ordinal categorical value (str)"
+  "education_num": "Person's education level as number - numerical value (int)"
+  "marital_status": "Person's marital status - nominal categorical value (str)"
+  "occupation": "Person's occupation - nominal categorical value (str)"
+  "relationship": "Person's relationship - nominal categorical (str)"
+  "race": "Persons's race - nominal categorical value (str)"
+  "sex": "Person's sex - nominal categorical value (str), internally mapped to integer: 'Male': 0, 'Female': 1"
+  "capital_gain": "Person's capital gain - numerical value (int)"
+  "capital_loss": "Person's capital loss - numerical value (int)"
+  "hours_per_week": "Person's hours of work per week - numerical value (int)"
+  "native_country": "Persons's native country - nominal categorical value (str), internally mapped to specific bin group"
+test_examples:
+  "Class <=50k (Label 0)":
+    "summary": "Person test example, income <=50k"
+    "description": "Person test example for model to predict income class of <=50k"
+    "value": 
+      "age": 38
+      "workclass": "Private"
+      "fnlgt": 215646
+      "education": "HS-grad"
+      "education_num": 9
+      "marital_status": "Divorced"
+      "occupation": "Handlers-cleaners"
+      "relationship": "Not-in-family"
+      "race": "White"
+      "sex": "Male"
+      "capital_gain": 0
+      "capital_loss": 0
+      "hours_per_week": 40
+      "native_country": "United-States"
+  "Class >50k (Label 1)":
+    "summary": "Person test example, income >50k"
+    "description": "Person test example for model to predict income class of >50k"
+    "value": 
+      "age": 31
+      "workclass": "Private"
+      "fnlgt": 45781
+      "education": "Masters"
+      "education_num": 14
+      "marital_status": "Never-married"
+      "occupation": "Prof-specialty"
+      "relationship": "Not-in-family"
+      "race": "White"
+      "sex": "Female"
+      "capital_gain": 14084
+      "capital_loss": 0
+      "hours_per_week": 50
+      "native_country": "United-States"
+  "Wrong feature value types str": 
+    "summary": "Person test example with wrong value types as strings, success case of >50k"
+    "description": "Person test example for model to handle wrong values (education, hours_per_week numbers as string)"
+    "value":
+      "age": 31
+      "workclass": "Private"
+      "fnlgt": 45781
+      "education": "Masters"
+      "education_num": '14'
+      "marital_status": "Never-married"
+      "occupation": "Prof-specialty"
+      "relationship": "Not-in-family"
+      "race": "White"
+      "sex": "Female"
+      "capital_gain": 14084
+      "capital_loss": 0
+      "hours_per_week": '50'
+      "native_country": "United-States"
+  "Wrong feature value types int": 
+    "summary": "Person test example with wrong value types as int, success case of >50k"
+    "description": "Person test example for model to handle wrong values (workclass, relationship strings as int)"
+    "value":
+      "age": 31
+      "workclass": 15
+      "fnlgt": 45781
+      "education": "Masters"
+      "education_num": 14
+      "marital_status": "Never-married"
+      "occupation": "Prof-specialty"
+      "relationship": 3
+      "race": "White"
+      "sex": "Female"
+      "capital_gain": 14084
+      "capital_loss": 0
+      "hours_per_week": 50
+      "native_country": "United-States"
+  "Missing features": 
+    "summary": "Person test example with missing values, failure case"
+    "description": "Person test example for model to handle missing feature values (starting with age)"
+    "value":
+      "fnlgt": 120478
+      "education_num": 11
+      "capital_gain": 0
+      "capital_loss": 0
+      "hours_per_week": 10

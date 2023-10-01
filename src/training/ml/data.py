@@ -218,7 +218,7 @@ def clean_data(df, config_file) -> pd.DataFrame:
 
     # replacement actions
     df = df.replace(to_replace=[' ?', '?', '? ', ' ? '], value='Other')
-    df = df.replace(to_replace=['Others', 'others', 'other'], value='Other')
+    df = df.replace(to_replace=['Others', 'others', 'other', 'Other values (5)'], value='Other')
     df = df.applymap(lambda x: x.strip().replace(' ', '-') if isinstance(x, str) else x)
     df['sex'] = df['sex'].map({'Male': 0, 'Female': 1})
 
@@ -229,8 +229,9 @@ def clean_data(df, config_file) -> pd.DataFrame:
     else:
         df['mod_native_country'] = df['native_country'].copy()
 
-    # change target column 'salary' (remember: spaces are stripped)
-    df['salary'] = df['salary'].map({'>50K': 1, '<=50K': 0})
+    # change target column 'salary' (remember: spaces are stripped) if available in df
+    if 'salary' in df.columns:
+        df['salary'] = df['salary'].map({'>50K': 1, '<=50K': 0})
 
     # remove original columns being modified or unnecessary,
     # only available ones will be removed

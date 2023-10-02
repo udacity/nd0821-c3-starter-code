@@ -37,11 +37,10 @@ def test_root():
 
 
 @pytest.mark.parametrize('test_input, expected',
-    [
-        ('age', "Person's age - numerical value (int)"),
-        ('marital_status', "Person's marital status - nominal categorical value (str)")
-    ]
-)
+                         [
+                            ('age', "Person's age - numerical value (int)"),
+                            ('marital_status', "Person's marital status - nominal categorical value (str)")
+                         ])
 def test_feature_info_response(test_input: str, expected: str):
     """
     Tests GET request response of function feature_labels()
@@ -79,7 +78,7 @@ def test_predict_status():
     with TestClient(app) as client:
         response = client.post("/predict/", json=sample)
         assert response.status_code == HTTPStatus.OK
-        assert response.request.method == "POST"    
+        assert response.request.method == "POST"
 
 
 def test_missing_feature_predict():
@@ -222,7 +221,7 @@ def test_wrong_feature_type_int_predict():
         'native_country': 'United-States'
     }
     with TestClient(app) as client:
-        response = client.post("/predict/", json=sample)       
+        response = client.post("/predict/", json=sample)
         assert response.status_code == HTTPStatus.OK
         assert response.request.method == "POST"
         assert response.content == b'income prediction label: 1, salary class: >50k' or \

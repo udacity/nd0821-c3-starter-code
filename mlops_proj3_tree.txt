@@ -1,0 +1,67 @@
+.
+├── LICENSE.txt
+├── README.md
+├── data
+│   ├── census.csv.dvc
+│   └── preproc_census.csv.dvc
+├── dvc_on_heroku_instructions.md
+├── logs
+│   └── ...
+├── mlops_proj3_tree.txt
+├── mlops_proj3_tree_dirs.txt
+├── model_card.md
+├── models
+│   ├── final_col_transformer_artifact.pkl
+│   └── final_xgb_cls_artifact.pkl
+├── plots
+│   ├── ... a lot of .png files, like ...
+│   ├── salary_dist_hoursPerWeek-age-sex_plot.png
+│   ├── sex_dist_age-capitalGain-educationLevel_plot.png
+│   ├── sex_plot.png
+│   └── workclass_plot.png
+├── requirements.txt
+├── sanitycheck.py
+├── screenshots
+│   ├── ... a lot of .png files, like ...
+│   ├── MLOps_proj3_FastAPI_docsLandingPage.PNG
+│   ├── MLOps_proj3_FastAPI_docsPredictPersonIncomeNegativeExample.PNG
+│   ├── MLOps_proj3_FastAPI_gitHubPrecommitHook.PNG
+│   ├── education-group_people-count.PNG
+│   └── normalDistTest_hours-per-week.PNG
+├── setup.py
+├── src
+│   ├── 2023-09-22_07-51_slice_output.txt
+│   ├── __init__.py
+│   ├── app
+│   │   ├── __init__.py
+│   │   ├── examples_request.yml
+│   │   └── schemas.py
+│   ├── config
+│   │   ├── __init__.py
+│   │   ├── config.py
+│   │   └── config.yml
+│   ├── eda
+│   │   ├── __init__.py
+│   │   ├── eda.ipynb
+│   │   ├── eda_census_orig_report.html
+│   │   └── eda_census_preproc_report.html
+│   ├── main.py
+│   ├── slice_performance.py
+│   └── training
+│       ├── __init__.py
+│       ├── ml
+│       │   ├── __init__.py
+│       │   ├── data.py
+│       │   └── model.py
+│       └── train_model.py
+└── tests
+    ├── __init__.py
+    ├── api_test_report.html
+    ├── assets
+    │   └── style.css
+    ├── conftest.py
+    ├── data_test_report.html
+    ├── model_test_report.html
+    ├── test_api.py
+    ├── test_data.py
+    └── test_model.py

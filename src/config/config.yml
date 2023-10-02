@@ -1,5 +1,5 @@
 main:
-  project_name: us_census
+  project_name: census-project
 
 logging:
   version: 1
@@ -51,6 +51,8 @@ etl:
   data_path: 'data'
   orig_census: "census.csv"
   preproc_census: "preproc_census.csv"
+  orig_census_dvc_url: "data/census.csv"
+  preproc_census_dvc_url: "data/preproc_census.csv"
   fnlgt_range: range(0, 1550000, 50000)
   non_converting_countries: ['Canada', 'United-States', 'Mexico', 'Hongkong', 'China',
                              'Japan', 'Taiwan', 'Russia', 'Outlying-US']

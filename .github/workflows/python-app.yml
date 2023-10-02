@@ -38,6 +38,8 @@ jobs:
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
     - name: DVC install      # see: https://github.com/iterative/setup-dvc
       uses: iterative/setup-dvc@v1
+    - name: DVC
+      run: dvc pull
     - name: Test with pytest 
       run: |
          # Final action: runs pytest for all tests in the ./tests dir

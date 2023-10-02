@@ -18,9 +18,8 @@ import os
 import sys
 import pandas as pd
 import pytest
-import dvc.api
 
-from src.config import get_config, get_data_path
+from src.config import get_config
 from src.training.ml.data import clean_data
 
 ###################

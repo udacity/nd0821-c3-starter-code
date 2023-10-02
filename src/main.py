@@ -34,6 +34,7 @@ date:   2023-09
 
 import logging
 import uvicorn
+import asyncio
 import signal
 import os
 import sys
@@ -50,7 +51,11 @@ print(f'sys.path : {sys.path}')
 
 from typing import Optional, Any
 from contextlib import asynccontextmanager
-from fastapi import FastAPI, Body, HTTPException, Response, status
+from fastapi import FastAPI, Body, HTTPException, Response, Request, status
+from fastapi.encoders import jsonable_encoder
+from fastapi.exceptions import RequestValidationError
+from fastapi.responses import JSONResponse
+
 from app.schemas import FeatureLabels, Person
 from training.ml.data import clean_data
 from training.ml.model import inference
@@ -86,6 +91,11 @@ def graceful_shutdown(signum, frame) -> None:
     # Perform cleanup tasks here (closing db connections, saving state, ...);
     # e.g. has to be filled, if Person items are stored in a database
 
+    # Set the stop condition when receiving SIGTERM.
+    loop = asyncio.get_running_loop()
+    stop = loop.create_future()
+    loop.add_signal_handler(signal.SIGTERM, stop.set_result, None)
+    
     # Finally, exit the application
     logger.warning("Shutting down the FastAPI US Census app")
     sys.exit(0)
@@ -132,6 +142,14 @@ app = FastAPI(
     lifespan=lifespan,
     debug = True
 )
+
+
+@app.exception_handler(RequestValidationError)
+async def validation_exception_handler(request: Request, exc: RequestValidationError):
+    return JSONResponse(
+        status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+        content=jsonable_encoder({"detail": exc.errors(), "body": exc.body}),
+    )
 
 
 @app.get("/")

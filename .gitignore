@@ -159,6 +159,9 @@ cython_debug/
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
 #.idea/
 
-# census app files
+# MLOPs proj3 US census app files
+./mlops_proj3_tree.txt
+./mlops_proj3_tree_dirs.txt
 ./logs/*.*
 census_app.log
+

@@ -27,6 +27,6 @@ print(response.status_code)
 print(response.json())
 
 # POST, check given sample
-response = requests.post('https://census-project-xki0.onrender.com/predict/', data=sample)
+response = httpx.post('https://census-project-xki0.onrender.com/predict/', data=sample)
 print(response.status_code)
 print(response.content)

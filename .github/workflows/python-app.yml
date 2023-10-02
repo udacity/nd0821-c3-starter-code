@@ -22,9 +22,6 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
-    - name: Listing contents after checkout
-        run: |
-          ls
     - name: Set up Python ${{ matrix.python-version }} # Name of an action that sets up Python
       uses: actions/setup-python@v3
       with:

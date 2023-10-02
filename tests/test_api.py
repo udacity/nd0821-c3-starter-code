@@ -40,8 +40,7 @@ def test_root():
                          [
                             ('age', "Person's age - numerical value (int)"),
                             ('marital_status', "Person's marital status - nominal categorical value (str)")
-                         ]
-)
+                         ])
 def test_feature_info_response(test_input: str, expected: str):
     """
     Tests GET request response of function feature_labels()

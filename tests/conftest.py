@@ -47,7 +47,7 @@ def raw_test_data() -> pd.DataFrame:
     data = os.path.join(get_data_path(), config_file['etl']['orig_census'])
 
     if not os.path.exists(data):
-        pytest.fail("Fixture creation: Data not found at path: %s", data)
+        pytest.fail(f"Fixture creation with 1500 orig rows: Data not found at path: {data}")
 
     return pd.read_csv(data)[:1500]
 
@@ -63,6 +63,6 @@ def cleaned_test_data() -> pd.DataFrame:
     data = os.path.join(get_data_path(), config_file['etl']['orig_census'])
 
     if not os.path.exists(data):
-        pytest.fail("Fixture creation: Data not found at path: %s", data)
+        pytest.fail(f"Fixture creation with 200 cleaned rows: Data not found at path: {data}")
 
     return clean_data(pd.read_csv(data)[:200], config_file)

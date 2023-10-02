@@ -49,7 +49,7 @@ sys.path.append(MAIN_DIR)
 sys.path.append(os.getcwd())
 print(f'sys.path : {sys.path}')
 
-from typing import Optional, Any
+from typing import Any
 from contextlib import asynccontextmanager
 from fastapi import FastAPI, Body, HTTPException, Response, Request, status
 from fastapi.encoders import jsonable_encoder
@@ -95,7 +95,7 @@ def graceful_shutdown(signum, frame) -> None:
     loop = asyncio.get_running_loop()
     stop = loop.create_future()
     loop.add_signal_handler(signal.SIGTERM, stop.set_result, None)
-    
+
     # Finally, exit the application
     logger.warning("Shutting down the FastAPI US Census app")
     sys.exit(0)
@@ -108,7 +108,7 @@ signal.signal(signal.SIGTERM, graceful_shutdown)
 @asynccontextmanager
 async def lifespan(app: FastAPI) -> None:
     ''' Handles transformer and model artifacts for startup and shutdown.
-    
+
     The coding before the yield will be executed before the application starts taking
     requests, during the startup.
     The coding after the yield will be executed after the application finishes handling requests,
@@ -118,7 +118,7 @@ async def lifespan(app: FastAPI) -> None:
         logging.debug('Read in post-market transformer and model artifacts')
         # load ml components: feature transformer and classifier artifacts
         transformer_artifact = load_transformer_artifact()
-        ml_components['transformer_artifact'] = transformer_artifact 
+        ml_components['transformer_artifact'] = transformer_artifact
         model_artifact = load_final_model_artifact()
         ml_components['model_artifact'] = model_artifact
 
@@ -137,7 +137,7 @@ async def lifespan(app: FastAPI) -> None:
 app = FastAPI(
     title = "Udacity MLOps, Project 3 - Prediction Model for Public US Census Bureau Data",
     description = "Deploying a Binary Classification ML Model on Render with FastAPI; \
-                  its inference is about having a salary <=50K or >50K",
+                   its inference is about having a salary <=50K or >50K",
     version = "0.1",
     lifespan=lifespan,
     debug = True
@@ -159,7 +159,7 @@ async def root() -> Response:
         status_code=status.HTTP_200_OK,
         content="Welcome to the Udacity MLOps project 3 and its salary prediction application!"
     )
-    return response 
+    return response
 
 
 @app.get("/feature_labels/{feature_name}")
@@ -172,21 +172,21 @@ async def feature_labels(feature_name: FeatureLabels) -> Any:
 
 @app.post("/predict/")
 async def predict(person: Person = Body(..., examples=examples_request['test_examples'])):
-    ''' 
+    '''
     Returns prediction of test examples about income class, being <=50k or >50k,
     so having a proper response status number 200 in such cases.
-    
+
     If only a few features are having a wrong value type, the model shall be able to handle
     this properly having an inference result of being an <=50k or >50k item as well.
-    
+
     If most of the features are missing, a value error shall be thrown with response status number 422.
     '''
-    logging.info("Model classification inference started")   
+    logging.info("Model classification inference started")
     person = person.dict()
     features = np.array(
         [person[f] for f in examples_request['features_labels'].keys()]
     ).reshape(1, -1)
-    
+
     df = pd.DataFrame(features, columns=examples_request['features_labels'].keys())
     df_cleaned = clean_data(df, get_config())
     logger.info('Census cleaned new adult person data with %s features',
@@ -213,7 +213,7 @@ async def predict(person: Person = Body(..., examples=examples_request['test_exa
     response = Response(
         status_code = status.HTTP_200_OK,
         content = content_txt,
-    )   
+    )
 
     return response
 

@@ -188,7 +188,6 @@ async def predict(person: Person = Body(..., examples=examples_request['test_exa
     ).reshape(1, -1)
 
     df = pd.DataFrame(features, columns=examples_request['features_labels'].keys())
-    
     df_cleaned = clean_data(df, get_config())
     logger.info('Census cleaned new adult person data with %s features',
                 df_cleaned.shape[1])

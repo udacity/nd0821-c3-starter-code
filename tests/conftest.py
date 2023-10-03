@@ -46,11 +46,11 @@ def raw_test_data() -> pd.DataFrame:
 
     Returns:
         Subset dataframe with 1500 rows loaded from original csv file
-    """ 
+    """
     try:
         # data = './df_test_1500raw.csv'
         ROOT = os.getcwd()
-        filepath = os.path.join(ROOT, config_file['etl']['test_data_orig_census'])   
+        filepath = os.path.join(ROOT, config_file['etl']['test_data_orig_census'])
         return pd.read_csv(filepath)
     except Exception as e:
         pytest.fail(f"Fixture with 1500 orig rows: exc: {e}")
@@ -67,7 +67,7 @@ def cleaned_test_data() -> pd.DataFrame:
     try:
         # data = './df_test_1500raw.csv'
         ROOT = os.getcwd()
-        filepath = os.path.join(ROOT, config_file['etl']['test_data_orig_census']) 
+        filepath = os.path.join(ROOT, config_file['etl']['test_data_orig_census'])
         return clean_data(pd.read_csv(filepath)[:200], config_file)
     except Exception as e:
         pytest.fail(f"Fixture with 200 cleaned rows: exc: {e}")

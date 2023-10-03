@@ -22,11 +22,14 @@ sample = {
 }
 
 # GET, check first feature attribute
-response = httpx.get('https://census-project-xki0.onrender.com/feature_info/age')
-print(response.status_code)
-print(response.json())
+response = httpx.get('https://census-project-xki0.onrender.com/feature_labels/age')
+print('--- Render census-project feature GET life service test ---')
+print(f'response status code: {response.status_code}')
+print(f'response json value: {response.json()}\n')
 
 # POST, check given sample
-response = httpx.post('https://census-project-xki0.onrender.com/predict/', data=sample)
-print(response.status_code)
-print(response.content)
+print('--- Render census-project person data POST life service test ---')
+response = httpx.post('https://census-project-xki0.onrender.com/predict/',
+                      json=sample)
+print(f'response status code: {response.status_code}')
+print(f'response content:\n{response.content}')

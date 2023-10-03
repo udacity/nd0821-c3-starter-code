@@ -156,13 +156,15 @@ As an examples regarding the use case of having a person earning <=50K as income
 * Have in mind: if you rely on your CI/CD to fail before fixing an issue, it slows down your deployment. Fix issues early, e.g. by running an ensemble linter like flake8 locally before committing changes.
 * For checking the render deployment, a python file exists that uses the httpx module to do one GET and POST on the live render web service and prints its results. 
 
-On the Render web service site, 
+On the Render web service site after deployment
 ![render web service life][image12]
 <br>
+and as result of the httpx test script for GET and POST
 ![render web service test][image13]
 <br>
 ![render web service script result][image14]
 
+<br>
 
 ## License
 This project coding is released under the [MIT](https://github.com/IloBe/US_CensusData_Classifier_PipelineWithDeployment/blob/master/LICENSE.txt) license.

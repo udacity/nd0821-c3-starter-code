@@ -1,6 +1,6 @@
 [//]: # (Image References)
 [image0]: ./screenshots/MLOps_proj3_tree.PNG "proj3 structure"
-[image1]: ./screenshots/MLOps_proj3_FastAPI_gitHubPrecommitHook.PNG "github action"
+[image1]: ./screenshots/continuous_deployment.png "github action"
 [image2]: ./plots/numFeats_outlierDist_sex_boxplot.png "feat dist by sex plot"
 [image3]: ./plots/general_dist_age-hoursPerWeek_boxplot.png "hours-per-week by age boxplots"
 [image4]: ./plots/salary_dist_hoursPerWeek-age-sex_plot.png "salary dist by age sex plot"
@@ -8,12 +8,12 @@
 [image6]: ./plots/sex_plot.png  "sex plot"
 [image7]: ./screenshots/education-group_people-count.PNG "education people count"
 [image8]: ./plots/eduLevel_dist_age-race_plot.png "education level grouping by age race"
-[image9]: ./screenshots/MLOps_proj3_FastAPI_docsPredictPersonIncomeNegativeExample.PNG "fastapi income negative"
+[image9]: ./screenshots/example.PNG "fastapi income negative"
 [image10]: ./screenshots/MLOps_proj3_FastAPI_docsPredictPersonIncomeNegativeExample_ResponseCode.PNG "fastapi income negative response"
-[image11]: ./screenshots/render_createNewWebService.PNG "render web service"
-[image12]: ./
-[image13]: ./
-[image14]: ./
+[image11]: ./screenshots/MLOps_proj3_Render_createNewWebService.PNG "render web service"
+[image12]: ./screenshots/MLOps_proj3_Render_webservice_live.PNG "render web service life"
+[image13]: ./screenshots/MLOps_proj3_Render_webservice_live_test_status.PNG "render web service test"
+[image14]: ./screenshots/live_post.png "render web service script result"
 
 
 # US Census Data - Creating and Deploying a Classifier Pipeline as Web Service
@@ -123,9 +123,9 @@ There in "__main__" it calls
   ```
 
 Remember, this code is for development purpose, in production the reload option shall be set to False resp. not used. In other words, the start command e.g. on our render deployment web service (see below) is:<br>
-uvicorn src.main:app
+uvicorn src.main:app --host 0.0.0.0 --port 8000
 
-* So , we start the browser web application with
+* So, locally we start our implemented browser web application with
 
   ```
   http://127.0.0.1:8000/docs
@@ -155,6 +155,13 @@ As an examples regarding the use case of having a person earning <=50K as income
 * That's it. Implement coding changes, push to the GitHub repository, and the app will automatically redeploy each time, but it will only deploy if your continuous integration action passes. 
 * Have in mind: if you rely on your CI/CD to fail before fixing an issue, it slows down your deployment. Fix issues early, e.g. by running an ensemble linter like flake8 locally before committing changes.
 * For checking the render deployment, a python file exists that uses the httpx module to do one GET and POST on the live render web service and prints its results. 
+
+On the Render web service site, 
+![render web service life][image12]
+<br>
+![render web service test][image13]
+<br>
+![render web service script result][image14]
 
 
 ## License

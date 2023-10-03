@@ -187,11 +187,18 @@ async def predict(person: Person = Body(..., examples=examples_request['test_exa
         [person[f] for f in examples_request['features_labels'].keys()]
     ).reshape(1, -1)
 
+    print(f'predict features are:\n {features}')
+
     df = pd.DataFrame(features, columns=examples_request['features_labels'].keys())
+    
+    print(f'predict df header:\n {df.head()}')
+    
     df_cleaned = clean_data(df, get_config())
     logger.info('Census cleaned new adult person data with %s features',
                 df_cleaned.shape[1])
     logger.info('Its columns are: %s', df_cleaned.columns)
+    
+    print(f'predict cleaned df columns: {df_cleaned.columns}')
 
     # cleaning inference case for person dataframe (X = df_cleaned), not training
     X_processed = ml_components['transformer_artifact'].transform(df_cleaned)
@@ -204,6 +211,8 @@ async def predict(person: Person = Body(..., examples=examples_request['test_exa
 
     pred_class = '>50k' if y_pred == 1 else '<=50k'
     logger.info('income prediction label: %s, salary class: %s', y_pred[0], pred_class)
+    
+    print(f'predict: income prediction label: {y_pred[0]}, salary class: {pred_class}')
 
     content_txt = ''.join(
         ['income prediction label: ', str(y_pred[0]),

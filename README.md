@@ -123,7 +123,7 @@ There in "__main__" it calls
   ```
 
 Remember, this code is for development purpose, in production the reload option shall be set to False resp. not used. In other words, the start command e.g. on our render deployment web service (see below) is:<br>
-uvicorn main:app host="0.0.0.0" port=8000
+uvicorn src.main:app
 
 * So , we start the browser web application with
 

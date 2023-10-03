@@ -31,7 +31,7 @@ Regarding software engineering principles, beside documentation, logging and pyt
 The Unit tests are written via _pytest_for GET and POST prediction requests for the FastAPI component as well as for the mentioned data and model task parts. All unit test results are reported in associated html files of the [tests directory](https://github.com/IloBe/US_CensusData_Classifier_PipelineWithDeployment/tree/master/tests).
 
 All project relevant configuration values, including model hyperparameter ranges for the cross validation concept, are handled via specific configuration _config.yml_ file.<br>
-For versioning tasks, [_git_](https://git-scm.com/) and [_dvc_](https://dvc.org/doc/use-cases/versioning-data-and-models), handled with ignore files content, are chosen.
+For versioning tasks, [_git_](https://git-scm.com/) and [_dvc_](https://dvc.org/doc/use-cases/versioning-data-and-models), handled with ignore files content, are chosen. If a remote storage, like AWS S3 or Azure shall be used as future task, dvc[all] for the selected dvc version is installed via requirements.txt file as well for specific configuration. By now, only dvc 'local' remote is set.
 
 
 ## Environment Set up
@@ -58,6 +58,7 @@ or use
 * In our GitHub repository an automatic Action script is set up to check amongst others dependencies, linting and unit testing.
 ![github action][image1]
 
+<br>
 
 ## Data
 * The download raw _census.csv_ file is preprocessed and stored as new .csv file. Both files are committed and versioned with _dvc_.
@@ -103,6 +104,7 @@ Several other insights are visualised and stored as .png files. So, have a look 
     ...
   ```
 * As mentioned, the model card informs about our found insights of the binary classification estimator including evaluation diagrams and general metrics.
+<br>
 
 
 ## API Creation
@@ -148,7 +150,8 @@ As an examples regarding the use case of having a person earning <=50K as income
 
 <br>
 
-* after selection, render starts its advanced deployment configuation, some parameters are already set, some have to be set manually appropriately. Render guides you through with easy to handle UI's.
+* Because default render Python version is 3.7 and this version has issues with dvc, the environment variable PYTHON_VERSION has to be configured being version 3.10.9.
+* After selection, render starts its advanced deployment configuation, some parameters are already set, some have to be set manually appropriately. Render guides you through with easy to handle UI's.
 * That's it. Implement coding changes, push to the GitHub repository, and the app will automatically redeploy each time, but it will only deploy if your continuous integration action passes. 
 * Have in mind: if you rely on your CI/CD to fail before fixing an issue, it slows down your deployment. Fix issues early, e.g. by running an ensemble linter like flake8 locally before committing changes.
 * For checking the render deployment, a python file exists that uses the httpx module to do one GET and POST on the live render web service and prints its results. 

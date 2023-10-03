@@ -53,6 +53,7 @@ etl:
   preproc_census: "preproc_census.csv"
   orig_census_dvc_url: "data/census.csv"
   preproc_census_dvc_url: "data/preproc_census.csv"
+  test_data_orig_census: "tests/df_test_1500raw.csv"
   fnlgt_range: range(0, 1550000, 50000)
   non_converting_countries: ['Canada', 'United-States', 'Mexico', 'Hongkong', 'China',
                              'Japan', 'Taiwan', 'Russia', 'Outlying-US']

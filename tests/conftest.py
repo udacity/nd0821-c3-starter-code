@@ -2,6 +2,9 @@
 
 """
 This conftest script delivers the fixture setup used for pytest testsuite.
+Having had issues with dvc cache and github actions part of unittests,
+a subset of data is stored once in the tests directory.
+
 author: I. Brinkmeier
 date:   2023-09
 
@@ -43,13 +46,14 @@ def raw_test_data() -> pd.DataFrame:
 
     Returns:
         Subset dataframe with 1500 rows loaded from original csv file
-    """
-    data = config_file['etl']['orig_census_dvc_url']
-    
+    """ 
     try:
-        return pd.read_csv(data)[:1500]
+        # data = './df_test_1500raw.csv'
+        ROOT = os.getcwd()
+        filepath = os.path.join(ROOT, config_file['etl']['test_data_orig_census'])   
+        return pd.read_csv(filepath)
     except Exception as e:
-        pytest.fail(f"Fixture creation with 1500 orig rows: e.g. Data not found at path: {data}, exc: {e}")
+        pytest.fail(f"Fixture with 1500 orig rows: exc: {e}")
 
 
 @pytest.fixture(scope='session')
@@ -60,9 +64,10 @@ def cleaned_test_data() -> pd.DataFrame:
     Returns:
         Subset dataframe with 200 rows loaded from original csv file and cleaned
     """
-    data = config_file['etl']['orig_census_dvc_url']
-
     try:
-        return clean_data(pd.read_csv(data)[:200], config_file)
+        # data = './df_test_1500raw.csv'
+        ROOT = os.getcwd()
+        filepath = os.path.join(ROOT, config_file['etl']['test_data_orig_census']) 
+        return clean_data(pd.read_csv(filepath)[:200], config_file)
     except Exception as e:
-        pytest.fail(f"Fixture creation with 200 cleaned rows: Data not found at path: {data}, exc: {e}")
+        pytest.fail(f"Fixture with 200 cleaned rows: exc: {e}")

@@ -6,7 +6,7 @@
 [image4]: ./plots/salary_dist_hoursPerWeek-age-sex_plot.png "salary dist by age sex plot"
 [image5]: ./plots/capitalGain_dist_age-hoursPerWeek-sex_plot.png "capital gain dist by hours-per-week sex"
 [image6]: ./plots/sex_plot.png  "sex plot"
-[image7]: ./sreenshots/education-group_people-count.PNG "education people-count grouping"
+[image7]: ./screenshots/education-group_people-count.PNG "education people count"
 [image8]: ./plots/eduLevel_dist_age-race_plot.png "education level grouping by age race"
 [image9]: ./screenshots/MLOps_proj3_FastAPI_docsPredictPersonIncomeNegativeExample.PNG "fastapi income negative"
 [image10]: ./screenshots/MLOps_proj3_FastAPI_docsPredictPersonIncomeNegativeExample_ResponseCode.PNG "fastapi income negative response"
@@ -77,7 +77,7 @@ Several other insights are visualised and stored as .png files. So, have a look 
 
 ![sex plot][image6]
 
-![education_people_count grouping][image7]
+![education people count][image7]
 
 ![education level grouping by age race][image8]
 

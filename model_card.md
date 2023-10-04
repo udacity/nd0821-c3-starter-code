@@ -97,10 +97,10 @@ Validation results of the GridSearchCV best estimator are:<br>
 ![best xgb cls eval][image6]
 
 ## Ethical Considerations
-No ethical consideration topics regarding data, human life, risk and harms and their needed risk mitigation strategies or fraught model use cases are detected.
+As ethical consideration topics regarding data, one insight is that the raw data have a bias towards men (twice as many men as women) and regarding race a bias towards white people mainly originally from the U.S., so, scaling activities are mandatory getting appropriate prediction results.<br>
+No other human life, risk and harms and their needed risk mitigation strategies or fraught model use cases are detected.
 
 ## Caveats and Recommendations
-- Regarding the data, have in mind that the raw data have among others a bias towards men (twice as many men as women) and white people mainly originally from the U.S., so, scaling activities are mandatory getting appropriate prediction results.
 - Regarding the prediction task, the performance of the grid search cross validation approach is already improved compared to the one of the single instance, but still not the best. As future toDo, final tuning of the XGBoost Classifier via <i>Hyperopt</i> library is recommended.
 - Additional, feature importance information of the final resulting XGBoost Classifier model is critical to understand the prediction process. As additional future toDo: usage of <i>SHAP</i> diagrams or simple <i>xgb feature_importances_ parameter</i> bar chart of the X_train columns from the GridSearchCV best model result for identifying which features are most relevant for the target variable.
 - Last topic as future toDo is the usage of other classifier types and their evaluation compared to the XGBoost Classifier, even though it was often used by teams that won Kaggle competitions.

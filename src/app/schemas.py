@@ -41,7 +41,7 @@ class FeatureLabels(str, Enum):
 
 
 class Person(BaseModel):
-    ''' Delivers the type hints for feature attributes '''
+    ''' Delivers the column label handling for feature attributes '''
     age: int = Field(..., example=45)
     capital_gain: int = Field(..., example=2174)
     capital_loss: int = Field(..., example=0)

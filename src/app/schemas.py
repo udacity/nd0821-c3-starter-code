@@ -42,21 +42,6 @@ class FeatureLabels(str, Enum):
 
 class Person(BaseModel):
     ''' Delivers the type hints for feature attributes '''
-#    age: int
-#    workclass: Optional[str] = None
-#    fnlgt: int
-#    education: Optional[str] = None
-#    education_num: int
-#    marital_status: Optional[str] = None
-#    occupation: Optional[str] = None
-#    relationship: Optional[str] = None
-#    race: Optional[str] = None
-#    sex: Optional[str] = None
-#    capital_gain: int
-#    capital_loss: int
-#    hours_per_week: int
-#    native_country: Optional[str] = None
-
     age: int = Field(..., example=45)
     capital_gain: int = Field(..., example=2174)
     capital_loss: int = Field(..., example=0)

@@ -20,7 +20,8 @@ from enum import Enum
 ###################
 
 def hyphen_to_underscore(field_name):
-    return f"{field_name}".replace("_", "-")
+    ''' Replaces hyphen with underscore '''
+    return f"{field_name}".replace("-", "_")
 
 class FeatureLabels(str, Enum):
     ''' Delivers the feature names as needed in Python '''

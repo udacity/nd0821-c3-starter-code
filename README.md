@@ -14,6 +14,9 @@
 [image12]: ./screenshots/MLOps_proj3_Render_webservice_live.PNG "render web service life"
 [image13]: ./screenshots/MLOps_proj3_Render_webservice_live_test_status.PNG "render web service test"
 [image14]: ./screenshots/live_post.png "render web service script result"
+[image15]: ./screenshots/render_auto-deploy_settings.PNG "render deploy settings"
+[image16]: ./screenshots/render_deployed_censusproject.PNG "render app deployed"
+[image17]: ./screenshots/render_deployed-app_browser-homepage.PNG "render app welcome"
 
 
 # US Census Data - Creating and Deploying a Classifier Pipeline as Web Service
@@ -152,7 +155,27 @@ As an examples regarding the use case of having a person earning <=50K as income
 
 * Because default render Python version is 3.7 and this version has issues with dvc, the environment variable PYTHON_VERSION has to be configured being version 3.10.9.
 * After selection, render starts its advanced deployment configuation, some parameters are already set, some have to be set manually appropriately. Render guides you through with easy to handle UI's.
-* That's it. Implement coding changes, push to the GitHub repository, and the app will automatically redeploy each time, but it will only deploy if your continuous integration action passes. 
+
+![render deploy settings][image15]
+
+<br>
+
+* That's it. Implement coding changes, push to the GitHub repository, and the app will automatically redeploy each time, but it will only deploy if your continuous integration action passes.
+
+![render app deployed][image16]
+
+<br>
+
+* Regarding the automatically created render census-project app link used as browser link
+  ```
+  https://census-project-xki0.onrender.com
+  ```
+  we get the welcome page message
+  
+![render app welcome][image17]
+
+<br>
+
 * Have in mind: if you rely on your CI/CD to fail before fixing an issue, it slows down your deployment. Fix issues early, e.g. by running an ensemble linter like flake8 locally before committing changes.
 * For checking the render deployment, a python file exists that uses the httpx module to do one GET and POST on the live render web service and prints its results. 
 

@@ -18,6 +18,8 @@
 [image16]: ./screenshots/render_deployed_censusproject.PNG "render app deployed"
 [image17]: ./screenshots/render_deployed-app_browser-homepage.PNG "render app welcome"
 
+[![made-with-python](https://img.shields.io/badge/Made%20with-Python3.10-1f425f.svg?style=flat-square&logo=python3.10)](https://www.python.org/)
+[![MIT license](https://img.shields.io/badge/License-MIT-blue.svg?style=flat-square&logo=appveyor)](https://opensource.org/license/mit/)
 
 # US Census Data - Creating and Deploying a Classifier Pipeline as Web Service
 

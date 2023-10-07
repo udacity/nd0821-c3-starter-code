@@ -31,7 +31,7 @@ General information about the deployed XGBoost classifier, the used data, their 
 
 Regarding software engineering principles, beside documentation, logging and python style, we create _unit tests_. Slice validation and the tests are incorporated into a _CI/CD framework_ using GitHub Actions. Then, the model is deployed using the [_FastAPI_](https://fastapi.tiangolo.com/) web framework and [_Render_](https://dashboard.render.com/#) as open-source web service.
 
-The Unit tests are written via _pytest_for GET and POST prediction requests for the FastAPI component as well as for the mentioned data and model task parts. All unit test results are reported in associated html files of the [tests directory](https://github.com/IloBe/US_CensusData_Classifier_PipelineWithDeployment/tree/master/tests).
+The unit tests are written via [_pytest_](https://docs.pytest.org/en/7.1.x/explanation/goodpractices.html#src-layout) for GET and POST prediction requests for the FastAPI component as well as for the mentioned data and model task parts. All unit test results are reported in associated html files of the [tests directory](https://github.com/IloBe/US_CensusData_Classifier_PipelineWithDeployment/tree/master/tests).
 
 All project relevant configuration values, including model hyperparameter ranges for the cross validation concept, are handled via specific configuration _config.yml_ file.<br>
 For versioning tasks, [_git_](https://git-scm.com/) and [_dvc_](https://dvc.org/doc/use-cases/versioning-data-and-models), handled with ignore files content, are chosen. If a remote storage, like AWS S3 or Azure shall be used as future task, dvc[all] for the selected dvc version is installed via requirements.txt file as well for specific configuration. By now, only dvc 'local' remote is set.
@@ -106,12 +106,12 @@ Several other insights are visualised and stored as .png files. So, have a look 
     
     ...
   ```
-* As mentioned, the model card informs about our found insights of the binary classification estimator including evaluation diagrams and general metrics.
+* As mentioned, the [Model Card](https://github.com/IloBe/US_CensusData_Classifier_PipelineWithDeployment/blob/master/model_card.md) informs about our found insights of the binary classification estimator including evaluation diagrams and general metrics.
 <br>
 
 
 ## API Creation
-* As Web framework to create a RESTful API _fastapi_ is chosen for app implementation. A _pydantic_ _BaseModel_ instance handels the  POST body, e.g. dealing with hyphens in data feature names which is not allowed in Python.
+* As web framework to create a RESTful API [_FastAPI_](https://fastapi.tiangolo.com/) is chosen for app implementation. A _pydantic_ _BaseModel_ instance handels the  POST body, e.g. dealing with hyphens in data feature names which is not allowed in Python.
 
 * As high performance ASGI server [uvicorn](https://www.uvicorn.org/) is selected. The FastAPI web app _uvicorn_ server can be started in the projects root directory via CLI python command:
     

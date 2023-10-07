@@ -11,7 +11,6 @@ date:   2023-09
 ###################
 
 from pydantic import BaseModel, Field
-from typing import Optional
 from enum import Enum
 
 
@@ -22,6 +21,7 @@ from enum import Enum
 def hyphen_to_underscore(field_name):
     ''' Replaces hyphen with underscore '''
     return f"{field_name}".replace("-", "_")
+
 
 class FeatureLabels(str, Enum):
     ''' Delivers the feature names as needed in Python '''

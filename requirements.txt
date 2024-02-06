@@ -11,7 +11,7 @@ pytest_html==4.0.0
 requests==2.31.0
 fastapi==0.98.0
 uvicorn==0.22.0
-starlette<0.36.0 and >=0.35.0
+starlette==0.35.0
 httpx==0.25.0
 pydantic==1.10.13
 gunicorn==20.1.0

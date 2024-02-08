@@ -48,7 +48,6 @@ def raw_test_data() -> pd.DataFrame:
         Subset dataframe with 1500 rows loaded from original csv file
     """
     try:
-        # data = './df_test_1500raw.csv'
         ROOT = os.getcwd()
         filepath = os.path.join(ROOT, config_file['etl']['test_data_orig_census'])
         return pd.read_csv(filepath)
@@ -65,7 +64,6 @@ def cleaned_test_data() -> pd.DataFrame:
         Subset dataframe with 200 rows loaded from original csv file and cleaned
     """
     try:
-        # data = './df_test_1500raw.csv'
         ROOT = os.getcwd()
         filepath = os.path.join(ROOT, config_file['etl']['test_data_orig_census'])
         return clean_data(pd.read_csv(filepath)[:200], config_file)

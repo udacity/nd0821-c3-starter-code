@@ -69,7 +69,7 @@ test_examples:
       "hours_per_week": '50'
       "native_country": "United-States"
   "Wrong feature value types int": 
-    "summary": "Person test example with wrong value types as int, success case of >50k"
+    "summary": "Person test example with wrong value types as int, failure case"
     "description": "Person test example for model to handle wrong values (workclass, relationship strings as int)"
     "value":
       "age": 31

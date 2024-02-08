@@ -5,9 +5,14 @@ Testsuite for FastAPI checks.
 For response attributes and methods see:
 https://www.geeksforgeeks.org/response-methods-python-requests/
 
+Note (2024-02):
+FastAPI usage of Pydantic V1 has different conditions as V2.
+Therefore, some test coding has to be changed for V2.
+It is mentioned in the specific test code.
 
 author: I. Brinkmeier
 date:   2023-09
+update: 2024-02, usage of pydantic V2 as dependency for fastapi 
 """
 
 ###################
@@ -91,7 +96,9 @@ def test_missing_feature_predict():
         response = client.post("/predict/", json=data)
         assert response.status_code == HTTPStatus.UNPROCESSABLE_ENTITY   # no. 422
         assert response.request.method == "POST"
-        assert response.json()["detail"][0]["type"] == "value_error.missing"
+        # prints out the details about wrong types of Person json body items 
+        #print(response.json()["detail"][0])
+        assert response.json()["detail"][0]["type"] == "missing"
 
 
 def test_predict_response_negative():
@@ -165,7 +172,9 @@ def test_wrong_feature_type_str_predict():
     Tests POST predict function about failure due to wrong feature types.
     Regarding the associated example, it starts with education_num feature
     followed by hours_per_week both delivered as string.
-    How is the ability of the model to get an inference value?
+    
+    How is the ability of the model to get an inference value for wrong str dict items?
+    For Pydantic V1 and V2 validation result is still the same.
     It is expected that this few changes can be handled, because FastAPI
     and json are working with strings. So, a proper transformation with
     HTTPStatus.OK (no. 200) shall be the test result.
@@ -197,12 +206,17 @@ def test_wrong_feature_type_str_predict():
 def test_wrong_feature_type_int_predict():
     """
     Tests POST predict function about failure due to wrong feature types.
-    Regarding the associated example, it starts with workclass feature
-    followed by relationship both delivered as int.
-    How is the ability of the model to get an inference value?
+    Regarding the associated example, it starts with 'workclass' feature
+    followed by 'relationship' both delivered as int instead of being 'string_type'.
+    
+    How is the ability of the model to get an inference value for wrong int dict items?
+    For Pydantic V1 used by fastapi:
     It is expected that this few changes can be handled, because FastAPI
     and json transform the unknown categories to zero or None. So, a proper
     transformation with HTTPStatus.OK (no. 200) shall be the test result.
+    For Pydantic V2 used by fastapi type handling is different compared to V1:
+    The test result of the response status code is HTTPStatus.UNPROCESSABLE_ENTITY
+    (no. 422).
     """
     sample = {
         'age': 39,
@@ -222,11 +236,22 @@ def test_wrong_feature_type_int_predict():
     }
     with TestClient(app) as client:
         response = client.post("/predict/", json=sample)
-        assert response.status_code == HTTPStatus.OK
+        # passed pydantic V1 coding, not V2: 
+        # assert response.status_code == HTTPStatus.OK
+        # assert response.request.method == "POST"
+        # assert response.content == b'income prediction label: 1, salary class: >50k' or \
+        #       response.content == b'income prediction label: 0, salary class: <=50k'
+        # Pydantic V2 coding:
+        assert response.status_code == HTTPStatus.UNPROCESSABLE_ENTITY
         assert response.request.method == "POST"
-        assert response.content == b'income prediction label: 1, salary class: >50k' or \
-               response.content == b'income prediction label: 0, salary class: <=50k'
-
+        
+        # prints out the details about wrong types of Person json body items 
+        #print(response.json()["detail"][0]) # for ['body', 'relationship']
+        #print(response.json()["detail"][1]) # for ['body', 'workclass']
+        assert response.json()["detail"][0]["type"] == "string_type"
+        assert response.json()["detail"][1]["type"] == "string_type"
+        assert response.json()["detail"][0]["input"] == 12
+        assert response.json()["detail"][1]["input"] == 3
 
 if __name__ == "__main__":
     # as cli command to create the api test report:

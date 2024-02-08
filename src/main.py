@@ -136,7 +136,7 @@ async def lifespan(app: FastAPI) -> None:
 
 app = FastAPI(
     title = "Udacity MLOps, Project 3 - Prediction Model for Public US Census Bureau Data",
-    description = "Deploying a Binary Classification ML Model on Render with FastAPI; \
+    description = "Deploying a Binary Classification ML Model with FastAPI interface; \
                    its inference is about having a salary <=50K or >50K",
     version = "0.1",
     lifespan=lifespan,
@@ -178,11 +178,22 @@ async def predict(person: Person = Body(..., examples=examples_request['test_exa
 
     If only a few features are having a wrong value type, the model shall be able to handle
     this properly having an inference result of being an <=50k or >50k item as well.
+    Using string type is still fine with test cases, int type is not by using Pydantic V2 or higher
+    as dependency of FastAPI framework.
 
-    If most of the features are missing, a value error shall be thrown with response status number 422.
+    If most of the features are missing or wrong numbers are given as string,
+    a value error shall be thrown with response status number 422 (HTTPStatus.UNPROCESSABLE_ENTITY).
     '''
     logging.info("Model classification inference started")
-    person = person.dict()
+    # Pydantic V2 warning thrown by using .dict() (FastAPI dependency)
+    # https://stackoverflow.com/questions/76760600/how-to-fix-pydantics-deprecation-warning-about-using-model-dict-method
+    # https://docs.pydantic.dev/2.6/migration/
+    # https://docs.pydantic.dev/latest/concepts/serialization/#modelmodel_dump
+    # the following code works only with Pydantic V1:
+    # person = person.dict()
+    # new coding of Pydantic V2
+    person = person.model_dump()
+    
     features = np.array(
         [person[f] for f in examples_request['features_labels'].keys()]
     ).reshape(1, -1)

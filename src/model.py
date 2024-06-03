@@ -13,28 +13,11 @@ from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import StandardScaler
 import joblib
 import os
-import ml.data as datalib
+import src.data as datalib
+from src.file_util import find_repo_root
 
 # Define constants
-def find_repo_root(current_path):
-    """
-    Finds the root of the repository by looking for the .git directory.
 
-    Parameters
-    ----------
-    current_path : str
-        The current file path.
-
-    Returns
-    -------
-    root_path : str
-        The root path of the repository.
-    """
-    while current_path != os.path.dirname(current_path):
-        if os.path.isdir(os.path.join(current_path, '.git')):
-            return current_path
-        current_path = os.path.dirname(current_path)
-    raise FileNotFoundError("Repository root with .git directory not found.")
 
 REPO_ROOT = find_repo_root(os.path.abspath(__file__))
 MODEL_FOLDER = os.path.join(REPO_ROOT, "model")
@@ -74,7 +57,7 @@ def train_model(X_train, y_train):
     
     return grid_search.best_estimator_
 
-def save_model(model, encoder, lb, filename):
+def save_model(model, encoder, lb, filename, folder=MODEL_FOLDER):
     """
     Saves the trained machine learning model, encoder, and label binarizer to a file.
 
@@ -89,11 +72,11 @@ def save_model(model, encoder, lb, filename):
     filename : str
         Path to the file where the model should be saved.
     """
-    model_path = os.path.join(MODEL_FOLDER, filename)
+    model_path = os.path.join(folder, filename)
     joblib.dump({'model': model, 'encoder': encoder, 'lb': lb}, model_path)
     print(f"Model saved to {model_path}")
 
-def load_model(filename):
+def load_model(filename, folder=MODEL_FOLDER):
     """
     Loads a machine learning model, encoder, and label binarizer from a file.
 
@@ -111,7 +94,7 @@ def load_model(filename):
     lb : object
         Loaded label binarizer.
     """
-    model_path = os.path.join(MODEL_FOLDER, filename)
+    model_path = os.path.join(folder, filename)
     data = joblib.load(model_path)
     print(f"Model loaded from {model_path}")
     return data['model'], data['encoder'], data['lb']
@@ -184,7 +167,8 @@ def model_performance_on_slices(model, data, target_column, categorical_features
 
     Returns
     -------
-    None
+    performance_dict : dict
+        Dictionary containing the performance metrics for each slice.
     """
     # Separate the features and the target variable
     y = data[target_column]
@@ -192,6 +176,8 @@ def model_performance_on_slices(model, data, target_column, categorical_features
 
     # Transform the target variable using the label binarizer
     y = lb.transform(y)
+
+    performance_dict = {}
 
     for feature in categorical_features:
         unique_values = data[feature].unique()
@@ -211,7 +197,12 @@ def model_performance_on_slices(model, data, target_column, categorical_features
             preds = model.predict(X_slice_processed)
 
             precision, recall, fbeta = compute_model_metrics(y_slice, preds)
-            print(f"Performance for {feature} = {value}:")
-            print(f"  Precision: {precision}")
-            print(f"  Recall: {recall}")
-            print(f"  F-beta: {fbeta}\n")
+            
+            performance_dict[f"{feature}={value}"] = {
+                "precision": precision,
+                "recall": recall,
+                "fbeta": fbeta
+            }
+
+    return performance_dict
+

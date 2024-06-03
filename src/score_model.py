@@ -5,8 +5,8 @@ Date Created: 2024-05-30
 This module scores our staged ("testing") model on our test data
 """
 import logger as appLogger
-from ml import model
-from ml import data as datalib
+from src import model
+from src import data as datalib
 from sklearn.model_selection import train_test_split
 from sklearn.exceptions import NotFittedError
 import os
@@ -73,7 +73,12 @@ def run_all():
     
     try:
         logger.info("Computing model performance on slices...")
-        model.model_performance_on_slices(rfc_model, test, 'salary', cat_features, encoder, lb)
+        performance = model.model_performance_on_slices(rfc_model, test, 'salary', cat_features, encoder, lb)
+        for slice_key, metrics in performance.items():
+            print(f"Performance for {slice_key}:")
+            print(f"  Precision: {metrics['precision']}")
+            print(f"  Recall: {metrics['recall']}")
+            print(f"  F-beta: {metrics['fbeta']}\n")
     except NotFittedError as e:
         logger.error(f"Error during model inference: {e}")
         return

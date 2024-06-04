@@ -6,8 +6,8 @@ This module integrates the data/model libraries to run the end-to-end training.
 """
 
 from sklearn.model_selection import train_test_split
-from ml import data as datalib
-from ml import model
+from src import data as datalib
+from src import model
 import logger as appLogger
 from sklearn.exceptions import NotFittedError
 import pandas as pd

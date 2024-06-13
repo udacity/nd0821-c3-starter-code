@@ -7,12 +7,15 @@ deactivate:
 	@echo "Run 'conda deactivate' to deactivate the environment."
 
 install:
-	./scripts/run_in_conda.sh census-classifier "conda install -y flake8 pytest pytest-xdist"
+	./scripts/run_in_conda.sh census-classifier "conda install -y flake8 pytest pytest-xdist autopep8 black isort"
 
 lint:
 	./scripts/run_in_conda.sh census-classifier "flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics && flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics && \
-	autopep8 --in-place --aggressive -r ./src && \
+	autopep8 --in-place --aggressive --aggressive -r ./src && \
 	pylint ./src"
+
+autolint:
+	./scripts/run_in_conda.sh census-classifier "autopep8 --in-place --aggressive --aggressive --recursive . && isort . && black ."
 
 test:
 	./scripts/run_in_conda.sh census-classifier "pytest -n 4"

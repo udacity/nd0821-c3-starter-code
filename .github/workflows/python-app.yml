@@ -38,7 +38,7 @@ jobs:
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
    # DVC iterative setup installation path is not working (Nov 2024), now happens via requirement.txt
    # - name: DVC install      # see: https://github.com/iterative/setup-dvc
-   #   uses: iterative/setup-dvc@v1  
+   #   uses: iterative/setup-dvc@v1
    # - name: DVC
    #   run:  |
    #     # see: https://dvc.org/doc/user-guide/troubleshooting#missing-files,

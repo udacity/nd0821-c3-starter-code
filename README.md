@@ -38,7 +38,8 @@ Regarding software engineering principles, beside documentation, logging and pyt
 
 The unit tests are written via [_pytest_](https://docs.pytest.org/en/7.1.x/explanation/goodpractices.html#src-layout) for GET and POST prediction requests for the FastAPI component as well as for the mentioned data and model task parts. All unit test results are reported in associated html files of the [tests directory](https://github.com/IloBe/US_CensusData_Classifier_PipelineWithDeployment/tree/master/tests).
 
-All project relevant configuration values, including model hyperparameter ranges for the cross validation concept, are handled via specific configuration _config.yml_ file.<br>
+All project relevant configuration values, including model hyperparameter ranges for the cross validation concept, are handled via specific configuration _config.yml_ file.
+
 For versioning tasks, [_git_](https://git-scm.com/) and [_dvc_](https://dvc.org/doc/use-cases/versioning-data-and-models), handled with ignore files content, are chosen. If a remote storage, like AWS S3 or Azure shall be used as future task, dvc[all] for the selected dvc version is installed via requirements.txt file as well for specific configuration. By now, only dvc 'local' remote is set.
 
 

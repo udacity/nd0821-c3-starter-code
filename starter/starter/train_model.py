@@ -10,9 +10,10 @@ from ml.model import train_model
 from ml.model import compute_model_metrics
 from ml.model import inference
 from ml.model import evaluate_slices
+import joblib
 
 # Add code to load in the data.
-data = pd.read_csv("starter/data/census.csv")
+data = pd.read_csv("data/census.csv")
 
 # Optional enhancement, use K-fold cross validation instead of a train-test split.
 train, test = train_test_split(data, test_size=0.20)
@@ -51,6 +52,10 @@ precision, recall, fbeta = compute_model_metrics(y_test, y_preds)
 print(f"Precision: {precision:.4f}")
 print(f"Recall:    {recall:.4f}")
 print(f"F1 Score:  {fbeta:.4f}")
+
+joblib.dump(model, "model/model.pkl")
+joblib.dump(encoder, "model/encoder.pkl")
+joblib.dump(lb, "model/label_binarizer.pkl")
 
 # build the model on slices of the data
 slice_metrics = evaluate_slices(

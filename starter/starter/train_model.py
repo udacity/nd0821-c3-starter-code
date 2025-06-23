@@ -13,7 +13,7 @@ from ml.model import evaluate_slices
 import joblib
 
 # Add code to load in the data.
-data = pd.read_csv("data/census.csv")
+data = pd.read_csv("starter/data/census.csv")
 
 # Optional enhancement, use K-fold cross validation instead of a train-test split.
 train, test = train_test_split(data, test_size=0.20)
@@ -53,9 +53,9 @@ print(f"Precision: {precision:.4f}")
 print(f"Recall:    {recall:.4f}")
 print(f"F1 Score:  {fbeta:.4f}")
 
-joblib.dump(model, "model/model.pkl")
-joblib.dump(encoder, "model/encoder.pkl")
-joblib.dump(lb, "model/label_binarizer.pkl")
+joblib.dump(model, "starter/model/model.pkl")
+joblib.dump(encoder, "starter/model/encoder.pkl")
+joblib.dump(lb, "starter/model/label_binarizer.pkl")
 
 # build the model on slices of the data
 slice_metrics = evaluate_slices(
@@ -69,9 +69,9 @@ slice_metrics = evaluate_slices(
 )
 
 # print out the performance metrics 
-for status, (precision, recall, f1) in slice_metrics.items():
-    print(f"marital-status = {status}")
-    print(f"  Precision: {precision:.4f}")
-    print(f"  Recall:    {recall:.4f}")
-    print(f"  F1 Score:  {f1:.4f}\n")
-
+with open("slice_output.txt", "w") as f:
+    for status, (precision, recall, f1) in slice_metrics.items():
+        f.write(f"marital-status = {status}\n")
+        f.write(f"  Precision: {precision:.4f}\n")
+        f.write(f"  Recall:    {recall:.4f}\n")
+        f.write(f"  F1 Score:  {f1:.4f}\n\n")

@@ -5,17 +5,17 @@ url = "https://nd0821-c3-starter-code-w71g.onrender.com/inference"
 
 # Example payload (match your Pydantic model structure and alias fields)
 payload = {
-    "age": 39,
-    "workclass": "State-gov",
-    "fnlgt": 77516,
+    "age": 37,
+    "workclass": "Private",
+    "fnlgt": 284582,
     "education": "Bachelors",
     "education-num": 13,
     "marital-status": "Never-married",
-    "occupation": "Adm-clerical",
+    "occupation": "Exec-managerial",
     "relationship": "Not-in-family",
     "race": "White",
     "sex": "Male",
-    "capital-gain": 2174,
+    "capital-gain": 0,
     "capital-loss": 0,
     "hours-per-week": 40,
     "native-country": "United-States"

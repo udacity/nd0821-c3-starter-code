@@ -19,7 +19,7 @@ def read_root():
 class InferenceInput(BaseModel):
     age: int
     workclass: str
-    fnlwgt: int
+    fnlgt: int
     education: str
     education_num: int = Field(..., alias="education-num")
     marital_status: str = Field(..., alias="marital-status")
@@ -38,7 +38,7 @@ class InferenceInput(BaseModel):
             "example": {
                 "age": 37,
                 "workclass": "Private",
-                "fnlwgt": 284582,
+                "fnlgt": 284582,
                 "education": "Bachelors",
                 "education-num": 13,
                 "marital-status": "Never-married",

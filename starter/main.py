@@ -6,8 +6,8 @@ import numpy as np
 import pandas as pd
 from typing import Literal
 
-from starter.ml.data import process_data
-from starter.ml.model import inference
+from starter.starter.ml.data import process_data
+from starter.starter.ml.model import inference
 
 app = FastAPI()
 

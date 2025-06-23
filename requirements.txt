@@ -1,6 +1,6 @@
 numpy
 pandas
-scikit-learn
+scikit-learn==1.5.2
 pytest
 requests
 fastapi==0.63.0

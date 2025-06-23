@@ -1,7 +1,6 @@
 services:
   - type: web
-    name: your-app-name
+    name: starter-service
     env: python
     buildCommand: pip install -r requirements.txt
-    startCommand: gunicorn starter.main:app --workers 1 --bind 0.0.0.0:$PORT
-    runtime: python
+    startCommand: uvicorn starter.main:app --host=0.0.0.0 --port=10000

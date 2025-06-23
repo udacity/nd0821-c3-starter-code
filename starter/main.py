@@ -6,8 +6,8 @@ import numpy as np
 import pandas as pd
 from typing import Literal
 
-from starter.starter.ml.data import process_data
-from starter.starter.ml.model import inference
+from starter.ml.data import process_data
+from starter.ml.model import inference
 
 app = FastAPI()
 
@@ -33,25 +33,28 @@ class InferenceInput(BaseModel):
     native_country: str = Field(..., alias="native-country")
 
     class Config:
-        allow_population_by_field_name = True
-        schema_extra = {
-            "example": {
-                "age": 37,
-                "workclass": "Private",
-                "fnlgt": 284582,
-                "education": "Bachelors",
-                "education-num": 13,
-                "marital-status": "Never-married",
-                "occupation": "Exec-managerial",
-                "relationship": "Not-in-family",
-                "race": "White",
-                "sex": "Male",
-                "capital-gain": 0,
-                "capital-loss": 0,
-                "hours-per-week": 40,
-                "native-country": "United-States"
-            }
+        populate_by_name = True
+        json_schema_extra = {
+            "examples": [
+                {
+                    "age": 37,
+                    "workclass": "Self-emp-not-inc",
+                    "fnlgt": 284582,
+                    "education": "Bachelors",
+                    "education-num": 13,
+                    "marital-status": "Never-married",
+                    "occupation": "Exec-managerial",
+                    "relationship": "Not-in-family",
+                    "race": "White",
+                    "sex": "Male",
+                    "capital-gain": 0,
+                    "capital-loss": 0,
+                    "hours-per-week": 40,
+                    "native-country": "United-States"
+                }
+            ]
         }
+
 
 # Load model and encoders
 model = joblib.load("starter/model/model.pkl")
@@ -60,8 +63,9 @@ lb = joblib.load("starter/model/label_binarizer.pkl")
 
 @app.post("/inference")
 def predict(input_data: InferenceInput):
+    print("RECEIVED INPUT:", input_data.dict(by_alias=True))
     input_dict = input_data.dict(by_alias=True)
-    data_df = pd.DataFrame([input_dict])  # <- convert to DataFrame
+    data_df = pd.DataFrame([input_dict])
 
     X, _, _, _ = process_data(
         data_df,
@@ -74,6 +78,8 @@ def predict(input_data: InferenceInput):
         encoder=encoder,
         lb=lb
     )
-    pred = inference(model, X)[0]
-    label = lb.inverse_transform([pred])[0]
-    return {"prediction": label}
+
+    pred = inference(model, X)
+    prediction_label = lb.inverse_transform(pred)[0]
+
+    return {"prediction": prediction_label}

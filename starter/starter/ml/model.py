@@ -1,4 +1,6 @@
 from sklearn.metrics import fbeta_score, precision_score, recall_score
+from sklearn.ensemble import RandomForestClassifier
+from .data import process_data
 
 
 # Optional: implement hyperparameter tuning.
@@ -17,8 +19,9 @@ def train_model(X_train, y_train):
     model
         Trained machine learning model.
     """
-
-    pass
+    model = RandomForestClassifier(random_state=42)
+    model.fit(X_train, y_train)
+    return model
 
 
 def compute_model_metrics(y, preds):
@@ -57,4 +60,44 @@ def inference(model, X):
     preds : np.array
         Predictions from the model.
     """
-    pass
+    preds = model.predict(X)
+    return preds
+
+
+def evaluate_slices(data, model, encoder, lb, cat_features, label_col="salary", slice_feature="marital-status"):
+    """
+    Evaluate model performance on slices of the data based on a categorical feature.
+
+    Parameters
+    ----------
+    data : pd.DataFrame
+        The full dataset to slice (e.g., test set).
+    model : sklearn model
+        Trained ML model.
+    encoder : OneHotEncoder
+        Fitted encoder from training.
+    lb : LabelBinarizer
+        Fitted label binarizer from training.
+    cat_features : list
+        List of categorical features.
+    label_col : str
+        The name of the label column.
+    slice_feature : str
+        Categorical feature to slice on.
+    """
+    results = {}
+    
+    for value in data[slice_feature].unique():
+        slice_data = data[data[slice_feature] == value]
+        X_slice, y_slice, _, _ = process_data(
+            slice_data,
+            categorical_features=cat_features,
+            label=label_col,
+            training=False,
+            encoder=encoder,
+            lb=lb
+        )
+        preds = inference(model, X_slice)
+        precision, recall, fbeta = compute_model_metrics(y_slice, preds)
+        results[value] = (precision, recall, fbeta)
+    return results

@@ -1,0 +1,35 @@
+marital-status = Never-married
+  Precision: 0.8627
+  Recall:    0.4074
+  F1 Score:  0.5535
+
+marital-status = Divorced
+  Precision: 0.7381
+  Recall:    0.3100
+  F1 Score:  0.4366
+
+marital-status = Married-civ-spouse
+  Precision: 0.7033
+  Recall:    0.6841
+  F1 Score:  0.6935
+
+marital-status = Widowed
+  Precision: 1.0000
+  Recall:    0.2500
+  F1 Score:  0.4000
+
+marital-status = Separated
+  Precision: 1.0000
+  Recall:    0.2143
+  F1 Score:  0.3529
+
+marital-status = Married-spouse-absent
+  Precision: 1.0000
+  Recall:    0.5000
+  F1 Score:  0.6667
+
+marital-status = Married-AF-spouse
+  Precision: 1.0000
+  Recall:    0.0000
+  F1 Score:  0.0000
+

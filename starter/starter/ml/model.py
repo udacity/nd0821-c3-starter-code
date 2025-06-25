@@ -1,4 +1,9 @@
 from sklearn.metrics import fbeta_score, precision_score, recall_score
+from sklearn.linear_model import LogisticRegression
+from typing import List
+
+
+from starter.starter.ml.data import process_data
 
 
 # Optional: implement hyperparameter tuning.
@@ -17,8 +22,13 @@ def train_model(X_train, y_train):
     model
         Trained machine learning model.
     """
+    clf = LogisticRegression(
+        max_iter=1000,
+        random_state=23,
+    )
 
-    pass
+    clf.fit(X_train, y_train)
+    return clf
 
 
 def compute_model_metrics(y, preds):
@@ -48,7 +58,7 @@ def inference(model, X):
 
     Inputs
     ------
-    model : ???
+    model : sklearn.linear_model._logistic.LogisticRegression
         Trained machine learning model.
     X : np.array
         Data used for prediction.
@@ -57,4 +67,31 @@ def inference(model, X):
     preds : np.array
         Predictions from the model.
     """
-    pass
+    return model.predict(X)
+
+
+def evaluate_slices(data, cat_features, label, model, encoder, lb, output_path) -> None:
+    """Output to a file the performance on slices of just the categorical features
+    """
+    results: List[str] = []
+    for feature in cat_features:
+        for category in data[feature].unique():
+            subset = data[data[feature] == category]
+            X_slice, y_slice, _, _ = process_data(
+                subset,
+                categorical_features=cat_features,
+                label=label,
+                training=False,
+                encoder=encoder,
+                lb=lb,
+            )
+
+            preds_slice = inference(model, X_slice)
+            p, r, f = compute_model_metrics(y_slice, preds_slice)
+            results.append(
+                f"Feature: {feature} | Category: {category} | Precision: {p:.3f} | Recall: {r:.3f} "
+                f"Fbeta: {f:.3f} | Number of samples: {len(y_slice)}"
+            )
+
+    with open(output_path, "w") as f:
+        f.write("\n".join(results))

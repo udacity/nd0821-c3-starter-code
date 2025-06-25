@@ -1,12 +1,11 @@
 from fastapi import FastAPI
-from typing import List
 
 import joblib
 import pandas as pd
 from pathlib import Path
 from pydantic import BaseModel, Field
 
-from starter.starter.ml.data import process_data
+from ml.data import process_data
 
 app = FastAPI(title="Census Income Prediction API")
 
@@ -17,19 +16,13 @@ async def read_root() -> dict:
     return {"message": "Welcome!"}
 
 
-# ----------------------------------------------------------------------
 # Load the trained model once at startup
-# ----------------------------------------------------------------------
-ROOT_DIR = Path(__file__).resolve().parent.parent 
+ROOT_DIR = Path(__file__).resolve().parent
 MODEL_DIR = ROOT_DIR / "model"
 loaded_model = joblib.load(MODEL_DIR / "model.pkl")
 loaded_encoder = joblib.load(MODEL_DIR / "encoder.pkl")
 loaded_lb = joblib.load(MODEL_DIR / "label_binarizer.pkl")
 
-
-# ----------------------------------------------------------------------
-# Request body schema using Pydantic
-# ----------------------------------------------------------------------
 class CensusData(BaseModel):
     age: int
     workclass: str
@@ -47,8 +40,9 @@ class CensusData(BaseModel):
     native_country: str = Field(..., alias="native-country")
 
     model_config = {
-         # Lets clients send either naming style (education_num or education-num).
-        "populate_by_name": True, 
+        # Lets clients send either naming style (education_num or
+        # education-num).
+        "populate_by_name": True,
         "json_schema_extra": {
             "examples": [
                 {
@@ -86,37 +80,31 @@ async def predict(data: CensusData) -> dict:
         "native-country",
     ]
 
-    # Convert incoming data to DataFrame with the column names expected by the model
+    # Convert incoming data to DataFrame with the column names expected by
+    # the model
     input_df = pd.DataFrame([data.model_dump(by_alias=True)])
 
-    # Perform inference. The loaded model is assumed to include any preprocessing
+    # Preprocess the input data.
     X_inf, _, _, _ = process_data(
         input_df,
         categorical_features=cat_features,
-        label="salary",
-        training=False,         
+        label=None,
+        training=False,
         encoder=loaded_encoder,
         lb=loaded_lb,
     )
+
+    # Perform inference.
     preds = loaded_model.predict(X_inf)
-    print(f"Predictions: {preds}")
 
-    # For binary classification with LabelBinarizer we map 0/1 back to string labels.
-    pred_label: List[str]
-    try:
-        # If model uses label binarizer like in training pipeline we can access classes_
-        classes = getattr(loaded_model, "classes_", None)
-        if classes is not None:
-            pred_label = [classes[preds[0]]]
-        else:
-            pred_label = [str(preds[0])]
-    except Exception:
-        pred_label = [str(preds[0])]
+    # Convert numpy prediction to Python native type and map to string labels
+    prediction_value = int(preds[0])  # Convert numpy.int64 to Python int
 
-    return {"prediction": pred_label[0]}
+    # Map 0/1 to string labels using the label binarizer
+    pred_label = loaded_lb.classes_[prediction_value]
+    return {"prediction": pred_label} # Ex: {"prediction":"<=50K"}
 
 
-# --- Entry point --------------------------------------------------------
 if __name__ == "__main__":
     import uvicorn
 

@@ -47,8 +47,8 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install -r starter/requirements.txt
+          pip install -r requirements.txt
           pip install pytest fastapi[all] scikit-learn pandas joblib
 
       - name: Run unit tests
-        run: pytest starter/starter/ml/test_model.py starter/test_main.py --maxfail=1 --disable-warnings | cat
+        run: pytest ml/test_model.py test_main.py --maxfail=1 --disable-warnings | cat

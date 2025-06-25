@@ -1,9 +1,8 @@
-from sklearn.metrics import fbeta_score, precision_score, recall_score
 from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import fbeta_score, precision_score, recall_score
 from typing import List
 
-
-from starter.starter.ml.data import process_data
+from .data import process_data
 
 
 # Optional: implement hyperparameter tuning.
@@ -33,7 +32,8 @@ def train_model(X_train, y_train):
 
 def compute_model_metrics(y, preds):
     """
-    Validates the trained machine learning model using precision, recall, and F1.
+    Validates the trained machine learning model using precision, recall,
+    and F1.
 
     Inputs
     ------
@@ -70,8 +70,10 @@ def inference(model, X):
     return model.predict(X)
 
 
-def evaluate_slices(data, cat_features, label, model, encoder, lb, output_path) -> None:
-    """Output to a file the performance on slices of just the categorical features
+def evaluate_slices(data, cat_features, label, model, encoder, lb,
+                    output_path) -> None:
+    """Output to a file the performance on slices of just the categorical
+    features
     """
     results: List[str] = []
     for feature in cat_features:
@@ -89,7 +91,8 @@ def evaluate_slices(data, cat_features, label, model, encoder, lb, output_path) 
             preds_slice = inference(model, X_slice)
             p, r, f = compute_model_metrics(y_slice, preds_slice)
             results.append(
-                f"Feature: {feature} | Category: {category} | Precision: {p:.3f} | Recall: {r:.3f} "
+                f"Feature: {feature} | Category: {category} | "
+                f"Precision: {p:.3f} | Recall: {r:.3f} "
                 f"Fbeta: {f:.3f} | Number of samples: {len(y_slice)}"
             )
 

@@ -1,7 +1,6 @@
-import pytest
 from fastapi.testclient import TestClient
 
-from starter.main import app
+from main import app
 
 client = TestClient(app)
 
@@ -56,7 +55,7 @@ def test_predict_low_income() -> None:
     response = client.post("/predict", json=low_income_payload)
     assert response.status_code == 200
     prediction = response.json()["prediction"]
-    assert prediction in ["<=50K", "0"]
+    assert prediction == "<=50K"
 
 
 def test_predict_high_income() -> None:
@@ -64,4 +63,4 @@ def test_predict_high_income() -> None:
     response = client.post("/predict", json=high_income_payload)
     assert response.status_code == 200
     prediction = response.json()["prediction"]
-    assert prediction in [">50K", "1"]
+    assert prediction == ">50K"

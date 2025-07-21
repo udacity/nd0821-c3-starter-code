@@ -52,8 +52,7 @@ cat_features = [
 X_train, y_train, encoder, lb = process_data(
     train, categorical_features=cat_features, label="salary", training=True
 )
-print("X_train shape:", X_train.shape)
-print("X_test shape:", test.shape)
+
 # Proces the test data with the process_data function.
 X_test, y_test, encoder, lb = process_data(
     test,

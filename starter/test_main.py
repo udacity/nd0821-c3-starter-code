@@ -14,7 +14,7 @@ def test_root():
     """
     r = client.get("/")
     assert r.status_code == 200
-    assert r.json() == "Welcome to our model API"
+    assert r.json() == "Welcome to our model API for Udacity and the DevOps Nanodegree program!"
 
 
 def test_inference():

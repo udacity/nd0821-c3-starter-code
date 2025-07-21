@@ -67,7 +67,7 @@ async def startup_event():
 
 @app.get("/")
 async def greetings():
-    return "Welcome to our model API"
+    return "Welcome to our model API for Udacity and the DevOps Nanodegree program!"
 
 
 # This allows sending of data (our InferenceSample) via POST to the API.

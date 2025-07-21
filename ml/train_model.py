@@ -36,7 +36,7 @@ if not os.path.isfile(datapath):
     raise FileNotFoundError(f"Data file not found at {datapath}")
 data = pd.read_csv(datapath)
 # Optional enhancement, use K-fold cross validation instead of a train-test split.
-train, test = train_test_split(data, test_size=0.20)
+train, test = train_test_split(data, test_size=0.20, stratify=data['salary'])
 
 cat_features = [
     "workclass",
@@ -48,10 +48,12 @@ cat_features = [
     "sex",
     "native-country",
 ]
+
 X_train, y_train, encoder, lb = process_data(
     train, categorical_features=cat_features, label="salary", training=True
 )
-
+print("X_train shape:", X_train.shape)
+print("X_test shape:", test.shape)
 # Proces the test data with the process_data function.
 X_test, y_test, encoder, lb = process_data(
     test,

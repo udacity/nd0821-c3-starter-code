@@ -31,7 +31,9 @@ logging.basicConfig(filename='journal.log',
 
 
 # Add code to load in the data.
-datapath = "../data/census.csv"
+datapath = os.path.join(os.path.dirname(__file__), "..", "data", "census.csv")
+if not os.path.isfile(datapath):
+    raise FileNotFoundError(f"Data file not found at {datapath}")
 data = pd.read_csv(datapath)
 # Optional enhancement, use K-fold cross validation instead of a train-test split.
 train, test = train_test_split(data, test_size=0.20)

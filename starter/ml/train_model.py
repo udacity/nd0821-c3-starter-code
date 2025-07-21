@@ -62,7 +62,8 @@ X_test, y_test, encoder, lb = process_data(
     lb=lb
 )
 # Train and save a model.
-savepath = '../model'
+savepath = os.path.join(os.path.dirname(__file__), "..", "model")
+os.makedirs(savepath, exist_ok=True)
 filename = ['trained_model.pkl', 'encoder.pkl', 'labelizer.pkl']
 
 # if saved model exits, load the model from disk

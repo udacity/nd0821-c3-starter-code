@@ -1,0 +1,29 @@
+# Top-level dependencies for the project.
+# Run `pip-compile` to generate the locked requirements.txt file.
+
+# Core Application
+fastapi==0.115.3
+uvicorn
+gunicorn
+
+# Data Science
+numpy==1.25.0
+pandas==2.0.3
+ydata-profiling
+scikit-learn==1.3.0
+xgboost==1.7.6
+
+# Tooling
+dvc[all]
+flake8
+pytest
+pytest-html
+
+# Utilities
+requests
+
+# Security Pins - keep these strictly pinned
+pillow>=10.3.0
+setuptools>=78.1.1
+fonttools>=4.43.0
+zipp>=3.19.1

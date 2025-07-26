@@ -1,0 +1,10 @@
+# pyproject.toml
+[build-system]
+# These are packages required to build the project and pip uses it
+# as a strong hint for what to use in isolated build environments
+# for dependencies.
+requires = [
+    "setuptools>=64.0.0", # A version well past the Python 3.12 compatibility fixes
+    "wheel"
+]
+build-backend = "setuptools.build_meta"

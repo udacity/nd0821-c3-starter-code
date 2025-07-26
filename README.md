@@ -43,18 +43,38 @@ All project relevant configuration values, including model hyperparameter ranges
 For versioning tasks, [_git_](https://git-scm.com/) and [_dvc_](https://dvc.org/doc/use-cases/versioning-data-and-models), handled with ignore files content, are chosen. If a remote storage, like AWS S3 or Azure shall be used as future task, dvc[all] for the selected dvc version is installed via requirements.txt file as well for specific configuration. By now, only dvc 'local' remote is set.
 
 
-## Environment Set up
+## Environment Set Up
 * Working in a command line environment is recommended for ease of use with git and dvc. Working on Windows, [WSL2 and Ubuntu (Linux)](https://ubuntu.com/tutorials/install-ubuntu-on-wsl2-on-windows-11-with-gui-support#1-overview) is chosen for this project implementation.
-* We expect you have at least Python 3.10.9 installed (e.g. via conda), furthermore having forked this project repo locally and activate it in your virtual environment to work on for your own. So, in your root directory `path/to/census-project` create a new virtual environment depending on the selected OS and use the supplied _requirements.txt_ file to install the needed libraries e.g. via
+* We expect you have at least Python 3.11.13 installed, furthermore having forked this project repo locally and activate it in your virtual environment to work on for your own. So, in your root directory `path/to/census-project` create a new virtual environment depending on the selected OS and use the supplied _requirements.txt_ file to install the needed libraries via the following process:
 
-  ```
-    pip install -r requirements/requirements.txt
-  ```
-or use
+### User Process
+This project uses Conda for environment management and pip-tools for dependency locking.
 
-  ```
-    conda create -n [envname] "python=3.10.9" scikit-learn pandas numpy pytest jupyter jupyterlab fastapi uvicorn ... <the-needed-library-list> -c conda-forge
-  ```
+1.  **Create and activate the Conda environment:**
+    ```bash
+    conda create --name my-project-env python=3.11.13
+    conda activate my-project-env
+    ```
+
+2.  **Install dependencies:**
+    Use the locked requirements file for a reproducible installation.
+    ```bash
+    pip install -r requirements.txt
+    ```
+
+### Developer Workflow
+If updates are needed, put them in the top-level <i>requirements.in</i> file. There the directly needed packages are listed. <i>pip-compile</i> resolves the search of necessary dependencies together with the <i>pyproject.toml</i> file and creates the final <i>requirements.txt</i> file.
+
+1.  Add or modify a package in `requirements.in`.
+2.  Regenerate the lock file:
+    ```bash
+    pip-compile requirements.in
+    ```
+3.  Install the new packages:
+    ```bash
+    pip install -r requirements.txt
+    ```
+4.  Commit **both** `requirements.in` and `requirements.txt` to Git.
 
 
 ## Project Structure
@@ -130,11 +150,11 @@ There in "__main__" it calls
   ```
     uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=True)
   ```
-
+  
 Remember, this code is for development purpose, in production the reload option shall be set to False resp. not used. In other words, the start command e.g. on our render deployment web service (see below) is:<br>
 uvicorn src.main:app --host 0.0.0.0 --port 8000
 
-* So, locally we start our implemented browser web application with
+* So, locally we start our implemented browser web application from project root with
 
   ```
   http://127.0.0.1:8000/docs

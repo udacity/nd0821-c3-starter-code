@@ -19,7 +19,7 @@
 [image17]: ./screenshots/render_deployed-app_browser-homepage.PNG "render app welcome"
 [image18]: https://readthedocs.org/projects/pycodestyle/badge/ "Inline docs"
 
-[![made-with-python](https://img.shields.io/badge/Made%20with-Python3.10-1f425f.svg?style=flat&logo=python3.10)](https://www.python.org/)
+[![made-with-python](https://img.shields.io/badge/Made%20with-Python3.11-1f425f.svg?style=flat&logo=python3.11)](https://www.python.org/)
 [![MIT license](https://img.shields.io/badge/License-MIT-blue.svg?style=flat&logo=appveyor)](https://opensource.org/license/mit/)
 ![Inline docs][image18]
 [![Known Vulnerabilities](https://snyk.io/test/github/IloBe/US_CensusData_Classifier_PipelineWithDeployment/badge.svg?style=flat-square)](https://snyk.io/test/github/IloBe/US_CensusData_Classifier_PipelineWithDeployment)

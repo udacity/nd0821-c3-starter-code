@@ -26,17 +26,25 @@ jobs:
       uses: actions/setup-python@v5                    # https://github.com/actions/setup-python
       with:
         python-version: ${{ matrix.python-version }}
-    - name: Install dependencies
+
+    - name: Install and upgrade core tools
       run: |
-        python -m pip install --upgrade pip  # Upgrade pip to the latest version
-	pip install pip-tools                # run pip-compile silently to create requirements.txt in memory
+        python -m pip install --upgrade pip
+        python -m pip install pip-tools
+
+    - name: Verify lockfile consistency (diagnostic mode)
+      run: |
+        echo "Generating requirements.txt from source to check for differences..."
         pip-compile --quiet requirements.in -o requirements.txt
-        # command will exit with error code if there's a diff
-        #git diff --exit-code requirements.txt
-	#       
-	# Temporarily changed to diagnostic mode to see the required changes
+        echo "Comparing the generated file with the one in the repository:"
+        # 'git diff' will show any diff's. '|| true' ensures the step doesn't fail.
         git diff requirements.txt || true
-        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+
+    - name: Install Python dependencies from lockfile
+      run: |
+        echo "Installing dependencies from requirements.txt..."
+        if [ -f requirements.txt ]; then python -m pip install -r requirements.txt; fi
+
     - name: Lint with flake8
       run: |
         # stop the build if there are Python syntax errors or undefined names

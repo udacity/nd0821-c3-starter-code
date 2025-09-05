@@ -1,23 +1,21 @@
 from sklearn.metrics import fbeta_score, precision_score, recall_score
 
 
-# Optional: implement hyperparameter tuning.
 def train_model(X_train, y_train):
     """
     Trains a machine learning model and returns it.
 
     Inputs
     ------
-    X_train : np.array
+    X_train : np.ndarray
         Training data.
-    y_train : np.array
+    y_train : np.ndarray
         Labels.
     Returns
     -------
-    model
+    model : RandomForestClassifier
         Trained machine learning model.
     """
-
     pass
 
 
@@ -27,9 +25,9 @@ def compute_model_metrics(y, preds):
 
     Inputs
     ------
-    y : np.array
+    y : np.ndarray
         Known labels, binarized.
-    preds : np.array
+    preds : np.ndarray
         Predicted labels, binarized.
     Returns
     -------
@@ -48,13 +46,13 @@ def inference(model, X):
 
     Inputs
     ------
-    model : ???
+    model : RandomForestClassifier
         Trained machine learning model.
-    X : np.array
+    X : np.ndarray
         Data used for prediction.
     Returns
     -------
-    preds : np.array
+    preds : np.ndarray
         Predictions from the model.
     """
     pass

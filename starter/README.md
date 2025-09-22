@@ -1,10 +1,16 @@
 Working in a command line environment is recommended for ease of use with git and dvc. If on Windows, WSL1 or 2 is recommended.
 
 # Environment Set up
-* Download and install conda if you don’t have it already.
-    * Use the supplied requirements file to create a new environment, or
-    * conda create -n [envname] "python=3.8" scikit-learn dvc pandas numpy pytest jupyter jupyterlab fastapi uvicorn -c conda-forge
-    * Install git either through conda (“conda install git”) or through your CLI, e.g. sudo apt-get git.
+* **Option 1: Using pip and venv (Recommended)**
+    * Ensure you have Python 3.13 installed
+    * Create virtual environment: `python3.13 -m venv .venv`
+    * Activate environment: `source .venv/bin/activate` (On Windows: `.venv\Scripts\activate`)
+    * Install dependencies: `pip install -r requirements.txt`
+
+* **Option 2: Using conda**
+    * Download and install conda if you don't have it already.
+    * conda create -n [envname] "python=3.13" scikit-learn dvc pandas numpy pytest jupyter jupyterlab fastapi uvicorn pydantic httpx matplotlib seaborn -c conda-forge
+    * Install git either through conda ("conda install git") or through your CLI, e.g. sudo apt-get git.
 
 ## Repositories
 
@@ -32,7 +38,8 @@ To use your new S3 bucket from the AWS CLI you will need to create an IAM user w
 ## GitHub Actions
 
 * Setup GitHub Actions on your repository. You can use one of the pre-made GitHub Actions if at a minimum it runs pytest and flake8 on push and requires both to pass without error.
-   * Make sure you set up the GitHub Action to have the same version of Python as you used in development.
+   * Make sure you set up the GitHub Action to use Python 3.13 (same version as development).
+   * Note: Add flake8 to requirements.txt if you want to use it for linting: `pip install flake8`
 * Add your <a href="https://github.com/marketplace/actions/configure-aws-credentials-action-for-github-actions" target="_blank">AWS credentials to the Action</a>.
 * Set up <a href="https://github.com/iterative/setup-dvc" target="_blank">DVC in the action</a> and specify a command to `dvc pull`.
 
@@ -70,6 +77,7 @@ To use your new S3 bucket from the AWS CLI you will need to create an IAM user w
    * Enable automatic deployments that only deploy if your continuous integration passes.
    * Hint: think about how paths will differ in your local environment vs. on Heroku.
    * Hint: development in Python is fast! But how fast you can iterate slows down if you rely on your CI/CD to fail before fixing an issue. I like to run flake8 locally before I commit changes.
+   * Note: Install flake8 separately if needed: `pip install flake8`
 * Set up DVC on Heroku using the instructions contained in the starter directory.
 * Set up access to AWS on Heroku, if using the CLI: `heroku config:set AWS_ACCESS_KEY_ID=xxx AWS_SECRET_ACCESS_KEY=yyy`
 * Write a script that uses the requests module to do one POST on your live API.

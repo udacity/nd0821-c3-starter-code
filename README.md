@@ -20,14 +20,14 @@ The training script and API are exercises to complete. Once implemented, run the
 
 ## Repositories
 * Create a directory for the project and initialize git.
-    * As you work on the code, continually commit changes. Trained models you want to use in production must be committed to GitHub.
-* Connect your local git repo to GitHub.
-* Setup GitHub Actions on your repo. You can use one of the pre-made GitHub Actions if at a minimum it runs pytest and flake8 on push and requires both to pass without error.
-    * Make sure you set up the GitHub Action to use Python 3.13 (same version as development).
+    * As you work on the code, continually commit changes. Trained models you want to use in production must be committed to the repository you submit.
+* Connect your local Git repository to GitHub or Azure Repos, following the corresponding course workflow.
+* Set up GitHub Actions or Azure Pipelines on your repository. You can use one of the pre-made GitHub Actions if at a minimum it runs pytest and flake8 on push and requires both to pass without error.
+    * Make sure you configure CI to use Python 3.13 (same version as development).
     * Note: Add flake8 to requirements.txt if you want to use it for linting: `pip install flake8`
 
 # Data
-* Use `data/census.csv` and commit it to dvc.
+* Use `data/census.csv`. DVC is optional; follow the course workflow you selected.
 * This data is messy, try to open it in pandas and see what you get.
 * To clean it, use your favorite text editor to remove all spaces.
 
@@ -50,11 +50,11 @@ The training script and API are exercises to complete. Once implemented, run the
 * Write 3 unit tests to test the API (one for the GET and two for POST, one that tests each prediction).
 
 # API Deployment
-* Create a free Heroku account (for the next steps you can either use the web GUI or download the Heroku CLI).
-* Create a new app and have it deployed from your GitHub repository.
-    * Use the repository root as the deployment root; it contains `requirements.txt` and `main.py`.
-    * Enable automatic deployments that only deploy if your continuous integration passes.
-    * Hint: think about how paths will differ in your local environment vs. on Heroku.
-    * Hint: development in Python is fast! But how fast you can iterate slows down if you rely on your CI/CD to fail before fixing an issue. I like to run flake8 locally before I commit changes.
-    * Note: Install flake8 separately if needed: `pip install flake8`
-* Write a script that uses the requests module to do one POST on your live API.
+* Use Render, Heroku, or another cloud application platform that meets the rubric. Heroku no longer offers its former free tier; check your provider's pricing.
+* Use the repository root as the deployment root; it contains `requirements.txt` and `main.py`.
+* Deploy only tested code from the protected `main` or `master` branch, after both `pytest` and `flake8` pass. Use the same Python version as development.
+    * **GitHub:** use a provider integration or GitHub Actions workflow with automatic deployment gated on successful CI.
+    * **Azure DevOps:** use an `azure-pipelines.yml` deployment stage that depends on successful CI and runs only for the protected `main` branch. Keep Azure Repos as the source repository.
+* Store deployment credentials in authorized secrets, never in project files or pipeline YAML. Follow the course's GitHub to Azure DevOps Translation Guide for platform-specific setup.
+* Account for local and hosted path differences, and run tests and lint locally before pushing.
+* Write a script using `requests` to POST to the deployed API and print the prediction and HTTP status code. Include the rubric's required deployment and live-request screenshots.

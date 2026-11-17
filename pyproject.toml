@@ -1,0 +1,29 @@
+[project]
+name = "uda-ml-final"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = "~=3.13.0"
+dependencies = [
+    "aequitas==0.42.0",
+    "altair==4.1.0",
+    "fastapi==0.117.1",
+    "flask==0.12.2",
+    "flask-bootstrap==3.3.7.1",
+    "httplib2==0.31.0",
+    "httpx==0.28.1",
+    "ipykernel==6.30.1",
+    "jupyter==1.1.1",
+    "matplotlib==3.10.6",
+    "nbformat==5.10.4",
+    "numpy==2.3.3",
+    "pandas==2.3.2",
+    "pydantic==2.11.9",
+    "pytest==8.4.2",
+    "pytest-asyncio==1.2.0",
+    "python-multipart==0.0.20",
+    "requests==2.32.5",
+    "scikit-learn==1.7.2",
+    "seaborn==0.13.2",
+    "uvicorn[standard]==0.36.0",
+]

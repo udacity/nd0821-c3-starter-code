@@ -60,4 +60,3 @@ Slices with few examples give noisy estimates. The data reflects historical soci
 - The data is old and may not reflect today's population or incomes.
 - No hyperparameter tuning or class-imbalance handling was done. Precision is 0.73 vs recall 0.65 for the `>50K` class, so the model misses more high earners than it falsely flags.
 - Not suitable for hiring, lending, or any decision affecting real people without a fairness audit.
-- Next steps: tune hyperparameters, try class weights, and evaluate fairness metrics across groups.

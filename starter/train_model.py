@@ -32,11 +32,12 @@ data_path = Path(__file__).resolve().parents[1] / "data" / "census.csv"
 raw_data = pd.read_csv(data_path, skipinitialspace=True)
 data = clean_data(raw_data)
 print(
-    f"rows: {len(raw_data):,} -> {len(data):,}  (removed {len(raw_data) - len(data):,} duplicates/invalid)"
+    f"rows: {len(raw_data):,} -> {len(data):,}  (removed {len(raw_data) - len(data):,} duplicates/invalid)"  # noqa E501
 )
 
-
-metrics_path = Path(__file__).resolve().parents[1] / "model" / "slice_output.txt"
+metrics_path = (
+    Path(__file__).resolve().parents[1] / "model" / "slice_output.txt"
+)
 
 # Optional: use K-fold cross validation instead of a train-test split.
 print("Split data into train and test sets")
@@ -71,14 +72,17 @@ print(pd.Series(overall).round(4).to_string())
 # Slice metrics
 print("Generate slice model metrics")
 slice_frames = [
-    compute_slice_metrics(test, feat, model, cat_features, encoder, lb, label="salary")
+    compute_slice_metrics(
+        test, feat, model, cat_features, encoder, lb, label="salary"
+    )
     for feat in cat_features
 ]
 slices = pd.concat(slice_frames, ignore_index=True)
 
 with open(metrics_path, "w") as f:
     f.writelines(
-        frame.round(4).to_string(index=False) + "\n\n" for frame in slice_frames
+        frame.round(4).to_string(index=False) + "\n\n"
+        for frame in slice_frames
     )
 print(f"Slice model metrics save to {metrics_path}")
 

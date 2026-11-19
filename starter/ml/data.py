@@ -3,7 +3,12 @@ from sklearn.preprocessing import LabelBinarizer, OneHotEncoder
 
 
 def process_data(
-    X, categorical_features=None, label=None, training=True, encoder=None, lb=None
+    X,
+    categorical_features=None,
+    label=None,
+    training=True,
+    encoder=None,
+    lb=None,
 ):
     """Process the data used in the machine learning pipeline.
 
@@ -74,7 +79,8 @@ def process_data(
 
 
 def clean_data(df, label="salary", missing="drop", missing_tokens=("?",)):
-    """Clean the raw census data. Safe to run on already-clean data (idempotent).
+    """Clean the raw census data.
+    Safe to run on already-clean data (idempotent).
 
     Steps
     -----
@@ -84,7 +90,7 @@ def clean_data(df, label="salary", missing="drop", missing_tokens=("?",)):
     4. Handle missing features: missing="drop" removes those rows,
        missing="unknown" fills text columns with "Unknown" (numeric NaNs are still dropped).
     5. Remove exact duplicate rows (so copies cannot end up in both train and test).
-    """
+    """ # noqa E501
     if missing not in ("drop", "unknown"):
         raise ValueError("missing must be 'drop' or 'unknown'")
     df = df.copy()

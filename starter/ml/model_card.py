@@ -27,7 +27,7 @@ def generate_model_card(
 
     def fmt(df_):
         return "\n".join(
-            f"- `{r.feature}` = **{r.value}** (n={r.n}): precision {r.precision:.2f}, recall {r.recall:.2f}, F1 {r.fbeta:.2f}"
+            f"- `{r.feature}` = **{r.value}** (n={r.n}): precision {r.precision:.2f}, recall {r.recall:.2f}, F1 {r.fbeta:.2f}"  # noqa E501
             for r in df_.itertuples()
         )
 
@@ -78,9 +78,9 @@ Slices with few examples give noisy estimates. The data reflects historical soci
 
 ## Caveats and Recommendations
 - The data is old and may not reflect today's population or incomes.
-- No hyperparameter tuning or class-imbalance handling was done. Precision is {overall['precision']:.2f} vs recall {overall['recall']:.2f} for the `>50K` class, so the model {'misses more high earners than it falsely flags' if overall['recall'] < overall['precision'] else 'flags more people as high earners than it misses'}.
+- No hyperparameter tuning or class-imbalance handling was done. Precision is {overall["precision"]:.2f} vs recall {overall["recall"]:.2f} for the `>50K` class, so the model {"misses more high earners than it falsely flags" if overall["recall"] < overall["precision"] else "flags more people as high earners than it misses"}.
 - Not suitable for hiring, lending, or any decision affecting real people without a fairness audit.
 - Next steps: tune hyperparameters, try class weights, and evaluate fairness metrics across groups.
-"""
+"""  # noqa E501
     with open(card_path, "w") as f:
         f.write(card)

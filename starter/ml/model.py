@@ -34,7 +34,9 @@ def train_model(X_train, y_train, force=False):
     model : RandomForestClassifier
         Trained machine learning model.
     """
-    model = RandomForestClassifier(n_estimators=100, random_state=42, n_jobs=-1)
+    model = RandomForestClassifier(
+        n_estimators=100, random_state=42, n_jobs=-1
+    )
     model.fit(X_train, y_train)
 
     with open(model_path, "wb") as file:
@@ -102,7 +104,9 @@ def compute_slice_metrics(
             encoder=encoder,
             lb=lb,
         )
-        precision, recall, fbeta = compute_model_metrics(y, inference(model, X))
+        precision, recall, fbeta = compute_model_metrics(
+            y, inference(model, X)
+        )
         rows.append((feature, value, len(subset), precision, recall, fbeta))
     return pd.DataFrame(
         rows, columns=["feature", "value", "n", "precision", "recall", "fbeta"]

@@ -69,14 +69,20 @@ def test_clean_data_fixes_common_problems():
         }
     )
     out = clean_data(raw)
-    assert list(out.columns) == ["age", "workclass", "salary"]  # names stripped
+    assert list(out.columns) == [
+        "age",
+        "workclass",
+        "salary",
+    ]  # names stripped
     assert "?" not in out["workclass"].values  # missing row dropped
     assert len(out) == 2  # duplicate + '?' row removed
     assert set(out["salary"]) == {"<=50K", ">50K"}  # label normalised
 
 
 def test_clean_data_unknown_strategy_keeps_rows():
-    raw = pd.DataFrame({"workclass": ["Private", "?"], "salary": ["<=50K", ">50K"]})
+    raw = pd.DataFrame(
+        {"workclass": ["Private", "?"], "salary": ["<=50K", ">50K"]}
+    )
     out = clean_data(raw, missing="unknown")
     assert len(out) == 2 and "Unknown" in out["workclass"].values
 
@@ -101,7 +107,12 @@ def test_process_data_train_then_inference_shapes(df):
 def test_process_data_without_label_returns_empty_y(df):
     _, _, enc, lb = process_data(df, CATS, label="salary", training=True)
     X, y, _, _ = process_data(
-        df.drop(columns="salary"), CATS, label=None, training=False, encoder=enc, lb=lb
+        df.drop(columns="salary"),
+        CATS,
+        label=None,
+        training=False,
+        encoder=enc,
+        lb=lb,
     )
     assert y.size == 0 and X.shape[0] == len(df)
 

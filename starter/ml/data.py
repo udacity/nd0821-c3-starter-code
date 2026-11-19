@@ -1,3 +1,5 @@
+from typing import Literal
+
 import numpy as np
 from sklearn.preprocessing import LabelBinarizer, OneHotEncoder
 
@@ -78,7 +80,12 @@ def process_data(
     return X, y, encoder, lb
 
 
-def clean_data(df, label="salary", missing="drop", missing_tokens=("?",)):
+def clean_data(
+    df,
+    label="salary",
+    missing: Literal["drop", "unknown"] = "drop",
+    missing_tokens=("?",),
+):
     """Clean the raw census data.
     Safe to run on already-clean data (idempotent).
 
@@ -86,13 +93,14 @@ def clean_data(df, label="salary", missing="drop", missing_tokens=("?",)):
     -----
     1. Strip whitespace from column names and text values.
     2. Treat `missing_tokens` (default "?") and empty strings as missing.
-    3. Drop rows with a missing label; normalise label text (e.g. "<=50K." -> "<=50K").
+    3. Drop rows with a missing label;
+       normalise label text (e.g. "<=50K." -> "<=50K").
     4. Handle missing features: missing="drop" removes those rows,
-       missing="unknown" fills text columns with "Unknown" (numeric NaNs are still dropped).
-    5. Remove exact duplicate rows (so copies cannot end up in both train and test).
-    """ # noqa E501
-    if missing not in ("drop", "unknown"):
-        raise ValueError("missing must be 'drop' or 'unknown'")
+       missing="unknown" fills text columns with "Unknown"
+       (numeric NaNs are still dropped).
+    5. Remove exact duplicate rows
+       (so copies cannot end up in both train and test).
+    """
     df = df.copy()
     df.columns = df.columns.str.strip()
 

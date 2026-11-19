@@ -36,7 +36,7 @@ if __name__ == "__main__":
     raw_data = pd.read_csv(data_path, skipinitialspace=True)
     data = clean_data(raw_data)
     print(
-        f"rows: {len(raw_data):,} -> {len(data):,}  (removed {len(raw_data) - len(data):,} duplicates/invalid)"  # noqa E501
+        f"rows: {len(raw_data):,} -> {len(data):,}  (removed {len(raw_data) - len(data):,} duplicates/invalid)"  # noqa: E501
     )
 
     metrics_path = (

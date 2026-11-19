@@ -67,9 +67,6 @@ HIGH_INCOME_ROW = BASE_ROWS | {
 }
 
 
-# ---------- GET ----------
-
-
 def test_get_root(client):
     response = client.get("/")
     assert response.status_code == 200
@@ -77,9 +74,6 @@ def test_get_root(client):
     assert response.json() == {
         "message": "Hello and welcome to simple inference API"
     }
-
-
-# ---------- POST: one test per possible model output ----------
 
 
 def test_predict_low_income(client):
@@ -100,9 +94,6 @@ def test_predict_high_income(client):
     assert body["predictions"][0] == ">50K"
 
 
-# ---------- Optional extras ----------
-
-
 def test_predict_missing_column_returns_422(client):
     row = {k: v for k, v in LOW_INCOME_ROW.items() if k != "age"}
     response = post_row(client, row)
@@ -113,3 +104,4 @@ def test_predict_invalid_value_returns_422(client):
     row = {**LOW_INCOME_ROW, "age": "not-a-number"}
     response = post_row(client, row)
     assert response.status_code == 422
+

@@ -1,5 +1,7 @@
+from typing import Annotated, Literal
+
 import pandas as pd
-from fastapi import FastAPI, HTTPException, UploadFile
+from fastapi import FastAPI, File, HTTPException, UploadFile
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel, ConfigDict, TypeAdapter, ValidationError
 
@@ -11,9 +13,9 @@ app = FastAPI()
 
 
 class Record(BaseModel):
-    model_config = ConfigDict({
-        "alias_generator": lambda x: x.replace("_", "-")
-    })
+    model_config = ConfigDict(
+        {"alias_generator": lambda x: x.replace("_", "-")}
+    )
     age: int
     workclass: str | None = None
     fnlgt: int
@@ -28,6 +30,7 @@ class Record(BaseModel):
     capital_loss: int = 0
     hours_per_week: int
     native_country: str | None = None
+    salary: Literal["<=50K", ">50K"] | None = None
 
 
 @app.get("/")
@@ -43,9 +46,16 @@ def index():
 
 
 @app.post("/predict")
-def make_inference(file: UploadFile):
+def make_inference(
+    file: Annotated[
+        UploadFile, File(description="CSV file with data to predict data for")
+    ],
+):
+
     try:
-        raw = pd.read_csv(file.file, skipinitialspace=True, na_values=["?", ""])  # noqa: E501
+        raw = pd.read_csv(
+            file.file, skipinitialspace=True, na_values=["?", ""]
+        )  # noqa: E501
         raw = clean_data(raw)
     except Exception:  # noqa: BLE001
         raise HTTPException(400, "Could not parse CSV")

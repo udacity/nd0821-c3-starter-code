@@ -1,0 +1,114 @@
+  feature            value    n  precision  recall  fbeta
+workclass      Federal-gov  189     0.7681  0.7465 0.7571
+workclass        Local-gov  409     0.7545  0.6694 0.7094
+workclass          Private 4466     0.7166  0.6264 0.6685
+workclass     Self-emp-inc  201     0.7829  0.8417 0.8112
+workclass Self-emp-not-inc  500     0.7692  0.5674 0.6531
+workclass        State-gov  260     0.7031  0.6716 0.6870
+workclass      Without-pay    3     1.0000  1.0000 1.0000
+
+  feature        value    n  precision  recall  fbeta
+education         10th  164     1.0000  0.1667 0.2857
+education         11th  224     0.8000  0.2857 0.4211
+education         12th   70     1.0000  0.4000 0.5714
+education      1st-4th   31     1.0000  0.0000 0.0000
+education      5th-6th   58     1.0000  0.5000 0.6667
+education      7th-8th  109     1.0000  0.1250 0.2222
+education          9th   98     1.0000  0.0000 0.0000
+education   Assoc-acdm  203     0.6500  0.5909 0.6190
+education    Assoc-voc  244     0.6727  0.5441 0.6016
+education    Bachelors 1002     0.7522  0.7747 0.7633
+education    Doctorate   69     0.8136  0.9600 0.8807
+education      HS-grad 1964     0.6201  0.4290 0.5071
+education      Masters  325     0.8092  0.8140 0.8116
+education    Preschool   16     1.0000  1.0000 1.0000
+education  Prof-school  114     0.8990  0.9468 0.9223
+education Some-college 1337     0.6696  0.5630 0.6117
+
+       feature                 value    n  precision  recall  fbeta
+marital-status              Divorced  834     0.6481  0.4375 0.5224
+marital-status     Married-AF-spouse    1     1.0000  1.0000 1.0000
+marital-status    Married-civ-spouse 2862     0.7269  0.6905 0.7083
+marital-status Married-spouse-absent   74     1.0000  0.3333 0.5000
+marital-status         Never-married 1913     0.9048  0.3838 0.5390
+marital-status             Separated  170     1.0000  0.4286 0.6000
+marital-status               Widowed  174     1.0000  0.3333 0.5000
+
+   feature             value   n  precision  recall  fbeta
+occupation      Adm-clerical 696     0.5976  0.5052 0.5475
+occupation      Armed-Forces   2     1.0000  1.0000 1.0000
+occupation      Craft-repair 830     0.6043  0.4468 0.5138
+occupation   Exec-managerial 791     0.7850  0.7809 0.7829
+occupation   Farming-fishing 193     0.8667  0.4643 0.6047
+occupation Handlers-cleaners 297     0.7143  0.2941 0.4167
+occupation Machine-op-inspct 398     0.7000  0.4118 0.5185
+occupation     Other-service 622     1.0000  0.2500 0.4000
+occupation   Priv-house-serv  33     1.0000  1.0000 1.0000
+occupation    Prof-specialty 831     0.7989  0.7817 0.7902
+occupation   Protective-serv 137     0.7000  0.6512 0.6747
+occupation             Sales 680     0.6588  0.6257 0.6418
+occupation      Tech-support 195     0.6774  0.7368 0.7059
+occupation  Transport-moving 323     0.6977  0.4348 0.5357
+
+     feature          value    n  precision  recall  fbeta
+relationship        Husband 2527     0.7318  0.6968 0.7138
+relationship  Not-in-family 1507     0.7857  0.4231 0.5500
+relationship Other-relative  192     1.0000  0.2000 0.3333
+relationship      Own-child  848     1.0000  0.4667 0.6364
+relationship      Unmarried  653     0.7368  0.3182 0.4444
+relationship           Wife  301     0.6838  0.6643 0.6739
+
+feature              value    n  precision  recall  fbeta
+   race Amer-Indian-Eskimo   54     0.5000  0.2500 0.3333
+   race Asian-Pac-Islander  167     0.7857  0.7174 0.7500
+   race              Black  566     0.7887  0.5600 0.6550
+   race              Other   40     0.7500  1.0000 0.8571
+   race              White 5201     0.7273  0.6537 0.6886
+
+feature  value    n  precision  recall  fbeta
+    sex Female 1918     0.7052  0.5545 0.6209
+    sex   Male 4110     0.7361  0.6651 0.6988
+
+       feature                      value    n  precision  recall  fbeta
+native-country                   Cambodia    4     1.0000  0.5000 0.6667
+native-country                     Canada   20     1.0000  0.6667 0.8000
+native-country                      China    8     1.0000  1.0000 1.0000
+native-country                   Columbia   10     1.0000  1.0000 1.0000
+native-country                       Cuba   26     0.5000  0.5000 0.5000
+native-country         Dominican-Republic    8     1.0000  1.0000 1.0000
+native-country                    Ecuador    2     1.0000  1.0000 1.0000
+native-country                El-Salvador   15     1.0000  0.5000 0.6667
+native-country                    England   19     0.8000  0.5714 0.6667
+native-country                     France    5     0.7500  1.0000 0.8571
+native-country                    Germany   29     0.8889  0.5333 0.6667
+native-country                     Greece    7     1.0000  0.6667 0.8000
+native-country                  Guatemala   13     1.0000  0.0000 0.0000
+native-country                      Haiti    6     1.0000  1.0000 1.0000
+native-country         Holand-Netherlands    1     1.0000  1.0000 1.0000
+native-country                   Honduras    2     1.0000  1.0000 1.0000
+native-country                       Hong    2     1.0000  1.0000 1.0000
+native-country                    Hungary    4     1.0000  1.0000 1.0000
+native-country                      India   25     0.5556  0.6250 0.5882
+native-country                       Iran   12     0.5714  0.6667 0.6154
+native-country                    Ireland    6     1.0000  1.0000 1.0000
+native-country                      Italy   12     1.0000  1.0000 1.0000
+native-country                    Jamaica   15     0.0000  0.0000 0.0000
+native-country                      Japan    6     1.0000  1.0000 1.0000
+native-country                       Laos    4     1.0000  1.0000 1.0000
+native-country                     Mexico  128     0.7500  0.5000 0.6000
+native-country                  Nicaragua    9     1.0000  1.0000 1.0000
+native-country Outlying-US(Guam-USVI-etc)    4     1.0000  1.0000 1.0000
+native-country                       Peru   11     1.0000  1.0000 1.0000
+native-country                Philippines   36     0.8000  0.8889 0.8421
+native-country                     Poland   11     0.5000  0.5000 0.5000
+native-country                   Portugal    7     1.0000  1.0000 1.0000
+native-country                Puerto-Rico   19     0.2500  1.0000 0.4000
+native-country                   Scotland    3     1.0000  1.0000 1.0000
+native-country                      South   10     0.5000  0.5000 0.5000
+native-country                     Taiwan    3     1.0000  0.5000 0.6667
+native-country                   Thailand    5     1.0000  1.0000 1.0000
+native-country            Trinadad&Tobago    5     1.0000  1.0000 1.0000
+native-country              United-States 5499     0.7301  0.6481 0.6866
+native-country                    Vietnam   12     1.0000  1.0000 1.0000
+native-country                 Yugoslavia    5     1.0000  0.6667 0.8000
+

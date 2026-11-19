@@ -26,4 +26,5 @@ dependencies = [
     "scikit-learn==1.7.2",
     "seaborn==0.13.2",
     "uvicorn[standard]==0.36.0",
+    "wandb>=0.31.0",
 ]

@@ -3,10 +3,9 @@ from sklearn.preprocessing import LabelBinarizer, OneHotEncoder
 
 
 def process_data(
-    X, categorical_features=[], label=None, training=True,
-    encoder=None, lb=None
+    X, categorical_features=[], label=None, training=True, encoder=None, lb=None
 ):
-    """ Process the data used in the machine learning pipeline.
+    """Process the data used in the machine learning pipeline.
 
     Uses one hot encoding for categorical features and a label binarizer
     for the labels. This can be used in either training or
@@ -70,3 +69,36 @@ def process_data(
 
     X = np.concatenate([X_continuous, X_categorical], axis=1)
     return X, y, encoder, lb
+
+
+def clean_data(df, label="salary", missing="drop", missing_tokens=("?",)):
+    """Clean the raw census data. Safe to run on already-clean data (idempotent).
+
+    Steps
+    -----
+    1. Strip whitespace from column names and text values.
+    2. Treat `missing_tokens` (default "?") and empty strings as missing.
+    3. Drop rows with a missing label; normalise label text (e.g. "<=50K." -> "<=50K").
+    4. Handle missing features: missing="drop" removes those rows,
+       missing="unknown" fills text columns with "Unknown" (numeric NaNs are still dropped).
+    5. Remove exact duplicate rows (so copies cannot end up in both train and test).
+    """
+    if missing not in ("drop", "unknown"):
+        raise ValueError("missing must be 'drop' or 'unknown'")
+    df = df.copy()
+    df.columns = df.columns.str.strip()
+
+    text_cols = df.select_dtypes(include=["object", "string"]).columns
+    for c in text_cols:
+        df[c] = df[c].str.strip()
+    df = df.replace(list(missing_tokens) + [""], np.nan)
+
+    df = df.dropna(subset=[label])
+    df[label] = df[label].astype(str).str.strip().str.rstrip(".")
+
+    if missing == "unknown":
+        df[text_cols] = df[text_cols].fillna("Unknown")
+    df = df.dropna()
+
+    df = df.drop_duplicates().reset_index(drop=True)
+    return df

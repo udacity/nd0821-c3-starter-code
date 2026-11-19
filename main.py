@@ -1,9 +1,9 @@
-from typing import Annotated
+from typing import Literal
 
 import pandas as pd
 from fastapi import FastAPI, File, HTTPException, UploadFile
 from fastapi.responses import JSONResponse
-from pydantic import BaseModel, ConfigDict, TypeAdapter, ValidationError
+from pydantic import BaseModel, ConfigDict, Field, TypeAdapter, ValidationError
 
 from starter.ml.data import clean_data, process_data
 from starter.ml.model import inference, retrieve_model
@@ -14,7 +14,9 @@ app = FastAPI()
 
 class Record(BaseModel):
     model_config = ConfigDict(
-        {"alias_generator": lambda x: x.replace("_", "-")}
+        {
+            "alias_generator": lambda x: x.replace("_", "-"),
+        }
     )
     age: int
     workclass: str | None = None
@@ -32,6 +34,39 @@ class Record(BaseModel):
     native_country: str | None = None
 
 
+class PredictResponse(BaseModel):
+    model_config = ConfigDict(
+        json_schema_extra={
+            "examples": [
+                {"predictions": ["<=50K", ">50K"]},
+            ]
+        }
+    )
+    predictions: Literal["<=50K", ">50K"] = Field(
+        description="One prediction per CSV row, in the same order"
+    )
+
+
+class ErrorResponse(BaseModel):
+    detail: str | list[dict]
+
+
+def error_response(description: str, **examples):
+    """Build a responses entry with named examples."""
+    return {
+        "model": ErrorResponse,
+        "description": description,
+        "content": {
+            "application/json": {
+                "examples": {
+                    name: {"summary": name.replace("_", " "), "value": value}
+                    for name, value in examples.items()
+                }
+            }
+        },
+    }
+
+
 @app.get("/")
 def index():
     """Greeting page for FastAPI interface
@@ -44,11 +79,49 @@ def index():
     )
 
 
-@app.post("/predict")
+EXAMPLE_CSV = """\
+age, workclass, fnlgt, education, education-num, marital-status, occupation, relationship, race, sex, capital-gain, capital-loss, hours-per-week, native-country
+39, State-gov, 77516, Bachelors, 13, Never-married, Adm-clerical, Not-in-family, White, Male, 2174, 0, 40, United-States
+50, Self-emp-not-inc, 83311, Bachelors, 13, Married-civ-spouse, Exec-managerial, Husband, White, Male, 0, 0, 13, United-States
+"""  # noqa: E501
+
+
+@app.post(
+    "/predict",
+    response_model=PredictResponse,
+    responses={
+        400: error_response(
+            "CSV could not be parsed",
+            unparseable={"detail": "Could not parse CSV"},
+        ),
+        422: error_response(
+            "Missing columns or invalid values",
+            missing_columns={"detail": "Missing columns: ['age']"},
+            invalid_value={
+                "detail": [
+                    {
+                        "type": "int_parsing",
+                        "loc": [0, "age"],
+                        "msg": "Input should be a valid integer",
+                        "input": "abc",
+                    }
+                ]
+            },
+        ),
+        500: error_response(
+            "No models available",
+            missing_model={"detail": "No model available"},
+        ),
+    },
+)
 def make_inference(
-    file: Annotated[
-        UploadFile, File(description="CSV file with data to predict data for")
-    ],
+    file: UploadFile = File(  # noqa: B008
+        description=(
+            "CSV file with data to predict salary from\n\n"
+            f"```csv\n{EXAMPLE_CSV}```\n\n"
+            f"Hyphens or underscores in headers are both accepted."
+        )
+    ),
 ):
 
     try:
@@ -57,18 +130,21 @@ def make_inference(
         )  # noqa: E501
         raw = clean_data(raw)
     except Exception:  # noqa: BLE001
-        raise HTTPException(400, "Could not parse CSV")
+        raise HTTPException(400, {"details": "Could not parse CSV"})
 
     model, encoder, lb = retrieve_model()
     if not model:
         raise HTTPException(
             500,
-            (
-                "No model available."
-                "Please use `train_model` script to make a new model"
-            ),
+            {
+                "details": (
+                    "No model available."
+                    "Please use `train_model` script to make a new model"
+                )
+            },
         )
     df = raw.copy()
+
     try:
         TypeAdapter(list[Record]).validate_python(df.to_dict("records"))
     except ValidationError as e:

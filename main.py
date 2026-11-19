@@ -1,7 +1,7 @@
 import pandas as pd
 from fastapi import FastAPI, HTTPException, UploadFile
 from fastapi.responses import JSONResponse
-from pydantic import BaseModel, TypeAdapter, ValidationError
+from pydantic import BaseModel, ConfigDict, TypeAdapter, ValidationError
 
 from starter.ml.data import clean_data, process_data
 from starter.ml.model import inference, retrieve_model
@@ -11,6 +11,9 @@ app = FastAPI()
 
 
 class Record(BaseModel):
+    model_config = ConfigDict({
+        "alias_generator": lambda x: x.replace("_", "-")
+    })
     age: int
     workclass: str | None = None
     fnlgt: int
@@ -42,11 +45,10 @@ def index():
 @app.post("/predict")
 def make_inference(file: UploadFile):
     try:
-        df = pd.read_csv(file.file, skipinitialspace=True, na_values=["?", ""])
+        raw = pd.read_csv(file.file, skipinitialspace=True, na_values=["?", ""])  # noqa: E501
+        raw = clean_data(raw)
     except Exception:  # noqa: BLE001
         raise HTTPException(400, "Could not parse CSV")
-
-    df = clean_data(df)
 
     model, encoder, lb = retrieve_model()
     if not model:
@@ -57,12 +59,7 @@ def make_inference(file: UploadFile):
                 "Please use `train_model` script to make a new model"
             ),
         )
-    missing = set(Record.model_fields) - set(
-        df.columns.str.strip().str.replace("-", "_").str.lower()
-    )
-    if missing:
-        raise HTTPException(422, f"Missing columns: {sorted(missing)}")
-
+    df = raw.copy()
     try:
         TypeAdapter(list[Record]).validate_python(df.to_dict("records"))
     except ValidationError as e:

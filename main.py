@@ -1,4 +1,4 @@
-from typing import Annotated, Literal
+from typing import Annotated
 
 import pandas as pd
 from fastapi import FastAPI, File, HTTPException, UploadFile
@@ -30,7 +30,6 @@ class Record(BaseModel):
     capital_loss: int = 0
     hours_per_week: int
     native_country: str | None = None
-    salary: Literal["<=50K", ">50K"] | None = None
 
 
 @app.get("/")

@@ -104,4 +104,3 @@ def test_predict_invalid_value_returns_422(client):
     row = {**LOW_INCOME_ROW, "age": "not-a-number"}
     response = post_row(client, row)
     assert response.status_code == 422
-

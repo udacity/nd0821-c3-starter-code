@@ -2,21 +2,54 @@ import os
 import pickle
 from pathlib import Path
 
+import numpy as np
 import pandas as pd
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import fbeta_score, precision_score, recall_score
 
-from .data import process_data
+from starter.ml.data import process_data
 
-model_path = Path(__file__).resolve().parents[2] / "model" / "model.pkl"
+model_path = Path(__file__).resolve().parents[2] / "model"
 
 
-def retrieve_model():
-    if os.path.isfile(model_path):
-        with open(model_path, "rb") as file:
-            return pickle.load(file)
+def retrieve_model(
+    model_file="model.pkl", encoder_file="encoder.pkl", lb_file="lb.pkl"
+):
+    model = None
+    encoder = None
+    lb = None
 
-    return None
+    if os.path.isfile(model_path / model_file):
+        with open(model_path / model_file, "rb") as file:
+            model = pickle.load(file)
+
+    if os.path.isfile(model_path / encoder_file):
+        with open(model_path / encoder_file, "rb") as file:
+            encoder = pickle.load(file)
+
+    if os.path.isfile(model_path / lb_file):
+        with open(model_path / lb_file, "rb") as file:
+            lb = pickle.load(file)
+
+    return model, encoder, lb
+
+
+def save_model(
+    model,
+    encoder,
+    lb,
+    model_file="model.pkl",
+    encoder_file="encoder.pkl",
+    lb_file="lb.pkl",
+):
+    with open(model_path / model_file, "wb") as file:
+        pickle.dump(model, file)
+
+    with open(model_path / encoder_file, "wb") as file:
+        pickle.dump(encoder, file)
+
+    with open(model_path / lb_file, "wb") as file:
+        pickle.dump(lb, file)
 
 
 def train_model(X_train, y_train, force=False):
@@ -38,9 +71,6 @@ def train_model(X_train, y_train, force=False):
         n_estimators=100, random_state=42, n_jobs=-1
     )
     model.fit(X_train, y_train)
-
-    with open(model_path, "wb") as file:
-        pickle.dump(model, file)
 
     return model
 
@@ -68,7 +98,7 @@ def compute_model_metrics(y, preds):
     return precision, recall, fbeta
 
 
-def inference(model, X):
+def inference(model, X) -> np.ndarray:
     """Run model inferences and return the predictions.
 
     Inputs

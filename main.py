@@ -1,7 +1,7 @@
 from typing import Literal
 
 import pandas as pd
-from fastapi import FastAPI, File, HTTPException, UploadFile
+from fastapi import FastAPI, HTTPException
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel, ConfigDict, Field, TypeAdapter, ValidationError
 
@@ -19,19 +19,20 @@ class Record(BaseModel):
         }
     )
     age: int
-    workclass: str | None = None
+    workclass: str
     fnlgt: int
-    education: str | None = None
+    education: str
     education_num: int
     marital_status: str | None = None
-    occupation: str | None = None
+    occupation: str
     relationship: str | None = None
-    race: str | None = None
-    sex: str | None = None
-    capital_gain: int = 0
-    capital_loss: int = 0
+    race: str
+    sex: str
+    capital_gain: int = Field(0)
+    capital_loss: int = Field(0)
     hours_per_week: int
     native_country: str | None = None
+    salary: str | None = Field("None")
 
 
 class PredictResponse(BaseModel):
@@ -44,6 +45,53 @@ class PredictResponse(BaseModel):
     )
     predictions: Literal["<=50K", ">50K"] = Field(
         description="One prediction per CSV row, in the same order"
+    )
+
+
+class PredictRequest(BaseModel):
+    csv_data: list[Record]
+
+    model_config = ConfigDict(
+        json_schema_extra={
+            "example": {
+                "csv_data": [
+                    {
+                        "age": 39,
+                        "workclass": "State-gov",
+                        "fnlgt": 77516,
+                        "education": "Bachelors",
+                        "education-num": 13,
+                        "marital-status": "Never-married",
+                        "occupation": "Adm-clerical",
+                        "relationship": "Not-in-family",
+                        "race": "White",
+                        "sex": "male",
+                        "capital-gain": 2174,
+                        "capital-loss": 0,
+                        "hours-per-week": 40,
+                        "native-country": "United-States",
+                        "salary": "<=50K",
+                    },
+                    {
+                        "age": 50,
+                        "workclass": "Federal-gov",
+                        "fnlgt": 251585,
+                        "education": "Bachelors",
+                        "education-num": 13,
+                        "marital-status": "Divorced",
+                        "occupation": "Exec-managerial",
+                        "relationship": "Not-in-family",
+                        "race": "White",
+                        "sex": "male",
+                        "capital-gain": 0,
+                        "capital-loss": 0,
+                        "hours-per-week": 55,
+                        "native-country": "United-States",
+                        "salary": "<=50K",
+                    },
+                ]
+            }
+        }
     )
 
 
@@ -79,20 +127,13 @@ def index():
     )
 
 
-EXAMPLE_CSV = """\
-age, workclass, fnlgt, education, education-num, marital-status, occupation, relationship, race, sex, capital-gain, capital-loss, hours-per-week, native-country
-39, State-gov, 77516, Bachelors, 13, Never-married, Adm-clerical, Not-in-family, White, Male, 2174, 0, 40, United-States
-50, Self-emp-not-inc, 83311, Bachelors, 13, Married-civ-spouse, Exec-managerial, Husband, White, Male, 0, 0, 13, United-States
-"""  # noqa: E501
-
-
 @app.post(
     "/predict",
     response_model=PredictResponse,
     responses={
         400: error_response(
             "CSV could not be parsed",
-            unparseable={"detail": "Could not parse CSV"},
+            unparseable={"detail": "Could not parse data"},
         ),
         422: error_response(
             "Missing columns or invalid values",
@@ -100,10 +141,23 @@ age, workclass, fnlgt, education, education-num, marital-status, occupation, rel
             invalid_value={
                 "detail": [
                     {
-                        "type": "int_parsing",
-                        "loc": [0, "age"],
-                        "msg": "Input should be a valid integer",
-                        "input": "abc",
+                        "type": "missing",
+                        "loc": ["body", "csv_data", 0, "age"],
+                        "msg": "Field required",
+                        "input": {
+                            "capital-gain": 2174,
+                            "capital-loss": 0,
+                            "education": "Bachelors",
+                            "education-num": 13,
+                            "fnlgt": 77516,
+                            "hours-per-week": 40,
+                            "marital-status": "Never-married",
+                            "native-country": "United-States",
+                            "occupation": "Adm-clerical",
+                            "race": "White",
+                            "relationship": "Not-in-family",
+                            "sex": "male",
+                        },
                     }
                 ]
             },
@@ -115,22 +169,30 @@ age, workclass, fnlgt, education, education-num, marital-status, occupation, rel
     },
 )
 def make_inference(
-    file: UploadFile = File(  # noqa: B008
-        description=(
-            "CSV file with data to predict salary from\n\n"
-            f"```csv\n{EXAMPLE_CSV}```\n\n"
-            f"Hyphens or underscores in headers are both accepted."
-        )
-    ),
+    request: PredictRequest,
 ):
 
     try:
-        raw = pd.read_csv(
-            file.file, skipinitialspace=True, na_values=["?", ""]
-        )  # noqa: E501
-        raw = clean_data(raw)
-    except Exception:  # noqa: BLE001
-        raise HTTPException(400, {"details": "Could not parse CSV"})
+        df = pd.DataFrame(
+            [r.model_dump(by_alias=True) for r in request.csv_data]
+        )
+        df = clean_data(df, missing="unknown")
+    except KeyError as e:
+        raise HTTPException(
+            422,
+            {
+                "details": [
+                    {
+                        "type": "missing",
+                        "loc": [0, str(e)],
+                        "msg": "Input should be a valid integer",
+                        "input": [r.model_dump() for r in request.csv_data],
+                    }
+                ]
+            },
+        )
+    except Exception as e:  # noqa: BLE001
+        raise HTTPException(400, {"details": str(e)})
 
     model, encoder, lb = retrieve_model()
     if not model:
@@ -143,12 +205,13 @@ def make_inference(
                 )
             },
         )
-    df = raw.copy()
 
     try:
         TypeAdapter(list[Record]).validate_python(df.to_dict("records"))
     except ValidationError as e:
         raise HTTPException(422, e.errors(include_url=False)[:20])
+
+    print(df)
 
     data, _, _, _ = process_data(
         df,

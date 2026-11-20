@@ -1,5 +1,3 @@
-import io
-
 import pytest
 from fastapi.testclient import TestClient
 
@@ -19,14 +17,8 @@ def make_csv(row: dict) -> str:
     return f"{header}\n{values}\n"
 
 
-def post_row(client, row: dict):
-    csv_text = make_csv(row)
-    return client.post(
-        "/predict",
-        files={
-            "file": ("data.csv", io.BytesIO(csv_text.encode()), "text/csv")
-        },
-    )
+def post_row(client: TestClient, row: dict):
+    return client.post("/predict", json={"csv_data": [row]})
 
 
 # Rows chosen so the model gives a clear-cut answer.
